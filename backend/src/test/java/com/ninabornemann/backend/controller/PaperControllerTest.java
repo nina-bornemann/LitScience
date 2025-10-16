@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -55,5 +54,16 @@ class PaperControllerTest {
                                                                              }
                                                                            ]
                                                                            """));
+    }
+
+    @DirtiesContext
+    @Test
+    void getAllPapers_shouldReturn_EmptyListWhenEmpty() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                                [
+                                                                                ]
+                                                                            """));
     }
 }
