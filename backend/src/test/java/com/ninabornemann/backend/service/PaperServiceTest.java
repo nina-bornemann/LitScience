@@ -1,6 +1,7 @@
 package com.ninabornemann.backend.service;
 import com.ninabornemann.backend.Repo.PaperRepo;
 import com.ninabornemann.backend.model.Paper;
+import com.ninabornemann.backend.model.PaperDto;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,5 +39,24 @@ class PaperServiceTest {
         assertEquals(List.of(), actual);
         verify(mockRepo).findAll();
         verifyNoMoreInteractions(mockRepo, mockIdService);
+    }
+
+    @Test
+    void addNewPaper_shouldReturn_newPaper() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, "stem cells", "");
+        Paper newPaper = new Paper("Test-id", "123", "gastruloids", "Ludi", 2022, "stem cells", "");
+
+        when(mockIdService.randomId()).thenReturn("Test-id");
+        when(mockRepo.save(newPaper)).thenReturn(newPaper);
+        Paper actual = service.addNewpaper(dto);
+
+        assertEquals(newPaper, actual);
+        verify(mockIdService).randomId();
+        verify(mockRepo).save(newPaper);
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+
     }
 }
