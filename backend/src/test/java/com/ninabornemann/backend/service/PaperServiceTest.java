@@ -33,6 +33,7 @@ class PaperServiceTest {
         when(mockRepo.findAll()).thenReturn(List.of());
         List<Paper> actual = service.getAllPaper();
 
+        assertEquals(List.of(), actual);
         verify(mockRepo).findAll();
         verifyNoMoreInteractions(mockRepo);
     }
