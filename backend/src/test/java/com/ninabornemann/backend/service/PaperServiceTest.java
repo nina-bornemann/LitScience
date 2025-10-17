@@ -11,7 +11,8 @@ class PaperServiceTest {
     @Test
     void getAllPaper_shouldReturn_listOfPaper() {
         PaperRepo mockRepo = mock(PaperRepo.class);
-        PaperService service = new PaperService(mockRepo);
+        IdService mockIdService = mock(IdService.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
         Paper p1 = new Paper("1", "1.2/3", "Test1", "Tester", 2024, "Bio", "nice");
         Paper p2 = new Paper("2", "1.3/5", "Test2", "Prof", 2019, "Physics", "cool");
         List<Paper> papers = List.of(p1, p2);
@@ -22,19 +23,20 @@ class PaperServiceTest {
 
         verify(mockRepo).findAll();
         assertEquals(papers, actual);
-        verifyNoMoreInteractions(mockRepo);
+        verifyNoMoreInteractions(mockRepo, mockIdService);
     }
 
     @Test
     void getAllPaper_shouldReturn_emptyList() {
+        IdService mockIdService = mock(IdService.class);
         PaperRepo mockRepo = mock(PaperRepo.class);
-        PaperService service = new PaperService(mockRepo);
+        PaperService service = new PaperService(mockIdService, mockRepo);
 
         when(mockRepo.findAll()).thenReturn(List.of());
         List<Paper> actual = service.getAllPaper();
 
         assertEquals(List.of(), actual);
         verify(mockRepo).findAll();
-        verifyNoMoreInteractions(mockRepo);
+        verifyNoMoreInteractions(mockRepo, mockIdService);
     }
 }

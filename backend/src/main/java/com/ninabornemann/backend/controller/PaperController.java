@@ -1,9 +1,9 @@
 package com.ninabornemann.backend.controller;
 import com.ninabornemann.backend.model.Paper;
+import com.ninabornemann.backend.model.PaperDto;
 import com.ninabornemann.backend.service.PaperService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -19,5 +19,10 @@ public class PaperController {
     @GetMapping
     public List<Paper> getAllPaper() {
         return paperService.getAllPaper();
+    }
+
+    @PostMapping
+    public Paper addNewPaper(@RequestBody PaperDto paperDto) {
+        return paperService.addNewpaper(paperDto);
     }
 }
