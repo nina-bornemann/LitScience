@@ -1,11 +1,15 @@
 package com.ninabornemann.backend.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ninabornemann.backend.Repo.PaperRepo;
 import com.ninabornemann.backend.model.Paper;
+import com.ninabornemann.backend.model.PaperDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -21,6 +25,10 @@ class PaperControllerTest {
 
     @Autowired
     private PaperRepo paperRepo;
+
+    String jsonFrom(PaperDto dto) throws JsonProcessingException {
+       return new ObjectMapper().writeValueAsString(dto);
+    }
 
     @DirtiesContext
     @Test
@@ -65,5 +73,26 @@ class PaperControllerTest {
                                                                                 [
                                                                                 ]
                                                                             """));
+    }
+
+    @DirtiesContext
+    @Test
+    void addNewPaper_shouldReturn_newPaper() throws Exception {
+        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, "stem cells", "");
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/paper")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonFrom(dto)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(""" 
+                                                                               {
+                                                                                  "doi": "123",
+                                                                                  "title": "gastruloids",
+                                                                                  "author": "Ludi",
+                                                                                  "year": 2022,
+                                                                                  "group": "stem cells",
+                                                                                  "notes": ""
+                                                                                }
+                                                                           """))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
     }
 }
