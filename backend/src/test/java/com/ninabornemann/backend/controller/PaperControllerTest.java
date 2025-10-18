@@ -7,21 +7,31 @@ import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureMockRestServiceServer
 class PaperControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private MockRestServiceServer mockServer;
 
     @Autowired
     private PaperRepo paperRepo;
@@ -93,6 +103,41 @@ class PaperControllerTest {
                                                                                   "notes": ""
                                                                                 }
                                                                            """))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
+    }
+
+    @DirtiesContext
+    @Test
+    void importPaperByDoi_shouldReturn_paperWhenDoiValid() throws Exception {
+        mockServer.expect(requestTo("https://api.openalex.org/works/https://doi.org/123/567"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess("""
+                        {
+                            "title": "The state of OA: a large-scale analysis of the prevalence and impact of Open Access articles",
+                            "publication_year": 2018,
+                            "authorships": [
+                                {
+                                    "author_position": "first",
+                                    "author": {
+                                        "display_name": "Heather Piwowar"
+                                    }
+                                }
+                            ]
+                        }
+                        """, MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/import/123/567"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                                {
+                                                                                    "doi": "123/567",
+                                                                                    "title": "The state of OA: a large-scale analysis of the prevalence and impact of Open Access articles",
+                                                                                    "author": "Heather Piwowar",
+                                                                                    "year": 2018,
+                                                                                    "group": "",
+                                                                                    "notes": ""
+                                                                                }
+                                                                                """))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
     }
 }

@@ -1,11 +1,9 @@
 package com.ninabornemann.backend.controller;
-import com.ninabornemann.backend.model.OpenAlexResponse;
 import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
 import com.ninabornemann.backend.service.OpenAlexService;
 import com.ninabornemann.backend.service.PaperService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
