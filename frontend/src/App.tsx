@@ -5,6 +5,7 @@ import PaperTable from "./components/PaperTable.tsx";
 import {useEffect, useState} from "react";
 import type {Paper} from "./components/Paper.tsx";
 import axios from "axios";
+import AddNewPaper from "./components/AddNewPaper.tsx";
 
 function App() {
 
@@ -21,6 +22,9 @@ function App() {
     return (
         <>
             <NavBar/>
+            <AddNewPaper onAdd={(paper) => {
+                setPapers(prevState => [...prevState, paper])
+            }}/>
             <PaperTable papers={papers}/>
             <Footer/>
         </>
