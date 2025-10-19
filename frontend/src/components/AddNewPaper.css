@@ -1,0 +1,22 @@
+.addDoi {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+.addDoiInput {
+    margin-right: 10px;
+    background-color: transparent;
+    border-bottom: 2px solid rgb(56 115 236 /0.5);
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    text-align: center;
+}
+.addDoiInput:hover {
+    border: 2px solid rgb(56 115 236);
+}
+.addButtons {
+    margin-right: 10px;
+    margin-left: 0px;
+}

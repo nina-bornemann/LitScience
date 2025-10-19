@@ -1,3 +1,4 @@
+import './AddNewPaper.css'
 import {useState} from "react";
 import axios from "axios";
 import type {Paper} from "./Paper.tsx";
@@ -23,10 +24,12 @@ export default function AddNewPaper(props:Readonly<AddNewPaperProps>) {
 
     return (
         <>
-            <input onChange={(r) => setDoi(r.target.value)} value={doi} placeholder={"Enter DOI"} />
-            <button onClick={handleDoi}>Add paper by DOI</button>
+            <div className={"addDoi"}>
+                <input className={"addDoiInput"} onChange={(r) => setDoi(r.target.value)} value={doi} placeholder={"Enter DOI"} />
+                <button className={"addButtons"} onClick={handleDoi}>Add paper by DOI</button>
 
-            <button>Add paper manually</button>
+                <button className={"addButtons"}>Add paper manually</button>
+            </div>
         </>
     )
 }
