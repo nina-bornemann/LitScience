@@ -1,4 +1,5 @@
 package com.ninabornemann.backend.controller;
+import com.ninabornemann.backend.exceptions.DoiNotFoundException;
 import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
 import com.ninabornemann.backend.service.OpenAlexService;
@@ -40,7 +41,7 @@ public class PaperController {
             Paper newPaper = paperService.addNewpaper(paperDto);
             return ResponseEntity.ok(newPaper);
         }
-        catch (RuntimeException e) {
+        catch (DoiNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }

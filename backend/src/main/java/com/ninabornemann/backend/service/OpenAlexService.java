@@ -1,4 +1,5 @@
 package com.ninabornemann.backend.service;
+import com.ninabornemann.backend.exceptions.DoiNotFoundException;
 import com.ninabornemann.backend.model.OpenAlexResponse;
 import com.ninabornemann.backend.model.PaperDto;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class OpenAlexService {
                 .build();
     }
 
-    public PaperDto getPaperByDoi(String doi) {
+    public PaperDto getPaperByDoi(String doi) throws DoiNotFoundException {
         // because of the double slash in uri
         String absolute = "https://api.openalex.org/works/https://doi.org/" + doi;
         OpenAlexResponse response;
@@ -28,7 +29,7 @@ public class OpenAlexService {
                 .body(OpenAlexResponse.class);
         }
         catch (RestClientException e) {
-            throw new RuntimeException("Paper not found.");
+            throw new DoiNotFoundException("Paper not found.");
         }
 
         return new PaperDto(
