@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 
 
 @SpringBootTest
@@ -139,5 +139,16 @@ class PaperControllerTest {
                                                                                 }
                                                                                 """))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
+    }
+
+    @DirtiesContext
+    @Test
+    void importPaperByDoi_should_whenDoiNotFound() throws Exception {
+        mockServer.expect(requestTo("https://api.openalex.org/works/https://doi.org/123"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withResourceNotFound());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/import/123"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }

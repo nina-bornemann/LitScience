@@ -3,6 +3,8 @@ import com.ninabornemann.backend.model.OpenAlexResponse;
 import com.ninabornemann.backend.model.PaperDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
+
 import java.net.URI;
 
 @Service
@@ -19,11 +21,13 @@ public class OpenAlexService {
     public PaperDto getPaperByDoi(String doi) {
         // because of the double slash in uri
         String absolute = "https://api.openalex.org/works/https://doi.org/" + doi;
-        OpenAlexResponse response = restClient.get().uri(URI.create(absolute))
+        OpenAlexResponse response;
+        try {
+            response = restClient.get().uri(URI.create(absolute))
                 .retrieve()
                 .body(OpenAlexResponse.class);
-
-        if (response == null) {
+        }
+        catch (RestClientException e) {
             throw new RuntimeException("Paper not found.");
         }
 
