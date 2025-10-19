@@ -48,4 +48,13 @@ class OpenAlexServiceTest {
         assertEquals(paperDto, service.getPaperByDoi("123/456"));
         assertDoesNotThrow(() -> service.getPaperByDoi("123/456"));
     }
+
+    @Test
+    void getPaperByDoi_shouldThrowException_whenDoiNotFound() {
+        mockServer.expect(requestTo("https://api.openalex.org/works/https://doi.org/777"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withResourceNotFound());
+
+        assertThrows(DoiNotFoundException.class, () -> service.getPaperByDoi("777"));
+    }
 }
