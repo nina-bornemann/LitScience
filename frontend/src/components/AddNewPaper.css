@@ -7,16 +7,25 @@
 .addDoiInput {
     margin-right: 10px;
     background-color: transparent;
-    border-bottom: 2px solid rgb(56 115 236 /0.5);
+    border-bottom: 2px solid rgb(77 170 160 / 0.7);
     border-left: 0;
     border-right: 0;
     border-top: 0;
     text-align: center;
 }
 .addDoiInput:hover {
-    border: 2px solid rgb(56 115 236);
+    border: 2px solid rgb(77 170 160);
+    border-radius: 8px;
 }
-.addButtons {
+.addButton {
+    font-size: 14px;
     margin-right: 10px;
-    margin-left: 0px;
+    margin-left: 0;
+    max-height: fit-content;
+    max-width: fit-content;
+    background-color: rgb(77 170 160);
+    border: 0;
+}
+.addButton:hover {
+    border: 2px solid rgb(77 170 160);
 }

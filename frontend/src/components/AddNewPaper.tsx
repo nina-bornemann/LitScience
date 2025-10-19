@@ -18,7 +18,7 @@ export default function AddNewPaper(props:Readonly<AddNewPaperProps>) {
                 props.onAdd(response.data)
                 setDoi("")
             })
-            .catch(() => alert("Doi was not found"))
+            .catch(() => alert("Please enter a valid DOI... 👀"))
 
     }
 
@@ -26,9 +26,7 @@ export default function AddNewPaper(props:Readonly<AddNewPaperProps>) {
         <>
             <div className={"addDoi"}>
                 <input className={"addDoiInput"} onChange={(r) => setDoi(r.target.value)} value={doi} placeholder={"Enter DOI"} />
-                <button className={"addButtons"} onClick={handleDoi}>Add paper by DOI</button>
-
-                <button className={"addButtons"}>Add paper manually</button>
+                <button className={"addButton"} onClick={handleDoi}>Add paper by DOI</button>
             </div>
         </>
     )
