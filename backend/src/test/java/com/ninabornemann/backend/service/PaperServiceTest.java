@@ -3,6 +3,8 @@ import com.ninabornemann.backend.Repo.PaperRepo;
 import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +77,19 @@ class PaperServiceTest {
 
         verify(mockRepo).findById("123");
         verify(mockRepo).delete(p1);
-        verifyNoMoreInteractions(mockRepo);
+        verifyNoMoreInteractions(mockRepo, mockIdService);
+    }
+
+    @Test
+    void deletePaperById_shouldThrowException_whenIdNotFound() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+
+        when(mockRepo.findById("666")).thenReturn(Optional.empty());
+
+        assertThrows(ResponseStatusException.class, () -> service.deletePaperById("666"));
+        verify(mockRepo).findById("666");
+        verifyNoMoreInteractions(mockIdService, mockRepo);
     }
 }
