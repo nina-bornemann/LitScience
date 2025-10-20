@@ -163,4 +163,17 @@ class PaperControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string(""))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").doesNotExist());
     }
+
+    @DirtiesContext
+    @Test
+    void deletePaperById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/paper/555"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                             {
+                                                                               "errorMessage": "404 NOT_FOUND \\"No paper was found under this id.\\""
+                                                                             }
+                                                                           """))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.instant").isNotEmpty());
+    }
 }
