@@ -3,7 +3,9 @@ import com.ninabornemann.backend.Repo.PaperRepo;
 import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
+import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -58,5 +60,34 @@ class PaperServiceTest {
         verify(mockRepo).save(newPaper);
         verifyNoMoreInteractions(mockIdService, mockRepo);
 
+    }
+
+    @Test
+    void getPaperById_shouldReturn_correctPaper_whenIdFound() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        Paper p1 = new Paper("123", "456/678", "Cool article", "Einstein", 1920, "Physics", "nice");
+
+        when(mockRepo.findById("456")).thenReturn(Optional.of(p1));
+        Paper actual = service.getPaperById("456");
+
+        assertEquals(p1, actual);
+        assertDoesNotThrow(() -> service.getPaperById("456"));
+        verify(mockRepo, atMost(2)).findById("456");
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+    }
+
+    @Test
+    void getPaperById_shouldThrow_ResponseStatusException() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+
+        when(mockRepo.findById("888")).thenReturn(Optional.empty());
+
+        assertThrows(ResponseStatusException.class, () -> service.getPaperById("888"));
+        verify(mockRepo).findById("888");
+        verifyNoMoreInteractions(mockIdService, mockRepo);
     }
 }
