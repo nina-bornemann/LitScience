@@ -7,8 +7,6 @@ import com.ninabornemann.backend.service.PaperService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
