@@ -151,4 +151,16 @@ class PaperControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/import/123"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
+
+    @DirtiesContext
+    @Test
+    void deletePaperById_shouldDelete_whenIdFound() throws Exception {
+        Paper p1 = new Paper("123", "456/789", "cool paper", "Einstein", 1920, "physics", "");
+        paperRepo.save(p1);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/paper/123"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andExpect(MockMvcResultMatchers.content().string(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").doesNotExist());
+    }
 }
