@@ -13,7 +13,7 @@ function App() {
 
     function getAllPapers() {
         axios
-            .get("api/paper")
+            .get("/api/paper")
             .then((response) => setPapers(response.data))
             .catch((e) => console.log(e))
     }
