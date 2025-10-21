@@ -1,3 +1,4 @@
+import "./PaperDetailPage.css"
 import {useEffect, useState} from "react";
 import type {Paper} from "./Paper.tsx";
 import {useParams} from "react-router-dom";
@@ -22,15 +23,16 @@ export default function PaperDetailPage() {
 
     return (
         <>
-            <div>
-                <h1>Title: {paper.title}</h1>
-                <p><h2>Author: </h2> {paper.author}</p>
-                <p>DOI: {paper.doi}</p>
-                <p>Publication year: {paper.year}</p>
-                <p>Group Tags: {paper.group}</p>
-                <p>Notes: {paper.notes}</p>
-                <p>PDF available: </p>
-                <p>Report: </p>
+            <div className={"detail-wrapper"}>
+                <h1 className={"title"}>Title:</h1>
+                <h1>{paper.title}</h1>
+                <h2> <b>Author: </b>{paper.author}</h2>
+                <p><b>DOI: </b> {paper.doi}</p>
+                <p><b>Publication year: </b>{paper.year}</p>
+                <p><b>Group Tags: </b> {paper.group}</p>
+                <p><b>Notes: </b>{paper.notes}</p>
+                <p><b>PDF available: </b></p>
+                <p><b>Report: </b></p>
                 <div>
                     <button>Get AI report</button>
                     <button> ✏️ </button>
