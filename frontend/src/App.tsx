@@ -34,6 +34,7 @@ function App() {
                         <PaperTable papers={papers}/>
                     </div>
                         }/>
+                <Route path={"/paper/:id"} element={<PaperDetailPage paper={}/>}/>
             </Routes>
 
             <Footer/>

@@ -16,7 +16,9 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                 <p>Group Tags: {props.paper.group}</p>
                 <p>Notes: {props.paper.notes}</p>
                 <p>PDF available: </p>
+                <p>Report: </p>
                 <div>
+                    <button>Get AI report</button>
                     <button> ✏️ </button>
                     <button> 🗑 </button>
                 </div>

@@ -21,6 +21,7 @@ export default function PaperTable(props:Readonly<PaperTableProps>) {
                 <Column field="year" header="Year" sortable style={{ width: '25%' }}></Column>
                 <Column field="group" header="Group" sortable style={{ width: '25%' }}></Column>
                 <Column field="notes" header="Notes"></Column>
+                <Column className={"details-button"}><button>Details</button></Column>
             </DataTable>
         </>
     )
