@@ -1,3 +1,7 @@
+.detail-wrapper {
+    width: 1000px;
+
+}
 .title{
     color: rgb(77 170 160);
 }
@@ -8,6 +12,7 @@ b {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: flex-end;
 }
 .detail-action-button {
     margin-right: 10px;
