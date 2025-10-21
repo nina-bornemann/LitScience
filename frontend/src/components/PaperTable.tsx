@@ -1,8 +1,9 @@
 import type {Paper} from "./Paper.tsx";
-import { DataTable } from 'primereact/datatable';
+import { DataTable, type DataTableRowClickEvent } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "primereact/resources/themes/bootstrap4-dark-blue/theme.css";
 import "./PaperTable.css"
+import {useNavigate} from "react-router-dom";
 
 export type PaperTableProps = {
     papers:Paper[]
@@ -10,18 +11,23 @@ export type PaperTableProps = {
 
 export default function PaperTable(props:Readonly<PaperTableProps>) {
 
-    const footer = "There are " + props.papers.length + " papers in total. "
+    const footer = "There are " + props.papers.length + " papers in total. ";
+    const nav = useNavigate()
+
+    function navToDetails(event:DataTableRowClickEvent) {
+        const paperId = event.data.id
+        nav(`/paper/${paperId}`)
+    }
 
     return (
         <>
-            <DataTable value={props.papers} footer={footer} dataKey="id"  scrollable scrollHeight="500px" tableStyle={{ minWidth: '40rem' }}>
+            <DataTable onRowClick={navToDetails} rowClassName={() => "clickable"} value={props.papers} footer={footer} dataKey="id"  scrollable scrollHeight="500px" tableStyle={{ minWidth: '40rem' }}>
                 <Column field="title" header="Title" sortable style={{ width: '25%' }}></Column>
                 <Column field="author" header="Author" sortable style={{ width: '25%' }}></Column>
                 <Column field="doi" header="DOI"></Column>
                 <Column field="year" header="Year" sortable style={{ width: '25%' }}></Column>
                 <Column field="group" header="Group" sortable style={{ width: '25%' }}></Column>
                 <Column field="notes" header="Notes"></Column>
-                <Column className={"details-button"}><button>Details</button></Column>
             </DataTable>
         </>
     )
