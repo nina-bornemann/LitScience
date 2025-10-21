@@ -4,3 +4,11 @@
 b {
     color: rgb(77 170 160);
 }
+.detail-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.detail-action-button {
+    margin-right: 10px;
+}

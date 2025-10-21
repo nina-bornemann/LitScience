@@ -24,6 +24,14 @@ export default function PaperDetailPage() {
     return (
         <>
             <div className={"detail-wrapper"}>
+                <div className={"detail-buttons"}>
+                    <button> ← Back </button>
+                    <div>
+                        <button className={"detail-action-button"}>Get AI report</button>
+                        <button className={"detail-action-button"}> ✏️ </button>
+                        <button className={"detail-action-button"}> 🗑 </button>
+                    </div>
+                </div>
                 <h1 className={"title"}>Title:</h1>
                 <h1>{paper.title}</h1>
                 <h2> <b>Author: </b>{paper.author}</h2>
@@ -33,11 +41,6 @@ export default function PaperDetailPage() {
                 <p><b>Notes: </b>{paper.notes}</p>
                 <p><b>PDF available: </b></p>
                 <p><b>Report: </b></p>
-                <div>
-                    <button>Get AI report</button>
-                    <button> ✏️ </button>
-                    <button> 🗑 </button>
-                </div>
             </div>
         </>
     )
