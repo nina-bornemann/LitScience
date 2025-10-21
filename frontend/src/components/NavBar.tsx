@@ -1,15 +1,28 @@
 import './NavBar.css'
+import {Link, useNavigate} from "react-router-dom";
 
 export default function NavBar() {
+
+    const nav = useNavigate()
+
+    function navToAllPapers() {
+        nav("/all")
+    }
 
     return (
         <>
             <header>
                 <div className={"logo-container"}>
-                    <img src={"src/assets/logo.png"} alt={"Logo"} className={"logo"}/>
+                    <a href="#" onClick={navToAllPapers}>
+                        <img src="/src/assets/logo.png" alt="Logo" className="logo" />
+                    </a>
+                    <a href="#" onClick={navToAllPapers}>
+                        <h2 className={"logo-text"}>LitScience</h2>
+                    </a>
                 </div>
-                <nav>
 
+                <nav>
+                    <Link to={"/all"}>My Collection</Link>
                 </nav>
             </header>
         </>

@@ -4,8 +4,10 @@ import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -88,6 +90,35 @@ class PaperServiceTest {
 
         assertThrows(ResponseStatusException.class, () -> service.getPaperById("888"));
         verify(mockRepo).findById("888");
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+    }
+
+    @Test
+    void deletePaperById_shouldReturn_noContent() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        Paper p1 = new Paper("123", "456/789", "cool paper", "Einstein", 1920, "physics", "");
+
+        when(mockRepo.findById("123")).thenReturn(Optional.of(p1));
+        doNothing().when(mockRepo).delete(p1);
+        service.deletePaperById("123");
+
+        verify(mockRepo).findById("123");
+        verify(mockRepo).delete(p1);
+        verifyNoMoreInteractions(mockRepo, mockIdService);
+    }
+
+    @Test
+    void deletePaperById_shouldThrowException_whenIdNotFound() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+
+        when(mockRepo.findById("666")).thenReturn(Optional.empty());
+
+        assertThrows(ResponseStatusException.class, () -> service.deletePaperById("666"));
+        verify(mockRepo).findById("666");
         verifyNoMoreInteractions(mockIdService, mockRepo);
     }
 }

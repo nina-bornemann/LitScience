@@ -1,0 +1,32 @@
+.p-datatable .p-datatable-thead > tr > th {
+    background-color: dimgrey;
+    border-color: rgb(43 45 48);
+    border-bottom-width: 2px;
+}
+span.p-column-title {
+    background-color: dimgrey;
+}
+.p-datatable .p-sortable-column .p-sortable-column-icon {
+    background-color: dimgrey;
+}
+div.p-column-header-content {
+    background-color: dimgrey;
+}
+.p-component {
+    background-color: grey;
+    border-color: rgb(43 45 48);
+}
+.p-datatable-footer {
+    background-color: dimgrey;
+    border-color: rgb(43 45 48);
+    border-top-width: 2px;
+    color: rgb(77 170 160);
+    font-size: 15px;
+}
+td {
+    background-color: #616161;
+    font-size: 16px;
+}
+.clickable {
+    cursor: pointer;
+}

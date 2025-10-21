@@ -53,4 +53,10 @@ public class PaperController {
     public Paper addNewPaper(@RequestBody PaperDto paperDto) {
         return paperService.addNewpaper(paperDto);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Paper> deletePaperById(@PathVariable String id) {
+        paperService.deletePaperById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

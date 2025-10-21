@@ -187,4 +187,29 @@ class PaperControllerTest {
                                                                            """))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.instant").isNotEmpty());
     }
+
+    @DirtiesContext
+    @Test
+    void deletePaperById_shouldDelete_whenIdFound() throws Exception {
+        Paper p1 = new Paper("123", "456/789", "cool paper", "Einstein", 1920, "physics", "");
+        paperRepo.save(p1);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/paper/123"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andExpect(MockMvcResultMatchers.content().string(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").doesNotExist());
+    }
+
+    @DirtiesContext
+    @Test
+    void deletePaperById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/paper/555"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                             {
+                                                                               "errorMessage": "404 NOT_FOUND \\"No paper was found under this id.\\""
+                                                                             }
+                                                                           """))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.instant").isNotEmpty());
+    }
 }

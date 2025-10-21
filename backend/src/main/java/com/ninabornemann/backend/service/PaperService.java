@@ -31,4 +31,9 @@ public class PaperService {
     public Paper getPaperById(String id) {
         return paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
     }
+
+    public void deletePaperById(String id) {
+        Paper existing = paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
+        paperRepo.delete(existing);
+    }
 }
