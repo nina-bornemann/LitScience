@@ -1,5 +1,4 @@
 package com.ninabornemann.backend.ExceptionHandler;
-
 import com.ninabornemann.backend.model.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,5 +16,4 @@ public class GlobalExceptionHandler {
     public ErrorMessage handleResponseStatusException(ResponseStatusException e) {
         return new ErrorMessage(e.getMessage(), Instant.now());
     }
-
 }

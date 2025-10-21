@@ -44,6 +44,11 @@ public class PaperController {
         }
     }
 
+    @GetMapping("/{id}")
+    public Paper getPaperById(@PathVariable String id) {
+        return paperService.getPaperById(id);
+    }
+
     @PostMapping
     public Paper addNewPaper(@RequestBody PaperDto paperDto) {
         return paperService.addNewpaper(paperDto);

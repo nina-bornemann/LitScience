@@ -35,8 +35,8 @@ public class OpenAlexService {
         return new PaperDto(
                 doi,
                 response.title(),
-                response.authorships().getFirst().author().display_name(),
-                response.publication_year(),
+                response.authorships().getFirst().author().displayName(),
+                response.publicationYear(),
                 "",
                 "");
     }
