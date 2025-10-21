@@ -151,4 +151,40 @@ class PaperControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/import/123"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
+
+    @DirtiesContext
+    @Test
+    void getPaperById_shouldReturn_CorrectPaper() throws Exception {
+        Paper p1 = new Paper("123", "456/678", "Cool article", "Einstein", 1920, "Physics", "nice");
+        Paper p2 = new Paper("456", "123/456", "Another article", "Einstein", 1919, "", "");
+        paperRepo.save(p1);
+        paperRepo.save(p2);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/456"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                               {
+                                                                                   "id": "456",
+                                                                                   "doi": "123/456",
+                                                                                   "title": "Another article",
+                                                                                   "author": "Einstein",
+                                                                                   "year": 1919,
+                                                                                   "group": "",
+                                                                                   "notes": ""
+                                                                               }
+                                                                           """));
+    }
+
+    @DirtiesContext
+    @Test
+    void getPaperById_shouldThrow_ResponseStatusException() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/777"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                           {
+                                                                             "errorMessage": "404 NOT_FOUND \\"No paper was found under this id.\\""
+                                                                           }
+                                                                           """))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.instant").isNotEmpty());
+    }
 }
