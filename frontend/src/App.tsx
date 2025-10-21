@@ -22,7 +22,7 @@ function App() {
     useEffect(() => {getAllPapers()}, [])
 
     return (
-        <>
+        <div className={"app-layout"}>
             <NavBar/>
 
             <Routes>
@@ -42,7 +42,7 @@ function App() {
             </Routes>
 
             <Footer/>
-        </>
+        </div>
     )
 }
 

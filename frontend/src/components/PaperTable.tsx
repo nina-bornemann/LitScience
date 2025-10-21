@@ -21,7 +21,7 @@ export default function PaperTable(props:Readonly<PaperTableProps>) {
 
     return (
         <>
-            <DataTable onRowClick={navToDetails} rowClassName={() => "clickable"} value={props.papers} footer={footer} dataKey="id"  scrollable scrollHeight="500px" tableStyle={{ minWidth: '40rem' }}>
+            <DataTable onRowClick={navToDetails} rowClassName={() => "clickable"} value={props.papers} footer={footer} dataKey="id" removableSort scrollable scrollHeight="500px" tableStyle={{ minWidth: '40rem' }}>
                 <Column field="title" header="Title" sortable style={{ width: '20%' }}></Column>
                 <Column field="author" header="Author" sortable style={{ width: '15%' }}></Column>
                 <Column field="doi" header="DOI" sortable style={{ width: '15%' }}></Column>

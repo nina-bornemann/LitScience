@@ -13,16 +13,16 @@ export default function NavBar() {
         <>
             <header>
                 <div className={"logo-container"}>
-                    <a href="#" onClick={navToAllPapers}>
+                    <a href="#" onClick={navToAllPapers} className={"clickable"}>
                         <img src="/src/assets/logo.png" alt="Logo" className="logo" />
                     </a>
-                    <a href="#" onClick={navToAllPapers}>
+                    <a href="#" onClick={navToAllPapers} className={"clickable"}>
                         <h2 className={"logo-text"}>LitScience</h2>
                     </a>
                 </div>
 
                 <nav>
-                    <Link to={"/all"}>My Collection</Link>
+                    <Link to={"/all"} className={"clickable"}>My Collection</Link>
                 </nav>
             </header>
         </>

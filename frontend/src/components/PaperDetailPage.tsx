@@ -1,10 +1,9 @@
 import "./PaperDetailPage.css"
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import type {Paper} from "./Paper.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import { Toast } from 'primereact/toast';
-import { useRef } from 'react';
 
 type PaperDetailPageProps = {
     onDelete: (id?:string) => void;
