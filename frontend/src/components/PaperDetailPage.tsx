@@ -6,7 +6,11 @@ import axios from "axios";
 import { Toast } from 'primereact/toast';
 import { useRef } from 'react';
 
-export default function PaperDetailPage() {
+type PaperDetailPageProps = {
+    onDelete: (id?:string) => void;
+}
+
+export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
 
     const {id} = useParams<{id:string}>()
     const [paper, setPaper] = useState<Paper | undefined>(undefined)
@@ -36,8 +40,9 @@ export default function PaperDetailPage() {
                     severity: 'success',
                     summary: 'Deleted',
                     detail: 'The paper was successfully deleted.',
-                    life: 3000,
+                    life: 5000,
                 });
+                props.onDelete(paper?.id);
                 setTimeout(() => navigateToAll(), 1000);
             })
             .catch((error) => {
@@ -45,7 +50,7 @@ export default function PaperDetailPage() {
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Could not delete the paper.',
-                    life: 3000,
+                    life: 5000,
                 });
                 console.error(error);
             })

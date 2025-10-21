@@ -34,7 +34,11 @@ function App() {
                         <PaperTable papers={papers}/>
                     </div>
                         }/>
-                <Route path={"/paper/:id"} element={<PaperDetailPage />}/>
+                <Route path="/paper/:id" element={
+                    <PaperDetailPage
+                        onDelete={(id) => setPapers(prev => prev.filter(p => p.id !== id))}
+                    />
+                }/>
             </Routes>
 
             <Footer/>
