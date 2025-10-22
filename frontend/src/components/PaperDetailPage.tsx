@@ -55,6 +55,10 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
+    function handleChange() {
+
+    }
+
     return (
         <>
             <Toast ref={toast} />
@@ -63,7 +67,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     <button onClick={navigateToAll}> ← Back </button>
                     <div>
                         <button className={"detail-action-button"}>Get AI report</button>
-                        <button className={"detail-action-button"}> ✏️ </button>
+                        <button className={"detail-action-button"} onClick={handleChange}> ✏️ </button>
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
                 </div>
