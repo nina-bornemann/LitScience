@@ -4,6 +4,7 @@ import type {Paper} from "../model/Paper.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import { Toast } from 'primereact/toast';
+import EditButton from "./EditButton.tsx";
 
 type PaperDetailPageProps = {
     onDelete: (id?:string) => void;
@@ -55,10 +56,6 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
-    function handleChange() {
-
-    }
-
     return (
         <>
             <Toast ref={toast} />
@@ -67,7 +64,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     <button onClick={navigateToAll}> ← Back </button>
                     <div>
                         <button className={"detail-action-button"}>Get AI report</button>
-                        <button className={"detail-action-button"} onClick={handleChange}> ✏️ </button>
+                        <EditButton/>
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
                 </div>
