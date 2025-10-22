@@ -1,6 +1,6 @@
 import "./PaperDetailPage.css"
 import {useEffect, useState, useRef} from "react";
-import type {Paper} from "./Paper.tsx";
+import type {Paper} from "../model/Paper.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import { Toast } from 'primereact/toast';

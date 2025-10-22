@@ -1,4 +1,4 @@
-import type {Paper} from "./Paper.tsx";
+import type {Paper} from "../model/Paper.tsx";
 import { DataTable, type DataTableRowClickEvent } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "primereact/resources/themes/bootstrap4-dark-blue/theme.css";

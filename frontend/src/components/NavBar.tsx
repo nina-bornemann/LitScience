@@ -22,7 +22,8 @@ export default function NavBar() {
                 </div>
 
                 <nav>
-                    <Link to={"/all"} className={"clickable"}>My Collection</Link>
+                    <Link to={"/home"} className={"clickable"}>  Home  </Link>
+                    <Link to={"/all"} className={"clickable"}>  My Collection  </Link>
                 </nav>
             </header>
         </>

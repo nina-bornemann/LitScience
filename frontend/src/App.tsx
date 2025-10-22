@@ -3,11 +3,12 @@ import NavBar from "./components/NavBar.tsx";
 import Footer from "./components/Footer.tsx";
 import PaperTable from "./components/PaperTable.tsx";
 import {useEffect, useState} from "react";
-import type {Paper} from "./components/Paper.tsx";
+import type {Paper} from "./model/Paper.tsx";
 import axios from "axios";
 import AddNewPaper from "./components/AddNewPaper.tsx";
 import {Route, Routes} from "react-router-dom";
 import PaperDetailPage from "./components/PaperDetailPage.tsx";
+import Home from "./components/Home.tsx";
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
             <NavBar/>
 
             <Routes>
+                <Route path={"/home"} element={<Home />}/>
                 <Route path={"/all"} element={
                     <div>
                         <AddNewPaper onAdd={(paper) => {
