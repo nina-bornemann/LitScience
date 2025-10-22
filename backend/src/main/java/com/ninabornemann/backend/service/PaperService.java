@@ -36,4 +36,11 @@ public class PaperService {
         Paper existing = paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
         paperRepo.delete(existing);
     }
+
+    public Paper editPaperById(String id, PaperDto dto) {
+        Paper existing = paperRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
+        Paper updated = new Paper(existing.id(), dto.doi(), dto.title(), dto.author(), dto.year(), dto.group(), dto.notes());
+        return paperRepo.save(updated);
+    }
 }

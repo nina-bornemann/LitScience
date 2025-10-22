@@ -59,4 +59,9 @@ public class PaperController {
         paperService.deletePaperById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public Paper editPaperById(@PathVariable String id, @RequestBody PaperDto dto) {
+        return paperService.editPaperById(id, dto);
+    }
 }
