@@ -16,3 +16,6 @@ b {
 .detail-action-button {
     margin-right: 10px;
 }
+.container {
+    max-width: 70%;
+}

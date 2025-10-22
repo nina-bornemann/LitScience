@@ -154,4 +154,15 @@ class PaperServiceTest {
         verify(mockRepo).findById("999");
         verifyNoMoreInteractions(mockIdService, mockRepo);
     }
+
+    @Test
+    void transformDtoToPaper_shouldReturn_CorrectPaper(){
+        Paper p = new Paper("1", "23", "Test", "Tester", 1999, "", "");
+        PaperDto dto = new PaperDto(null, null, null, 0, null, "Experiments to do");
+        Paper updated = new Paper("1", "23", "Test", "Tester", 1999, "", "Experiments to do");
+
+        Paper actual = PaperService.transformDtoToPaper(dto, p);
+
+        assertEquals(updated, actual);
+    }
 }
