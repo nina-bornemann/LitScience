@@ -1,8 +1,8 @@
-type EditButtonProps = {
-    onEdit: (id:string, dto:PaperDto) => void
+/*type EditButtonProps = {
+    onEdit: (id:string, dto: PaperDto) => void
 }
 
-export default function EditButton(props:Readonly<EditButtonProps>) {
+export default function EditButton(props: Readonly<EditButtonProps>) {
 
 
 
@@ -12,3 +12,4 @@ export default function EditButton(props:Readonly<EditButtonProps>) {
         </>
     )
 }
+*/
