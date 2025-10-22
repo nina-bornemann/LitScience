@@ -22,5 +22,6 @@
 .app-layout {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
