@@ -33,3 +33,6 @@ header {
 .logo-text:hover {
     filter: drop-shadow(2px 2px 1em rgb(77 170 160));
 }
+nav .clickable{
+    margin-right: 60px;
+}

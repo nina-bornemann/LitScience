@@ -13,5 +13,11 @@
 }
 .smiley {
     max-height: 160px;
-    padding-left: 150px;
+    padding-left: 100px;
+}
+.description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
