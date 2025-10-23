@@ -31,7 +31,7 @@ export default function Dashboard() {
                 <div className={"stats-card"}>
                     <h1> 📂 </h1>
                     <div className={"stats-text"}>
-                        <h2></h2>
+                        <h2>(number)</h2>
                         <h3>Groups</h3>
                     </div>
                 </div>
@@ -39,7 +39,7 @@ export default function Dashboard() {
                 <div className={"stats-card"}>
                     <h1> ❤️ </h1>
                     <div className={"stats-text"}>
-                        <h2></h2>
+                        <h2>(number)</h2>
                         <h3>Favorites</h3>
                     </div>
                 </div>
