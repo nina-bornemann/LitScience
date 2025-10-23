@@ -12,10 +12,14 @@ b {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
+    margin-top: 50px;
 }
 .detail-action-button {
     margin-right: 10px;
 }
 .container {
     max-width: 70%;
+}
+.saveButton {
+    margin-top: 20px;
 }

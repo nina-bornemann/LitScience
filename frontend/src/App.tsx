@@ -46,6 +46,7 @@ function App() {
                 <Route path="/paper/:id" element={
                     <PaperDetailPage
                         onDelete={(id) => setPapers(prev => prev.filter(p => p.id !== id))}
+                        onUpdate={() => getAllPapers()}
                     />
                 }/>
             </Routes>

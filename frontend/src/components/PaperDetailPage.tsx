@@ -9,13 +9,14 @@ import rehypeSanitize from "rehype-sanitize";
 
 type PaperDetailPageProps = {
     onDelete: (id?:string) => void;
+    onUpdate: () => void;
 }
 
 export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
 
     const {id} = useParams<{id:string}>()
     const [paper, setPaper] = useState<Paper | undefined>(undefined)
-    const [notes, setNotes] = useState<string | undefined>(undefined);
+    const [notes, setNotes] = useState<string>("");
     const toast = useRef<Toast>(null);
     const nav = useNavigate();
 
@@ -61,9 +62,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
-    function handleChange(value?:string){
-        setNotes(value);
-
+    function handleChange(){
         const dto:PaperDto = {
             doi: undefined,
             title: undefined,
@@ -80,6 +79,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     detail: 'The notes were successfully updated.',
                     life: 5000,
                 });
+                props.onUpdate();
             })
             .catch((error) => {
                 toast.current?.show({
@@ -113,12 +113,13 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                 <div className="container">
                     <MDEditor
                         value={notes}
-                        onChange={handleChange}
+                        onChange={(value) => setNotes(value || "")}
                         previewOptions={{
                             rehypePlugins: [[rehypeSanitize]],
                         }}
                     />
                 </div>
+                <button onClick={handleChange} className={"saveButton"}>Save Notes</button>
                 <p><b>PDF available: </b></p>
                 <p><b>Report: </b></p>
             </div>

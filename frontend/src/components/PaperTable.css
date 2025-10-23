@@ -30,3 +30,15 @@ td {
 .clickable {
     cursor: pointer;
 }
+.truncate-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px; /* oder wie breit du willst */
+    white-space: normal; /* wichtig, sonst bricht er nicht in Zeilen */
+}
+.truncate-3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px; /* oder wie breit du willst */
+    white-space: nowrap; /* wichtig, sonst bricht er nicht in Zeilen */
+}
