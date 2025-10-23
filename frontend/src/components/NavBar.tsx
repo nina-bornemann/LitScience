@@ -5,24 +5,26 @@ export default function NavBar() {
 
     const nav = useNavigate()
 
-    function navToAllPapers() {
-        nav("/all")
+    function navToDashboard() {
+        nav("/")
     }
 
     return (
         <>
             <header>
                 <div className={"logo-container"}>
-                    <a href="#" onClick={navToAllPapers}>
+                    <a href="#" onClick={navToDashboard} className={"clickable"}>
                         <img src="/src/assets/logo.png" alt="Logo" className="logo" />
                     </a>
-                    <a href="#" onClick={navToAllPapers}>
+                    <a href="#" onClick={navToDashboard} className={"clickable"}>
                         <h2 className={"logo-text"}>LitScience</h2>
                     </a>
                 </div>
 
                 <nav>
-                    <Link to={"/all"}>My Collection</Link>
+                    <Link to={"/home"} className={"clickable"}>  Home  </Link>
+                    <Link to={"/"} className={"clickable"}> Dashboard </Link>
+                    <Link to={"/all"} className={"clickable"}>  My Collection  </Link>
                 </nav>
             </header>
         </>

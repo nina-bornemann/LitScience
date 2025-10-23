@@ -212,4 +212,46 @@ class PaperControllerTest {
                                                                            """))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.instant").isNotEmpty());
     }
+
+    @DirtiesContext
+    @Test
+    void editPaperById_shouldReturn_updatedPaper() throws Exception {
+        Paper existing = new Paper("234", "123.4/56", "Plant biochemistry", "Plantmaster", 1970, "", "");
+        paperRepo.save(existing);
+        PaperDto updated = new PaperDto("123.4/56", "Plant metabolism", "Prof", 1970, "Plants", "cool paper");
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/234")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFrom(updated))
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                           {
+                                                                               "id": "234",
+                                                                               "doi": "123.4/56",
+                                                                               "title": "Plant metabolism",
+                                                                               "author": "Prof",
+                                                                               "year": 1970,
+                                                                               "group": "Plants",
+                                                                               "notes": "cool paper"
+                                                                           }
+                                                                           """));
+    }
+
+    @DirtiesContext
+    @Test
+    void editPaperById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
+        PaperDto dto = new PaperDto("22.3/4", "Gastruloids", "Krauss", 2022, "stem cells", "important");
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/333")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonFrom(dto))
+                )
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                               {
+                                                                                   "errorMessage": "404 NOT_FOUND \\"No paper was found under this id.\\""
+                                                                               }
+                                                                           """))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.instant").isNotEmpty());
+    }
 }

@@ -1,7 +1,7 @@
 import './AddNewPaper.css'
 import {useState} from "react";
 import axios from "axios";
-import type {Paper} from "./Paper.tsx";
+import type {Paper} from "../model/Paper.tsx";
 
 export type AddNewPaperProps = {
     onAdd : (paper:Paper) => void;

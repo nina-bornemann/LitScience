@@ -2,10 +2,10 @@ package com.ninabornemann.backend.service;
 import com.ninabornemann.backend.Repo.PaperRepo;
 import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
+import com.ninabornemann.backend.utils.UtilsHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @Service
@@ -13,6 +13,8 @@ public class PaperService {
 
     private final IdService idService;
     private final PaperRepo paperRepo;
+
+    String idNotFoundMessage = "No paper was found under this id.";
 
     public PaperService(IdService idService, PaperRepo paperRepo) {
         this.idService = idService;
@@ -29,11 +31,18 @@ public class PaperService {
     }
 
     public Paper getPaperById(String id) {
-        return paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
+        return paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
     }
 
     public void deletePaperById(String id) {
-        Paper existing = paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
+        Paper existing = paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
         paperRepo.delete(existing);
+    }
+
+    public Paper editPaperById(String id, PaperDto dto) {
+        Paper existing = paperRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
+        Paper updated = UtilsHelper.transformDtoToPaper(dto, existing);
+        return paperRepo.save(updated);
     }
 }

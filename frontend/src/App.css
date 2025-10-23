@@ -18,3 +18,10 @@
         animation: logo-spin infinite 20s linear;
     }
 }
+
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}

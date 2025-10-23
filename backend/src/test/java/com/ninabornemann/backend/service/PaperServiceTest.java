@@ -27,8 +27,8 @@ class PaperServiceTest {
         List<Paper> actual = service.getAllPaper();
 
         verify(mockRepo).findAll();
-        assertEquals(papers, actual);
         verifyNoMoreInteractions(mockRepo, mockIdService);
+        assertEquals(papers, actual);
     }
 
     @Test
@@ -40,9 +40,9 @@ class PaperServiceTest {
         when(mockRepo.findAll()).thenReturn(List.of());
         List<Paper> actual = service.getAllPaper();
 
-        assertEquals(List.of(), actual);
         verify(mockRepo).findAll();
         verifyNoMoreInteractions(mockRepo, mockIdService);
+        assertEquals(List.of(), actual);
     }
 
     @Test
@@ -57,11 +57,10 @@ class PaperServiceTest {
         when(mockRepo.save(newPaper)).thenReturn(newPaper);
         Paper actual = service.addNewpaper(dto);
 
-        assertEquals(newPaper, actual);
         verify(mockIdService).randomId();
         verify(mockRepo).save(newPaper);
         verifyNoMoreInteractions(mockIdService, mockRepo);
-
+        assertEquals(newPaper, actual);
     }
 
     @Test
@@ -119,6 +118,39 @@ class PaperServiceTest {
 
         assertThrows(ResponseStatusException.class, () -> service.deletePaperById("666"));
         verify(mockRepo).findById("666");
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+    }
+
+    @Test
+    void editPaperBxId_shouldReturn_updatedPaper() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        Paper existing = new Paper("123", "234", "Title", "Author", 2002, "Science", "");
+        PaperDto dto = new PaperDto("234", "Title", "Author", 2004, "Better Group", "some notes");
+        Paper updated = new Paper("123", "234", "Title", "Author", 2004,"Better Group", "some notes");
+
+        when(mockRepo.findById("123")).thenReturn(Optional.of(existing));
+        when(mockRepo.save(updated)).thenReturn(updated);
+        Paper actual = service.editPaperById("123", dto);
+
+        verify(mockRepo).findById("123");
+        verify(mockRepo).save(updated);
+        verifyNoMoreInteractions(mockRepo, mockIdService);
+        assertEquals(updated, actual);
+    }
+
+    @Test
+    void editPaperById_shouldThrowException() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        PaperDto dto = new PaperDto("234", "Title", "Author", 2004, "Better Group", "some notes");
+
+        when(mockRepo.findById("999")).thenReturn(Optional.empty());
+
+        assertThrows(ResponseStatusException.class, () -> service.editPaperById("999", dto));
+        verify(mockRepo).findById("999");
         verifyNoMoreInteractions(mockIdService, mockRepo);
     }
 }

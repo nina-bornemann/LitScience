@@ -1,32 +1,44 @@
 .p-datatable .p-datatable-thead > tr > th {
-    background-color: dimgrey;
+    background-color: #4a4a4a;
     border-color: rgb(43 45 48);
     border-bottom-width: 2px;
 }
 span.p-column-title {
-    background-color: dimgrey;
+    background-color: #4a4a4a;
 }
 .p-datatable .p-sortable-column .p-sortable-column-icon {
-    background-color: dimgrey;
+    background-color: #4a4a4a;
 }
 div.p-column-header-content {
-    background-color: dimgrey;
+    background-color: #4a4a4a;
 }
 .p-component {
-    background-color: grey;
+    background-color: #4a4a4a;
     border-color: rgb(43 45 48);
 }
 .p-datatable-footer {
-    background-color: dimgrey;
+    background-color: #4a4a4a;
     border-color: rgb(43 45 48);
     border-top-width: 2px;
     color: rgb(77 170 160);
     font-size: 15px;
 }
 td {
-    background-color: #616161;
+    background-color: #5a5a5a;
     font-size: 16px;
 }
 .clickable {
     cursor: pointer;
+}
+.truncate-2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+}
+.truncate-3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
 }

@@ -1,26 +1,32 @@
 import "./PaperDetailPage.css"
-import {useEffect, useState} from "react";
-import type {Paper} from "./Paper.tsx";
+import {useEffect, useState, useRef} from "react";
+import type {Paper, PaperDto} from "../model/Paper.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import { Toast } from 'primereact/toast';
-import { useRef } from 'react';
+import MDEditor from "@uiw/react-md-editor";
+import rehypeSanitize from "rehype-sanitize";
 
 type PaperDetailPageProps = {
     onDelete: (id?:string) => void;
+    onUpdate: () => void;
 }
 
 export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
 
     const {id} = useParams<{id:string}>()
     const [paper, setPaper] = useState<Paper | undefined>(undefined)
+    const [notes, setNotes] = useState<string>("");
     const toast = useRef<Toast>(null);
     const nav = useNavigate();
 
     useEffect(() => {
         if (id) {
             axios.get(`/api/paper/${id}`)
-                .then((response) => setPaper(response.data))
+                .then((response) => {
+                    setPaper(response.data)
+                    setNotes(response.data.notes)
+                })
                 .catch((e) => console.log("Failed to load paper: " + e))
         }
     }, [id])
@@ -56,6 +62,36 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
+    function handleChange(){
+        const dto:PaperDto = {
+            doi: undefined,
+            title: undefined,
+            author: undefined,
+            year: undefined,
+            group: undefined,
+            notes: notes
+        };
+        axios.put(`/api/paper/${paper?.id}`, dto)
+            .then(()=> {
+                toast.current?.show({
+                    severity: 'success',
+                    summary: 'Updated',
+                    detail: 'The notes were successfully updated.',
+                    life: 5000,
+                });
+                props.onUpdate();
+            })
+            .catch((error) => {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Could not edit notes.',
+                    life: 5000,
+                });
+                console.error(error);
+            })
+    }
+
     return (
         <>
             <Toast ref={toast} />
@@ -64,7 +100,6 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     <button onClick={navigateToAll}> ← Back </button>
                     <div>
                         <button className={"detail-action-button"}>Get AI report</button>
-                        <button className={"detail-action-button"}> ✏️ </button>
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
                 </div>
@@ -74,7 +109,17 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                 <p><b>DOI: </b> {paper.doi}</p>
                 <p><b>Publication year: </b>{paper.year}</p>
                 <p><b>Group Tags: </b> {paper.group}</p>
-                <p><b>Notes: </b>{paper.notes}</p>
+                <p><b>Notes: </b></p>
+                <div className="container">
+                    <MDEditor
+                        value={notes}
+                        onChange={(value) => setNotes(value || "")}
+                        previewOptions={{
+                            rehypePlugins: [[rehypeSanitize]],
+                        }}
+                    />
+                </div>
+                <button onClick={handleChange} className={"saveButton"}>Save Notes</button>
                 <p><b>PDF available: </b></p>
                 <p><b>Report: </b></p>
             </div>
