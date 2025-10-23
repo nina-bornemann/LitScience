@@ -27,8 +27,8 @@ class PaperServiceTest {
         List<Paper> actual = service.getAllPaper();
 
         verify(mockRepo).findAll();
-        assertEquals(papers, actual);
         verifyNoMoreInteractions(mockRepo, mockIdService);
+        assertEquals(papers, actual);
     }
 
     @Test
@@ -40,9 +40,9 @@ class PaperServiceTest {
         when(mockRepo.findAll()).thenReturn(List.of());
         List<Paper> actual = service.getAllPaper();
 
-        assertEquals(List.of(), actual);
         verify(mockRepo).findAll();
         verifyNoMoreInteractions(mockRepo, mockIdService);
+        assertEquals(List.of(), actual);
     }
 
     @Test
@@ -57,11 +57,10 @@ class PaperServiceTest {
         when(mockRepo.save(newPaper)).thenReturn(newPaper);
         Paper actual = service.addNewpaper(dto);
 
-        assertEquals(newPaper, actual);
         verify(mockIdService).randomId();
         verify(mockRepo).save(newPaper);
         verifyNoMoreInteractions(mockIdService, mockRepo);
-
+        assertEquals(newPaper, actual);
     }
 
     @Test
@@ -135,10 +134,10 @@ class PaperServiceTest {
         when(mockRepo.save(updated)).thenReturn(updated);
         Paper actual = service.editPaperById("123", dto);
 
-        assertEquals(updated, actual);
         verify(mockRepo).findById("123");
         verify(mockRepo).save(updated);
         verifyNoMoreInteractions(mockRepo, mockIdService);
+        assertEquals(updated, actual);
     }
 
     @Test
@@ -153,16 +152,5 @@ class PaperServiceTest {
         assertThrows(ResponseStatusException.class, () -> service.editPaperById("999", dto));
         verify(mockRepo).findById("999");
         verifyNoMoreInteractions(mockIdService, mockRepo);
-    }
-
-    @Test
-    void transformDtoToPaper_shouldReturn_CorrectPaper(){
-        Paper p = new Paper("1", "23", "Test", "Tester", 1999, "", "");
-        PaperDto dto = new PaperDto(null, null, null, 0, null, "Experiments to do");
-        Paper updated = new Paper("1", "23", "Test", "Tester", 1999, "", "Experiments to do");
-
-        Paper actual = PaperService.transformDtoToPaper(dto, p);
-
-        assertEquals(updated, actual);
     }
 }

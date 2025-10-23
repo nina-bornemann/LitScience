@@ -2,11 +2,14 @@ package com.ninabornemann.backend.service;
 import com.ninabornemann.backend.Repo.PaperRepo;
 import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
+import com.ninabornemann.backend.utils.UtilsHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
+import static com.ninabornemann.backend.utils.UtilsHelper.transformDtoToPaper;
 
 @Service
 public class PaperService {
@@ -40,17 +43,7 @@ public class PaperService {
     public Paper editPaperById(String id, PaperDto dto) {
         Paper existing = paperRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
-        Paper updated = transformDtoToPaper(dto, existing);
+        Paper updated = UtilsHelper.transformDtoToPaper(dto, existing);
         return paperRepo.save(updated);
-    }
-
-    protected static Paper transformDtoToPaper(PaperDto dto, Paper existing) {
-        return new Paper(existing.id(),
-                dto.doi() != null ? dto.doi() : existing.doi(),
-                dto.title() != null ? dto.title() : existing.title(),
-                dto.author() != null ? dto.author() : existing.author(),
-                dto.year() != 0 ? dto.year() : existing.year(),
-                dto.group() != null ? dto.group() : existing.group(),
-                dto.notes() != null ? dto.notes() : existing.notes());
     }
 }
