@@ -17,6 +17,8 @@ public class PaperService {
     private final IdService idService;
     private final PaperRepo paperRepo;
 
+    String idNotFoundMessage = "No paper was found under this id.";
+
     public PaperService(IdService idService, PaperRepo paperRepo) {
         this.idService = idService;
         this.paperRepo = paperRepo;
@@ -32,17 +34,17 @@ public class PaperService {
     }
 
     public Paper getPaperById(String id) {
-        return paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
+        return paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
     }
 
     public void deletePaperById(String id) {
-        Paper existing = paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
+        Paper existing = paperRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
         paperRepo.delete(existing);
     }
 
     public Paper editPaperById(String id, PaperDto dto) {
         Paper existing = paperRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No paper was found under this id."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
         Paper updated = UtilsHelper.transformDtoToPaper(dto, existing);
         return paperRepo.save(updated);
     }
