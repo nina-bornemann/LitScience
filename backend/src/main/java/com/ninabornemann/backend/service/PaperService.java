@@ -6,10 +6,7 @@ import com.ninabornemann.backend.utils.UtilsHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
-
-import static com.ninabornemann.backend.utils.UtilsHelper.transformDtoToPaper;
 
 @Service
 public class PaperService {

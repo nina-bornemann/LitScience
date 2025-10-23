@@ -5,6 +5,9 @@ import com.ninabornemann.backend.model.PaperDto;
 
 public class UtilsHelper {
 
+    private UtilsHelper() {
+    }
+
     public static Paper transformDtoToPaper(PaperDto dto, Paper existing) {
         return new Paper(existing.id(),
                 dto.doi() != null ? dto.doi() : existing.doi(),
