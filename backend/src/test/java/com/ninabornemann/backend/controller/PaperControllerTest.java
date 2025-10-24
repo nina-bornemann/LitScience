@@ -221,7 +221,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void editPaperById_shouldReturn_updatedPaper() throws Exception {
-        Paper existing = new Paper("234", "123.4/56", "Plant biochemistry", "Plantmaster", 1970, "", "", false);
+        Paper existing = new Paper("234", "123.4/56", "Plant biochemistry", "Plant master", 1970, "", "", false);
         paperRepo.save(existing);
         PaperDto updated = new PaperDto("123.4/56", "Plant metabolism", "Prof", 1970, "Plants", "cool paper");
 
@@ -259,5 +259,39 @@ class PaperControllerTest {
                                                                                }
                                                                            """))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.instant").isNotEmpty());
+    }
+
+    @DirtiesContext
+    @Test
+    void toggleFavoriteById_shouldReturn_oppositeBoolean() throws Exception {
+        Paper p = new Paper("123", "12.3", "Pancakes are cool", "Pancake", 2024, "cool", "I love pancakes", false);
+        paperRepo.save(p);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/123/favorite"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                           {
+                                                                             "id": "123",
+                                                                             "doi": "12.3",
+                                                                             "title": "Pancakes are cool",
+                                                                             "author": "Pancake",
+                                                                             "year": 2024,
+                                                                             "group": "cool",
+                                                                             "notes": "I love pancakes",
+                                                                             "isFav": true
+                                                                           }
+                                                                           """));
+    }
+
+    @DirtiesContext
+    @Test
+    void toggleFavoriteById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/246/favorite"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                           {
+                                                                             "errorMessage": "404 NOT_FOUND \\"No paper was found under this id.\\""
+                                                                           }
+                                                                           """));
     }
 }
