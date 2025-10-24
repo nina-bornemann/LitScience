@@ -26,7 +26,7 @@ public class PaperService {
     }
 
     public Paper addNewpaper(PaperDto paperDto) {
-        Paper newPaper = new Paper(idService.randomId(), paperDto.doi(), paperDto.title(), paperDto.author(), paperDto.year(), paperDto.group(), paperDto.notes());
+        Paper newPaper = new Paper(idService.randomId(), paperDto.doi(), paperDto.title(), paperDto.author(), paperDto.year(), paperDto.group(), paperDto.notes(), false);
         return paperRepo.save(newPaper);
     }
 

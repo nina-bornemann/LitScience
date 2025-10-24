@@ -6,6 +6,7 @@ public record Paper(String id,
                     String author,
                     int year,
                     String group,
-                    String notes
+                    String notes,
+                    boolean isFav
                     ) {
 }

@@ -43,8 +43,8 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void getAllPaper_shouldReturn_listOfPaper() throws Exception {
-        Paper p1 = new Paper("1", "1.2/3", "Test1", "Tester", 2024, "Bio", "nice");
-        Paper p2 = new Paper("2", "1.3/5", "Test2", "Prof", 2019, "Physics", "cool");
+        Paper p1 = new Paper("1", "1.2/3", "Test1", "Tester", 2024, "Bio", "nice", false);
+        Paper p2 = new Paper("2", "1.3/5", "Test2", "Prof", 2019, "Physics", "cool", false);
         paperRepo.save(p1);
         paperRepo.save(p2);
 
@@ -59,7 +59,8 @@ class PaperControllerTest {
                                                                                "author": "Tester",
                                                                                "year": 2024,
                                                                                "group": "Bio",
-                                                                               "notes": "nice"
+                                                                               "notes": "nice",
+                                                                               "isFav": false
                                                                              },
                                                                              {
                                                                                "id": "2",
@@ -68,7 +69,8 @@ class PaperControllerTest {
                                                                                "author": "Prof",
                                                                                "year": 2019,
                                                                                "group": "Physics",
-                                                                               "notes": "cool"
+                                                                               "notes": "cool",
+                                                                               "isFav": false
                                                                              }
                                                                            ]
                                                                            """));
@@ -100,7 +102,8 @@ class PaperControllerTest {
                                                                                   "author": "Ludi",
                                                                                   "year": 2022,
                                                                                   "group": "stem cells",
-                                                                                  "notes": ""
+                                                                                  "notes": "",
+                                                                                  "isFav": false
                                                                                 }
                                                                            """))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
@@ -135,7 +138,8 @@ class PaperControllerTest {
                                                                                     "author": "Heather Piwowar",
                                                                                     "year": 2018,
                                                                                     "group": "",
-                                                                                    "notes": ""
+                                                                                    "notes": "",
+                                                                                    "isFav": false
                                                                                 }
                                                                                 """))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
@@ -155,8 +159,8 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void getPaperById_shouldReturn_CorrectPaper() throws Exception {
-        Paper p1 = new Paper("123", "456/678", "Cool article", "Einstein", 1920, "Physics", "nice");
-        Paper p2 = new Paper("456", "123/456", "Another article", "Einstein", 1919, "", "");
+        Paper p1 = new Paper("123", "456/678", "Cool article", "Einstein", 1920, "Physics", "nice", false);
+        Paper p2 = new Paper("456", "123/456", "Another article", "Einstein", 1919, "", "", true);
         paperRepo.save(p1);
         paperRepo.save(p2);
 
@@ -170,7 +174,8 @@ class PaperControllerTest {
                                                                                    "author": "Einstein",
                                                                                    "year": 1919,
                                                                                    "group": "",
-                                                                                   "notes": ""
+                                                                                   "notes": "",
+                                                                                   "isFav": true
                                                                                }
                                                                            """));
     }
@@ -191,7 +196,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void deletePaperById_shouldDelete_whenIdFound() throws Exception {
-        Paper p1 = new Paper("123", "456/789", "cool paper", "Einstein", 1920, "physics", "");
+        Paper p1 = new Paper("123", "456/789", "cool paper", "Einstein", 1920, "physics", "", false);
         paperRepo.save(p1);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/paper/123"))
@@ -216,7 +221,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void editPaperById_shouldReturn_updatedPaper() throws Exception {
-        Paper existing = new Paper("234", "123.4/56", "Plant biochemistry", "Plantmaster", 1970, "", "");
+        Paper existing = new Paper("234", "123.4/56", "Plant biochemistry", "Plantmaster", 1970, "", "", false);
         paperRepo.save(existing);
         PaperDto updated = new PaperDto("123.4/56", "Plant metabolism", "Prof", 1970, "Plants", "cool paper");
 
@@ -233,7 +238,8 @@ class PaperControllerTest {
                                                                                "author": "Prof",
                                                                                "year": 1970,
                                                                                "group": "Plants",
-                                                                               "notes": "cool paper"
+                                                                               "notes": "cool paper",
+                                                                               "isFav": false
                                                                            }
                                                                            """));
     }

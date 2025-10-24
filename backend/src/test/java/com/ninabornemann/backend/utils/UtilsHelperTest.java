@@ -8,9 +8,9 @@ class UtilsHelperTest {
 
     @Test
     void transformDtoToPaper_shouldReturn_CorrectPaper(){
-        Paper p = new Paper("1", "23", "Test", "Tester", 1999, "", "");
+        Paper p = new Paper("1", "23", "Test", "Tester", 1999, "", "", false);
         PaperDto dto = new PaperDto(null, null, null, 0, null, "Experiments to do");
-        Paper updated = new Paper("1", "23", "Test", "Tester", 1999, "", "Experiments to do");
+        Paper updated = new Paper("1", "23", "Test", "Tester", 1999, "", "Experiments to do", false);
 
         Paper actual = UtilsHelper.transformDtoToPaper(dto, p);
 

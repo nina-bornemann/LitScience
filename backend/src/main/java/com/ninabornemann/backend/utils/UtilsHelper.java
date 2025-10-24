@@ -15,6 +15,7 @@ public class UtilsHelper {
                 dto.author() != null ? dto.author() : existing.author(),
                 dto.year() != 0 ? dto.year() : existing.year(),
                 dto.group() != null ? dto.group() : existing.group(),
-                dto.notes() != null ? dto.notes() : existing.notes());
+                dto.notes() != null ? dto.notes() : existing.notes(),
+                existing.isFav());
     }
 }
