@@ -45,4 +45,10 @@ public class PaperService {
         Paper updated = UtilsHelper.transformDtoToPaper(dto, existing);
         return paperRepo.save(updated);
     }
+
+    public Paper toggleFavoriteById(String id) {
+        Paper existing = paperRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
+        return paperRepo.save(existing.withFav(!existing.isFav()));
+    }
 }

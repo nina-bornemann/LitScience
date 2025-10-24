@@ -1,5 +1,7 @@
 package com.ninabornemann.backend.model;
 
+import lombok.With;
+
 public record Paper(String id,
                     String doi,
                     String title,
@@ -7,6 +9,6 @@ public record Paper(String id,
                     int year,
                     String group,
                     String notes,
-                    boolean isFav
+                    @With boolean isFav
                     ) {
 }
