@@ -54,7 +54,7 @@ class PaperServiceTest {
         Paper newPaper = new Paper("Test-id", "123", "gastruloids", "Ludi", 2022, "stem cells", "", false);
 
         when(mockIdService.randomId()).thenReturn("Test-id");
-        when(mockRepo.save(newPaper)).thenReturn(newPaper);
+        when(mockRepo.save(newPaper)).then(a -> a.getArgument(0));
         Paper actual = service.addNewpaper(dto);
 
         verify(mockIdService).randomId();
@@ -131,7 +131,7 @@ class PaperServiceTest {
         Paper updated = new Paper("123", "234", "Title", "Author", 2004,"Better Group", "some notes", true);
 
         when(mockRepo.findById("123")).thenReturn(Optional.of(existing));
-        when(mockRepo.save(updated)).thenReturn(updated);
+        when(mockRepo.save(updated)).then(a -> a.getArgument(0));
         Paper actual = service.editPaperById("123", dto);
 
         verify(mockRepo).findById("123");
@@ -151,6 +151,37 @@ class PaperServiceTest {
 
         assertThrows(ResponseStatusException.class, () -> service.editPaperById("999", dto));
         verify(mockRepo).findById("999");
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+    }
+
+    @Test
+    void toggleFavoriteById_shouldReturn_oppositeBoolean() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        Paper p = new Paper("1", "2", "paper", "writer", 2025, "", "", true);
+        Paper toggled = new Paper("1", "2", "paper", "writer", 2025, "", "", false);
+
+        when(mockRepo.findById("1")).thenReturn(Optional.of(p));
+        when(mockRepo.save(toggled)).then(a -> a.getArgument(0));
+        Paper actual = service.toggleFavoriteById("1");
+
+        verify(mockRepo).findById("1");
+        verify(mockRepo).save(toggled);
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+        assertEquals(toggled, actual);
+    }
+
+    @Test
+    void toggleFavoriteById_shouldThrow_ResponseStatusException() {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+
+        when(mockRepo.findById("2")).thenReturn(Optional.empty());
+
+        assertThrows(ResponseStatusException.class, () -> service.toggleFavoriteById("2"));
+        verify(mockRepo).findById("2");
         verifyNoMoreInteractions(mockIdService, mockRepo);
     }
 }
