@@ -93,6 +93,23 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
+    function toggleFavorite() {
+        axios.put(`/api/paper/${paper?.id}/favorite`)
+            .then((response) => {
+                setIsFav(response.data.isFav)
+                props.onUpdate()
+            })
+            .catch((error) => {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Could not add to favorites.',
+                    life: 5000,
+                });
+                console.error(error);
+            })
+    }
+
     return (
         <>
             <Toast ref={toast} />
@@ -101,8 +118,8 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     <button onClick={navigateToAll}> ← Back </button>
                     <div>
                         <button className={"detail-action-button"}>Get AI report</button>
-                        {!isFav && <button className={"detail-action-button"}> 🩶 </button>}
-                        {isFav && <button> ❤️ </button>}
+                        {!isFav && <button className={"detail-action-button"} onClick={toggleFavorite}> 🩶 </button>}
+                        {isFav && <button className={"detail-action-button"} onClick={toggleFavorite}> ❤️ </button>}
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
                 </div>
