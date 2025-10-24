@@ -26,6 +26,7 @@ div.p-column-header-content {
 td {
     background-color: #5a5a5a;
     font-size: 16px;
+    padding: 5px 8px 5px  8px;
 }
 .clickable {
     cursor: pointer;
@@ -41,4 +42,14 @@ td {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 150px;
+}
+.fav-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+}
+.fav {
+    line-height: 0;
+    font-size: 20px;
 }
