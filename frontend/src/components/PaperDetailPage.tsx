@@ -6,6 +6,7 @@ import axios from "axios";
 import { Toast } from 'primereact/toast';
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
+import GroupSelect from "./GroupSelect.tsx";
 
 type PaperDetailPageProps = {
     onDelete: (id?:string) => void;
@@ -108,7 +109,12 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                 <h2> <b>Author: </b>{paper.author}</h2>
                 <p><b>DOI: </b> {paper.doi}</p>
                 <p><b>Publication year: </b>{paper.year}</p>
-                <p><b>Group Tags: </b> {paper.group}</p>
+
+                <div className={"group"}>
+                    <p className={"group-title"}><b>Group Tags: </b> {paper.group}</p>
+                    <GroupSelect />
+                </div>
+
                 <p><b>Notes: </b></p>
                 <div className="container">
                     <MDEditor

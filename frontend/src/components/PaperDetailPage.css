@@ -7,6 +7,9 @@
 b {
     color: rgb(77 170 160);
 }
+p {
+    line-height: 3;
+}
 .detail-buttons {
     display: flex;
     flex-direction: row;
@@ -22,4 +25,14 @@ b {
 }
 .saveButton {
     margin-top: 20px;
+}
+.group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.group-title {
+    margin-right: 20px;
 }

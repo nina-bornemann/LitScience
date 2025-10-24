@@ -1,0 +1,22 @@
+.group-dropdown {
+    max-width: 20%;
+}
+
+/* whole dropdown field*/
+.css-13cymwt-control {
+    border-color: rgb(77 170 160);
+    background-color: black;
+}
+/*tag container*/
+.css-1p3m7a8-multiValue {
+    border-color: rgb(77 170 160);
+    background-color: #5a5a5a;
+}
+.css-1p3m7a8-multiValue::after {
+    border-color: rgb(77 170 160);
+    background-color: #5a5a5a;
+}
+/*tag text*/
+.css-9jq23d {
+    color: #f9f9f9;
+}
