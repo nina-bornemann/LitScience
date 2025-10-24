@@ -19,6 +19,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
     const [notes, setNotes] = useState<string>("");
     const toast = useRef<Toast>(null);
     const nav = useNavigate();
+    const [isFav, setIsFav] = useState<boolean>(false)
 
     useEffect(() => {
         if (id) {
@@ -100,11 +101,13 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     <button onClick={navigateToAll}> ← Back </button>
                     <div>
                         <button className={"detail-action-button"}>Get AI report</button>
+                        {!isFav && <button className={"detail-action-button"}> 🩶 </button>}
+                        {isFav && <button> ❤️ </button>}
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
                 </div>
-                <h1 className={"title"}>Title:</h1>
-                <h1>{paper.title}</h1>
+                <h2 className={"title"}>Title:</h2>
+                <h2>{paper.title}</h2>
                 <h2> <b>Author: </b>{paper.author}</h2>
                 <p><b>DOI: </b> {paper.doi}</p>
                 <p><b>Publication year: </b>{paper.year}</p>
