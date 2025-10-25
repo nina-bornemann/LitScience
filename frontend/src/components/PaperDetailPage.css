@@ -28,9 +28,9 @@ p {
 }
 .group {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .group-title {

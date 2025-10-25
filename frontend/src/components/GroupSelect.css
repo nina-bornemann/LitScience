@@ -1,22 +1,27 @@
-.group-dropdown {
-    max-width: 20%;
+.rs-tag {
+    display: inline-block;
+    background-color: blue;
+    color: #343434;
+    border-radius: 6px;
+    line-height: 20px;
 }
-
-/* whole dropdown field*/
-.css-13cymwt-control {
-    border-color: rgb(77 170 160);
-    background-color: black;
+.rs-tag-group {
+    display: flex;
+    flex-direction: row;
 }
-/*tag container*/
-.css-1p3m7a8-multiValue {
-    border-color: rgb(77 170 160);
-    background-color: #5a5a5a;
+.rs-tag-closable {
+    position: relative;
 }
-.css-1p3m7a8-multiValue::after {
-    border-color: rgb(77 170 160);
-    background-color: #5a5a5a;
+.rs-tag-icon-close {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
-/*tag text*/
-.css-9jq23d {
-    color: #f9f9f9;
+.rs-tag-md {
+    padding: 2px 8px;
+    font-size: 12px;
+}
+.rs-tag-text {
+    color: cadetblue;
+    font-size: 20px;
 }

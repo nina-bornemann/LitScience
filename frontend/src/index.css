@@ -36,13 +36,13 @@ button {
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #12344D;
+    background-color: #335F7A;
     cursor: pointer;
     transition: border-color 0.25s;
 }
 
 button:hover {
-    border-color: rgb(77, 170, 160);
+    border-color: rgb(77 170 160);
 }
 
 button:focus,
