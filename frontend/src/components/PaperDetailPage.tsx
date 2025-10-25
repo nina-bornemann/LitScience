@@ -124,30 +124,33 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
                 </div>
-                <h2 className={"title"}>Title:</h2>
-                <h2>{paper.title}</h2>
-                <h2> <b>Author: </b>{paper.author}</h2>
-                <p><b>DOI: </b> {paper.doi}</p>
-                <p><b>Publication year: </b>{paper.year}</p>
 
-                <div className={"group"}>
-                    <p className={"group-title"}><b>Group Tags: </b> {paper.group}</p>
-                    <GroupSelect />
-                </div>
+                <div className="card">
+                    <h2 className={"title"}>Title:</h2>
+                    <h2>{paper.title}</h2>
+                    <h2> <b>Author: </b>{paper.author}</h2>
+                    <p><b>DOI: </b> {paper.doi}</p>
+                    <p><b>Publication year: </b>{paper.year}</p>
 
-                <p><b>Notes: </b></p>
-                <div className="container">
-                    <MDEditor
-                        value={notes}
-                        onChange={(value) => setNotes(value || "")}
-                        previewOptions={{
-                            rehypePlugins: [[rehypeSanitize]],
-                        }}
-                    />
+                    <div className={"group"}>
+                        <p className={"group-title"}><b>Group Tags: </b> {paper.group}</p>
+                        <GroupSelect />
+                    </div>
+
+                    <p><b>Notes: </b></p>
+                    <div className="md-container">
+                        <MDEditor
+                            value={notes}
+                            onChange={(value) => setNotes(value || "")}
+                            previewOptions={{
+                                rehypePlugins: [[rehypeSanitize]],
+                            }}
+                        />
                 </div>
                 <button onClick={handleChange} className={"saveButton"}>Save Notes</button>
                 <p><b>PDF available: </b></p>
                 <p><b>Report: </b></p>
+                </div>
             </div>
         </>
     )

@@ -3,6 +3,8 @@
 }
 .title{
     color: rgb(77 170 160);
+    width: 800px !important;
+    overflow-wrap: normal;
 }
 b {
     color: rgb(77 170 160);
@@ -20,11 +22,12 @@ p {
 .detail-action-button {
     margin-right: 10px;
 }
-.container {
-    max-width: 70%;
+.md-container {
+    max-width: 80%;
 }
 .saveButton {
     margin-top: 20px;
+    background-color: #12344D;
 }
 .group {
     display: flex;
@@ -35,4 +38,11 @@ p {
 
 .group-title {
     margin-right: 20px;
+}
+.card {
+    background-color: #335F7A;
+    padding: 1px 30px 10px;
+    border-radius: 8px;
+    margin-top: 50px;
+    width: 100%;
 }

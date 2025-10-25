@@ -5,11 +5,11 @@ import {useState} from "react";
 import 'rsuite/Tag/styles/index.css'
 
 export default function GroupSelect(){
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState<string[]>([]);
     const [typing, setTyping] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
-    const removeTag = (tag) => {
+    const removeTag = (tag: string) => {
         const nextTags = tags.filter(item => item !== tag);
         setTags(nextTags);
     };

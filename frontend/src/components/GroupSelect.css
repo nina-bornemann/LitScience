@@ -1,27 +1,33 @@
-.rs-tag {
-    display: inline-block;
-    background-color: blue;
-    color: #343434;
-    border-radius: 6px;
-    line-height: 20px;
-}
 .rs-tag-group {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    background-color: #12344D;
+    border-radius: 8px;
+    max-height: 50px;
+}
+.rs-tag {
+    background-color: #12344D !important;
 }
 .rs-tag-closable {
     position: relative;
-}
-.rs-tag-icon-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-.rs-tag-md {
-    padding: 2px 8px;
-    font-size: 12px;
+    background-color: #12344D;
+    border-radius: 8px;
 }
 .rs-tag-text {
-    color: cadetblue;
-    font-size: 20px;
+    color: white;
+    font-size: 15px;
+}
+.tag-add-btn {
+    border-radius: 8px;
+    background-color: #12344D;
+}
+.tag-input {
+    background-color: #12344D;
+    border: 1px solid #12344D;
+    border-radius: 8px;
+    min-height: 30px;
+}
+.rs-tag-default {
+    background-color: #12344D;
 }
