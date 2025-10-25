@@ -1,33 +1,33 @@
 .p-datatable .p-datatable-thead > tr > th {
-    background-color: #1a1a1a;
-    border-color: rgb(43 45 48);
-    border-bottom-width: 5px;
+    background-color: #335F7A;
+    border-color: #12344D;
+    border-bottom-width: 3px;
     border-top-width: 0;
 }
 span.p-column-title {
-    background-color: #1a1a1a;
+    background-color: #335F7A;
 }
 .p-datatable .p-sortable-column .p-sortable-column-icon {
-    background-color: #1a1a1a;
+    background-color: #335F7A;
 }
 div.p-column-header-content {
-    background-color: #1a1a1a;
+    background-color: #335F7A;
 }
 .p-component {
-    background-color: #1a1a1a;
-    border-color: rgb(43 45 48);
+    background-color: #335F7A;
+    border-color: #12344D;
 }
 .p-datatable-footer {
-    background-color: #1a1a1a;
-    border-color: rgb(43 45 48);
+    background-color: #335F7A;
+    border-color: #12344D;
     border-top-width: 3px;
-    border-bottom-width: 0px;
+    border-bottom-width: 0;
     color: rgb(77 170 160);
     font-size: 15px;
 }
 td {
-    background-color: #1a1a1a;
-    border-color: rgb(43 45 48);
+    background-color: #335F7A;
+    border-color: #12344D;
     font-size: 16px;
     padding: 5px 8px 5px  8px;
 }
@@ -55,4 +55,9 @@ td {
 .fav {
     line-height: 0;
     font-size: 20px;
+}
+.table-container {
+    background-color: #335F7A;
+    border-radius: 8px;
+    padding: 15px;
 }
