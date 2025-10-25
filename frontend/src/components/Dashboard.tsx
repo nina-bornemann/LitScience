@@ -7,6 +7,8 @@ export default function Dashboard() {
 
     const [papers, setPapers] = useState<Paper[]>([])
 
+    let favorites = papers.filter((paper) => paper.isFav)
+
     function getAllPapers() {
         axios
             .get("/api/paper")
@@ -39,7 +41,7 @@ export default function Dashboard() {
                 <div className={"stats-card"}>
                     <h1> ❤️ </h1>
                     <div className={"stats-text"}>
-                        <h2>(number)</h2>
+                        <h2>{favorites.length}</h2>
                         <h3>Favorites</h3>
                     </div>
                 </div>

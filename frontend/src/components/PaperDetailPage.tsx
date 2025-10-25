@@ -19,7 +19,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
     const [notes, setNotes] = useState<string>("");
     const toast = useRef<Toast>(null);
     const nav = useNavigate();
-    const [isFav, setIsFav] = useState<boolean>(false)
+    const [isFav, setIsFav] = useState<boolean>()
 
     useEffect(() => {
         if (id) {
@@ -27,6 +27,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                 .then((response) => {
                     setPaper(response.data)
                     setNotes(response.data.notes)
+                    setIsFav(response.data.isFav)
                 })
                 .catch((e) => console.log("Failed to load paper: " + e))
         }
