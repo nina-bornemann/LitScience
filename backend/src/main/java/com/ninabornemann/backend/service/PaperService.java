@@ -5,6 +5,7 @@ import com.ninabornemann.backend.model.PaperDto;
 import com.ninabornemann.backend.utils.UtilsHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class PaperService {
         return paperRepo.save(updated);
     }
 
+    @Transactional
     public Paper toggleFavoriteById(String id) {
         Paper existing = paperRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));

@@ -119,8 +119,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     <button onClick={navigateToAll}> ← Back </button>
                     <div>
                         <button className={"detail-action-button"}>Get AI report</button>
-                        {!isFav && <button className={"detail-action-button"} onClick={toggleFavorite}> 🩶 </button>}
-                        {isFav && <button className={"detail-action-button"} onClick={toggleFavorite}> ❤️ </button>}
+                        <button className={"detail-action-button"} onClick={toggleFavorite}>{isFav && "❤️"}️{!isFav && "🩶"}</button>
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
                 </div>

@@ -15,11 +15,7 @@ export default function PaperTable(props:Readonly<PaperTableProps>) {
     const nav = useNavigate()
 
     const favTemplate = (paper:Paper) => {
-        if (paper.isFav) {
-            return <div className={"fav-container"}> <p className={"fav"}> ❤️</p> </div>
-        } else {
-            return <div className={"fav-container"}> <p className={"fav"}>  </p> </div>
-        }
+        return <div className={"fav-container"}> <p className={"fav"}>{paper.isFav && "❤️"}️{!paper.isFav && ""}</p> </div>
     };
 
     function navToDetails(event:DataTableRowClickEvent) {
