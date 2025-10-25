@@ -6,6 +6,7 @@ export type Paper = {
     year:number,
     group:string,
     notes:string
+    isFav:boolean
 }
 
 export type PaperDto = {

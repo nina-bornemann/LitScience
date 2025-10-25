@@ -6,7 +6,10 @@ export default function Footer() {
         <>
             <footer>
                 <p>
-                    © 2025 LitScience — Where AI meets curiosity 🔬
+                    © Nina Bornemann 2025
+                </p>
+                <p>
+                    LitScience — Where AI meets curiosity 🔬
                 </p>
                 <p>
                     <a href="https://github.com/nina-bornemann/LitScience">View source</a>
