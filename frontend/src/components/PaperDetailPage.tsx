@@ -19,6 +19,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
     const [notes, setNotes] = useState<string>("");
     const toast = useRef<Toast>(null);
     const nav = useNavigate();
+    const [isFav, setIsFav] = useState<boolean>()
 
     useEffect(() => {
         if (id) {
@@ -26,6 +27,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                 .then((response) => {
                     setPaper(response.data)
                     setNotes(response.data.notes)
+                    setIsFav(response.data.isFav)
                 })
                 .catch((e) => console.log("Failed to load paper: " + e))
         }
@@ -92,6 +94,23 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
+    function toggleFavorite() {
+        axios.put(`/api/paper/${paper?.id}/favorite`)
+            .then((response) => {
+                setIsFav(response.data.isFav)
+                props.onUpdate()
+            })
+            .catch((error) => {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Could not add to favorites.',
+                    life: 5000,
+                });
+                console.error(error);
+            })
+    }
+
     return (
         <>
             <Toast ref={toast} />
@@ -100,11 +119,12 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     <button onClick={navigateToAll}> ← Back </button>
                     <div>
                         <button className={"detail-action-button"}>Get AI report</button>
+                        <button className={"detail-action-button"} onClick={toggleFavorite}>{isFav && "❤️"}️{!isFav && "🩶"}</button>
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
                 </div>
-                <h1 className={"title"}>Title:</h1>
-                <h1>{paper.title}</h1>
+                <h2 className={"title"}>Title:</h2>
+                <h2>{paper.title}</h2>
                 <h2> <b>Author: </b>{paper.author}</h2>
                 <p><b>DOI: </b> {paper.doi}</p>
                 <p><b>Publication year: </b>{paper.year}</p>

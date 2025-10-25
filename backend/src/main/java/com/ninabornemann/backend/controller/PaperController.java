@@ -64,4 +64,9 @@ public class PaperController {
     public Paper editPaperById(@PathVariable String id, @RequestBody PaperDto dto) {
         return paperService.editPaperById(id, dto);
     }
+
+    @PutMapping("/{id}/favorite")
+    public Paper toggleFavoriteById(@PathVariable String id) {
+        return paperService.toggleFavoriteById(id);
+    }
 }

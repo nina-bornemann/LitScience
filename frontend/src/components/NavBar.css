@@ -3,14 +3,14 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    box-shadow: -10px 1px 15px rgb(56 115 236);
+    box-shadow: -10px 1px 15px rgb(77 170 160);
     padding: 15px;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 55px;
-    background-color: rgb(9 15 22);
+    background-color: rgb(10 15 20);
 }
 .logo {
     display: block;
@@ -25,13 +25,14 @@ header {
     gap: 10px;
 }
 .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+    filter: drop-shadow(1px 1px 100em rgb(77 170 160));
 }
 .logo-text {
-    color: rgb(56 115 236);
+    color: rgb(77 170 160)
+;
 }
 .logo-text:hover {
-    filter: drop-shadow(2px 2px 1em rgb(77 170 160));
+    filter: drop-shadow(1px 1px 100em rgb(77 170 160));
 }
 nav .clickable{
     margin-right: 60px;
