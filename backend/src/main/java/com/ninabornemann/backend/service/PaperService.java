@@ -53,4 +53,10 @@ public class PaperService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
         return paperRepo.save(existing.withFav(!existing.isFav()));
     }
+
+    public Paper editGroupsById(String id, List<String> groupTags) {
+        Paper existing = paperRepo.findById(id)
+                .orElseThrow(() -> new  ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
+        return new Paper(existing.id(), existing.doi(), existing.title(), existing.author(), existing.year(), groupTags, existing.notes(), existing.isFav());
+    }
 }

@@ -69,4 +69,9 @@ public class PaperController {
     public Paper toggleFavoriteById(@PathVariable String id) {
         return paperService.toggleFavoriteById(id);
     }
+
+    @PutMapping("/{id}/group")
+    public Paper editGroupsById(@PathVariable String id, @RequestBody List<String> groupTags) {
+        return paperService.editGroupsById(id, groupTags);
+    }
 }
