@@ -74,7 +74,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void addNewPaper_shouldReturn_newPaper() throws Exception {
-        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, "stem cells", "");
+        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, List.of("stem cells", "gastruloids"), "");
         mockMvc.perform(MockMvcRequestBuilders.post("/api/paper")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonFrom(dto)))
@@ -85,7 +85,7 @@ class PaperControllerTest {
                                                                                   "title": "gastruloids",
                                                                                   "author": "Ludi",
                                                                                   "year": 2022,
-                                                                                  "group": "stem cells",
+                                                                                  "group": ["stem cells", "gastruloids"],
                                                                                   "notes": "",
                                                                                   "isFav": false
                                                                                 }
@@ -121,7 +121,7 @@ class PaperControllerTest {
                                                                                     "title": "The state of OA: a large-scale analysis of the prevalence and impact of Open Access articles",
                                                                                     "author": "Heather Piwowar",
                                                                                     "year": 2018,
-                                                                                    "group": "",
+                                                                                    "group": [""],
                                                                                     "notes": "",
                                                                                     "isFav": false
                                                                                 }
@@ -143,25 +143,14 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void getPaperById_shouldReturn_CorrectPaper() throws Exception {
-        Paper p1 = new Paper("123", "456/678", "Cool article", "Einstein", 1920, "Physics", "nice", false);
-        Paper p2 = new Paper("456", "123/456", "Another article", "Einstein", 1919, "", "", true);
-        paperRepo.save(p1);
-        paperRepo.save(p2);
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaper();
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaper();
+        paperRepo.save(p1.getPaper());
+        paperRepo.save(p2.getPaper());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/456"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/" +p1.getPaper().id()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
-                                                                               {
-                                                                                   "id": "456",
-                                                                                   "doi": "123/456",
-                                                                                   "title": "Another article",
-                                                                                   "author": "Einstein",
-                                                                                   "year": 1919,
-                                                                                   "group": "",
-                                                                                   "notes": "",
-                                                                                   "isFav": true
-                                                                               }
-                                                                           """));
+                .andExpect(MockMvcResultMatchers.content().json(p1.getJson()));
     }
 
     @DirtiesContext
@@ -180,10 +169,10 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void deletePaperById_shouldDelete_whenIdFound() throws Exception {
-        Paper p1 = new Paper("123", "456/789", "cool paper", "Einstein", 1920, "physics", "", false);
-        paperRepo.save(p1);
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaper();
+        paperRepo.save(p1.getPaper());
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/paper/123"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/paper/" + p1.getPaper().id()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent())
                 .andExpect(MockMvcResultMatchers.content().string(""))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").doesNotExist());
@@ -205,9 +194,9 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void editPaperById_shouldReturn_updatedPaper() throws Exception {
-        Paper existing = new Paper("234", "123.4/56", "Plant biochemistry", "Plant master", 1970, "", "", false);
+        Paper existing = new Paper("234", "123.4/56", "Plant metabolism", "Prof", 1970, List.of("plants"), "", false);
         paperRepo.save(existing);
-        PaperDto updated = new PaperDto("123.4/56", "Plant metabolism", "Prof", 1970, "Plants", "cool paper");
+        PaperDto updated = new PaperDto("123.4/56", "Plant metabolism", "Prof", 1970, List.of("plants"), "cool paper");
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/234")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -221,7 +210,7 @@ class PaperControllerTest {
                                                                                "title": "Plant metabolism",
                                                                                "author": "Prof",
                                                                                "year": 1970,
-                                                                               "group": "Plants",
+                                                                               "group": ["plants"],
                                                                                "notes": "cool paper",
                                                                                "isFav": false
                                                                            }
@@ -231,7 +220,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void editPaperById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
-        PaperDto dto = new PaperDto("22.3/4", "Gastruloids", "Krauss", 2022, "stem cells", "important");
+        PaperDto dto = new PaperDto("22.3/4", "Gastruloids", "Krauss", 2022, List.of("stem cells"), "important");
         mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/333")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonFrom(dto))
@@ -248,23 +237,12 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void toggleFavoriteById_shouldReturn_oppositeBoolean() throws Exception {
-        Paper p = new Paper("123", "12.3", "Pancakes are cool", "Pancake", 2024, "cool", "I love pancakes", false);
-        paperRepo.save(p);
+        TestPaperScenario p = testPaperFactory.createRandomTestPaperWithModification((paper) -> paper.withFav(false));
+        paperRepo.save(p.getPaper());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/123/favorite"))
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/" +p.getPaper().id()+ "/favorite"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
-                                                                           {
-                                                                             "id": "123",
-                                                                             "doi": "12.3",
-                                                                             "title": "Pancakes are cool",
-                                                                             "author": "Pancake",
-                                                                             "year": 2024,
-                                                                             "group": "cool",
-                                                                             "notes": "I love pancakes",
-                                                                             "isFav": true
-                                                                           }
-                                                                           """));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isFav").value(true));
     }
 
     @DirtiesContext

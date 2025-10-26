@@ -7,6 +7,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
 import java.net.URI;
+import java.util.List;
 
 @Service
 public class OpenAlexService {
@@ -37,7 +38,7 @@ public class OpenAlexService {
                 response.title(),
                 response.authorships().getFirst().author().displayName(),
                 response.publicationYear(),
-                "",
+                List.of(""),
                 "");
     }
 }
