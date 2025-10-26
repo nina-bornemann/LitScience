@@ -41,8 +41,8 @@ class PaperControllerTest {
     @Autowired
     private PaperRepo paperRepo;
 
-    String jsonFrom(PaperDto dto) throws JsonProcessingException {
-       return new ObjectMapper().writeValueAsString(dto);
+    String jsonFrom(Object object) throws JsonProcessingException {
+       return new ObjectMapper().writeValueAsString(object);
     }
 
     TestPaperFactory testPaperFactory = new TestPaperFactory();
@@ -249,6 +249,41 @@ class PaperControllerTest {
     @Test
     void toggleFavoriteById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/246/favorite"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                           {
+                                                                             "errorMessage": "404 NOT_FOUND \\"No paper was found under this id.\\""
+                                                                           }
+                                                                           """));
+    }
+
+    @DirtiesContext
+    @Test
+    void editGroupsById_shouldReturn_updatedPaper() throws Exception {
+        TestPaperScenario p = testPaperFactory.createRandomTestPaper();
+        paperRepo.save(p.getPaper());
+        List<String> groupTags = List.of("bio", "good");
+        Paper updated = p.getPaper().withGroup(groupTags);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/"+ p.getPaper().id() + "/group")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonFrom(groupTags))
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(jsonFrom(updated)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(p.getPaper().id()));
+    }
+
+    @DirtiesContext
+    @Test
+    void editGroupsById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
+        TestPaperScenario p = testPaperFactory.createRandomTestPaper();
+        List<String> groupTags = List.of("bio", "good");
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/"+ p.getPaper().id() + "/group")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFrom(groupTags))
+                )
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.content().json("""
                                                                            {

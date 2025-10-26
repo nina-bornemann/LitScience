@@ -8,7 +8,7 @@ public record Paper(String id,
                     String title,
                     String author,
                     int year,
-                    List<String> group,
+                    @With List<String> group,
                     String notes,
                     @With boolean isFav
                     ) {
