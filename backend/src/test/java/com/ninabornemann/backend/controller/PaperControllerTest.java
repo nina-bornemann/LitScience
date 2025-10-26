@@ -3,6 +3,8 @@ package com.ninabornemann.backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ninabornemann.backend.Repo.PaperRepo;
+import com.ninabornemann.backend.TestFactory.TestPaperFactory;
+import com.ninabornemann.backend.TestFactory.TestPaperScenario;
 import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,9 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.List;
+
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
@@ -40,40 +45,19 @@ class PaperControllerTest {
        return new ObjectMapper().writeValueAsString(dto);
     }
 
+    TestPaperFactory testPaperFactory = new TestPaperFactory();
+
     @DirtiesContext
     @Test
     void getAllPaper_shouldReturn_listOfPaper() throws Exception {
-        Paper p1 = new Paper("1", "1.2/3", "Test1", "Tester", 2024, "Bio", "nice", false);
-        Paper p2 = new Paper("2", "1.3/5", "Test2", "Prof", 2019, "Physics", "cool", false);
-        paperRepo.save(p1);
-        paperRepo.save(p2);
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaper();
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaper();
+        paperRepo.save(p1.getPaper());
+        paperRepo.save(p2.getPaper());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/paper"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
-                                                                           [
-                                                                             {
-                                                                               "id": "1",
-                                                                               "doi": "1.2/3",
-                                                                               "title": "Test1",
-                                                                               "author": "Tester",
-                                                                               "year": 2024,
-                                                                               "group": "Bio",
-                                                                               "notes": "nice",
-                                                                               "isFav": false
-                                                                             },
-                                                                             {
-                                                                               "id": "2",
-                                                                               "doi": "1.3/5",
-                                                                               "title": "Test2",
-                                                                               "author": "Prof",
-                                                                               "year": 2019,
-                                                                               "group": "Physics",
-                                                                               "notes": "cool",
-                                                                               "isFav": false
-                                                                             }
-                                                                           ]
-                                                                           """));
+                .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper().writeValueAsString(List.of(p1.getPaper(), p2.getPaper()))));
     }
 
     @DirtiesContext
