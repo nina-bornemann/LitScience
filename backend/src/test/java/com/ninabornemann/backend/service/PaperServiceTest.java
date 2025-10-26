@@ -1,4 +1,5 @@
 package com.ninabornemann.backend.service;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ninabornemann.backend.Repo.PaperRepo;
 import com.ninabornemann.backend.TestFactory.TestPaperFactory;
@@ -7,10 +8,9 @@ import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -132,8 +132,8 @@ class PaperServiceTest {
         PaperRepo mockRepo = mock(PaperRepo.class);
         PaperService service = new PaperService(mockIdService, mockRepo);
         Paper existing = new Paper("123", "234", "Title", "Author", 2002, List.of("Science"), "", true);
-        PaperDto dto = new PaperDto("234", "Title", "Author", 2004,List.of("Better Group"), "some notes");
-        Paper updated = new Paper("123", "234", "Title", "Author", 2004,List.of("Better Group"), "some notes", true);
+        PaperDto dto = new PaperDto("234", "Title", "Author", 2004, List.of("Better Group"), "some notes");
+        Paper updated = new Paper("123", "234", "Title", "Author", 2004, List.of("Better Group"), "some notes", true);
 
         when(mockRepo.findById("123")).thenReturn(Optional.of(existing));
         when(mockRepo.save(updated)).then(a -> a.getArgument(0));
@@ -224,5 +224,38 @@ class PaperServiceTest {
         assertThrows(ResponseStatusException.class, () -> service.editGroupsById("123", groupTags));
         verify(mockRepo).findById("123");
         verifyNoMoreInteractions(mockIdService, mockRepo);
+    }
+
+    @Test
+    void findByGroup_shouldReturn_PaperListOfGroup() throws JsonProcessingException {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification((p) -> p.withGroup(List.of("bio", "chem")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification((p) -> p.withGroup(List.of("physics", "literature")));
+        TestPaperScenario p3 = testPaperFactory.createRandomTestPaperWithModification((p) -> p.withGroup(List.of("literature", "bio")));
+        TestPaperScenario p4 = testPaperFactory.createRandomTestPaperWithModification((p) -> p.withGroup(List.of("chem", "geo")));
+        List<Paper> papers = List.of(p2.getPaper(), p3.getPaper());
+
+        when(mockRepo.findAll()).thenReturn(papers);
+        List<Paper> actual = service.findByGroup("literature");
+
+        verify(mockRepo).findAll();
+        verifyNoMoreInteractions(mockRepo, mockIdService);
+        assertEquals(papers, actual);
+    }
+
+    @Test
+    void findByGroup_shouldReturn_EmptyList() throws JsonProcessingException {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+
+        when(mockRepo.findAll()).thenReturn(new ArrayList<>());
+        List<Paper> actual = service.findByGroup("physics");
+
+        verify(mockRepo).findAll();
+        verifyNoMoreInteractions(mockRepo, mockIdService);
+        assertEquals(new ArrayList<>(), actual);
     }
 }

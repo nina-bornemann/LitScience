@@ -19,9 +19,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.util.List;
-
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
@@ -289,6 +287,35 @@ class PaperControllerTest {
                                                                            {
                                                                              "errorMessage": "404 NOT_FOUND \\"No paper was found under this id.\\""
                                                                            }
+                                                                           """));
+    }
+
+    @DirtiesContext
+    @Test
+    void getAllPaper_withGroupParam_shouldReturn_ListOfPapersOfGroup() throws Exception {
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("bio", "chem")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("physics", "chem")));
+        TestPaperScenario p3 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("literature", "bio")));
+        TestPaperScenario p4 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("chem", "geo")));
+        paperRepo.saveAll(List.of(p1.getPaper(), p2.getPaper(), p3.getPaper(), p4.getPaper()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper?group=bio"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper().writeValueAsString(List.of(p1.getPaper(), p3.getPaper()))));
+    }
+
+    @DirtiesContext
+    @Test
+    void getAllPaper_withGroupParam_shouldReturn_EmptyList() throws Exception {
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("bio", "chem")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("physics", "chem")));
+        paperRepo.saveAll(List.of(p1.getPaper(), p2.getPaper()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper?group=literature"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                           [
+                                                                           ]
                                                                            """));
     }
 }
