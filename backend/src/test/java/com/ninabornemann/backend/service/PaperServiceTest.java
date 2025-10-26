@@ -189,4 +189,40 @@ class PaperServiceTest {
         verify(mockRepo).findById("2");
         verifyNoMoreInteractions(mockIdService, mockRepo);
     }
+
+    @Test
+    void editGroupsById_shouldReturn_updatedPaper() throws JsonProcessingException {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        TestPaperScenario p = testPaperFactory.createRandomTestPaper();
+        List<String> groupTags = List.of("bio", "chem");
+        Paper updated = p.getPaper().withGroup(groupTags);
+
+        when(mockRepo.findById(p.getPaper().id())).thenReturn(Optional.of(p.getPaper()));
+        when(mockRepo.save(updated)).thenReturn(updated);
+        Paper actual = service.editGroupsById(p.getPaper().id(), groupTags);
+
+        verify(mockRepo).findById(p.getPaper().id());
+        verify(mockRepo).save(updated);
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+        assertEquals(updated, actual);
+    }
+
+    @Test
+    void editGroupsById_shouldThrow_ResponseStatusException_whenIdNotFound() throws JsonProcessingException {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        TestPaperScenario p = testPaperFactory.createRandomTestPaper();
+        List<String> groupTags = List.of("bio", "chem");
+        Paper updated = p.getPaper().withGroup(groupTags);
+
+        when(mockRepo.findById("123")).thenReturn(Optional.empty());
+        when(mockRepo.save(updated)).thenReturn(updated);
+
+        assertThrows(ResponseStatusException.class, () -> service.editGroupsById("123", groupTags));
+        verify(mockRepo).findById("123");
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+    }
 }
