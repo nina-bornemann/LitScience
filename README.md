@@ -1,6 +1,10 @@
+# 🧬 LitScience 🧪
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Java CI with Maven](https://github.com/nina-bornemann/LitScience/actions/workflows/maven.yml/badge.svg)](https://github.com/nina-bornemann/LitScience/actions/workflows/maven.yml)
+
+
 ![website](docs/img.png)
 
-# 🧬 LitScience 🧪
 
 **LitScience** is an intelligent literature assistant for 
 researchers, students, and curious readers.  
