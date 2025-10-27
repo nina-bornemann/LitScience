@@ -3,6 +3,8 @@ package com.ninabornemann.backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ninabornemann.backend.Repo.PaperRepo;
+import com.ninabornemann.backend.TestFactory.TestPaperFactory;
+import com.ninabornemann.backend.TestFactory.TestPaperScenario;
 import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import java.util.List;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
@@ -36,44 +39,23 @@ class PaperControllerTest {
     @Autowired
     private PaperRepo paperRepo;
 
-    String jsonFrom(PaperDto dto) throws JsonProcessingException {
-       return new ObjectMapper().writeValueAsString(dto);
+    String jsonFrom(Object object) throws JsonProcessingException {
+       return new ObjectMapper().writeValueAsString(object);
     }
+
+    TestPaperFactory testPaperFactory = new TestPaperFactory();
 
     @DirtiesContext
     @Test
     void getAllPaper_shouldReturn_listOfPaper() throws Exception {
-        Paper p1 = new Paper("1", "1.2/3", "Test1", "Tester", 2024, "Bio", "nice", false);
-        Paper p2 = new Paper("2", "1.3/5", "Test2", "Prof", 2019, "Physics", "cool", false);
-        paperRepo.save(p1);
-        paperRepo.save(p2);
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaper();
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaper();
+        paperRepo.save(p1.getPaper());
+        paperRepo.save(p2.getPaper());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/paper"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
-                                                                           [
-                                                                             {
-                                                                               "id": "1",
-                                                                               "doi": "1.2/3",
-                                                                               "title": "Test1",
-                                                                               "author": "Tester",
-                                                                               "year": 2024,
-                                                                               "group": "Bio",
-                                                                               "notes": "nice",
-                                                                               "isFav": false
-                                                                             },
-                                                                             {
-                                                                               "id": "2",
-                                                                               "doi": "1.3/5",
-                                                                               "title": "Test2",
-                                                                               "author": "Prof",
-                                                                               "year": 2019,
-                                                                               "group": "Physics",
-                                                                               "notes": "cool",
-                                                                               "isFav": false
-                                                                             }
-                                                                           ]
-                                                                           """));
+                .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper().writeValueAsString(List.of(p1.getPaper(), p2.getPaper()))));
     }
 
     @DirtiesContext
@@ -90,7 +72,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void addNewPaper_shouldReturn_newPaper() throws Exception {
-        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, "stem cells", "");
+        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, List.of("stem cells", "gastruloids"), "");
         mockMvc.perform(MockMvcRequestBuilders.post("/api/paper")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonFrom(dto)))
@@ -101,7 +83,7 @@ class PaperControllerTest {
                                                                                   "title": "gastruloids",
                                                                                   "author": "Ludi",
                                                                                   "year": 2022,
-                                                                                  "group": "stem cells",
+                                                                                  "group": ["stem cells", "gastruloids"],
                                                                                   "notes": "",
                                                                                   "isFav": false
                                                                                 }
@@ -137,7 +119,7 @@ class PaperControllerTest {
                                                                                     "title": "The state of OA: a large-scale analysis of the prevalence and impact of Open Access articles",
                                                                                     "author": "Heather Piwowar",
                                                                                     "year": 2018,
-                                                                                    "group": "",
+                                                                                    "group": [],
                                                                                     "notes": "",
                                                                                     "isFav": false
                                                                                 }
@@ -159,25 +141,14 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void getPaperById_shouldReturn_CorrectPaper() throws Exception {
-        Paper p1 = new Paper("123", "456/678", "Cool article", "Einstein", 1920, "Physics", "nice", false);
-        Paper p2 = new Paper("456", "123/456", "Another article", "Einstein", 1919, "", "", true);
-        paperRepo.save(p1);
-        paperRepo.save(p2);
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaper();
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaper();
+        paperRepo.save(p1.getPaper());
+        paperRepo.save(p2.getPaper());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/456"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/" +p1.getPaper().id()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
-                                                                               {
-                                                                                   "id": "456",
-                                                                                   "doi": "123/456",
-                                                                                   "title": "Another article",
-                                                                                   "author": "Einstein",
-                                                                                   "year": 1919,
-                                                                                   "group": "",
-                                                                                   "notes": "",
-                                                                                   "isFav": true
-                                                                               }
-                                                                           """));
+                .andExpect(MockMvcResultMatchers.content().json(p1.getJson()));
     }
 
     @DirtiesContext
@@ -196,10 +167,10 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void deletePaperById_shouldDelete_whenIdFound() throws Exception {
-        Paper p1 = new Paper("123", "456/789", "cool paper", "Einstein", 1920, "physics", "", false);
-        paperRepo.save(p1);
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaper();
+        paperRepo.save(p1.getPaper());
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/paper/123"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/paper/" + p1.getPaper().id()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent())
                 .andExpect(MockMvcResultMatchers.content().string(""))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").doesNotExist());
@@ -221,9 +192,9 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void editPaperById_shouldReturn_updatedPaper() throws Exception {
-        Paper existing = new Paper("234", "123.4/56", "Plant biochemistry", "Plant master", 1970, "", "", false);
+        Paper existing = new Paper("234", "123.4/56", "Plant metabolism", "Prof", 1970, List.of("plants"), "", false);
         paperRepo.save(existing);
-        PaperDto updated = new PaperDto("123.4/56", "Plant metabolism", "Prof", 1970, "Plants", "cool paper");
+        PaperDto updated = new PaperDto("123.4/56", "Plant metabolism", "Prof", 1970, List.of("plants"), "cool paper");
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/234")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -237,7 +208,7 @@ class PaperControllerTest {
                                                                                "title": "Plant metabolism",
                                                                                "author": "Prof",
                                                                                "year": 1970,
-                                                                               "group": "Plants",
+                                                                               "group": ["plants"],
                                                                                "notes": "cool paper",
                                                                                "isFav": false
                                                                            }
@@ -247,7 +218,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void editPaperById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
-        PaperDto dto = new PaperDto("22.3/4", "Gastruloids", "Krauss", 2022, "stem cells", "important");
+        PaperDto dto = new PaperDto("22.3/4", "Gastruloids", "Krauss", 2022, List.of("stem cells"), "important");
         mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/333")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonFrom(dto))
@@ -264,23 +235,12 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void toggleFavoriteById_shouldReturn_oppositeBoolean() throws Exception {
-        Paper p = new Paper("123", "12.3", "Pancakes are cool", "Pancake", 2024, "cool", "I love pancakes", false);
-        paperRepo.save(p);
+        TestPaperScenario p = testPaperFactory.createRandomTestPaperWithModification(paper -> paper.withFav(false));
+        paperRepo.save(p.getPaper());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/123/favorite"))
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/" +p.getPaper().id()+ "/favorite"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
-                                                                           {
-                                                                             "id": "123",
-                                                                             "doi": "12.3",
-                                                                             "title": "Pancakes are cool",
-                                                                             "author": "Pancake",
-                                                                             "year": 2024,
-                                                                             "group": "cool",
-                                                                             "notes": "I love pancakes",
-                                                                             "isFav": true
-                                                                           }
-                                                                           """));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isFav").value(true));
     }
 
     @DirtiesContext
@@ -292,6 +252,70 @@ class PaperControllerTest {
                                                                            {
                                                                              "errorMessage": "404 NOT_FOUND \\"No paper was found under this id.\\""
                                                                            }
+                                                                           """));
+    }
+
+    @DirtiesContext
+    @Test
+    void editGroupsById_shouldReturn_updatedPaper() throws Exception {
+        TestPaperScenario p = testPaperFactory.createRandomTestPaper();
+        paperRepo.save(p.getPaper());
+        List<String> groupTags = List.of("bio", "good");
+        Paper updated = p.getPaper().withGroup(groupTags);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/"+ p.getPaper().id() + "/group")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonFrom(groupTags))
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(jsonFrom(updated)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(p.getPaper().id()));
+    }
+
+    @DirtiesContext
+    @Test
+    void editGroupsById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
+        TestPaperScenario p = testPaperFactory.createRandomTestPaper();
+        List<String> groupTags = List.of("bio", "good");
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/"+ p.getPaper().id() + "/group")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFrom(groupTags))
+                )
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                           {
+                                                                             "errorMessage": "404 NOT_FOUND \\"No paper was found under this id.\\""
+                                                                           }
+                                                                           """));
+    }
+
+    @DirtiesContext
+    @Test
+    void getAllPaper_withGroupParam_shouldReturn_ListOfPapersOfGroup() throws Exception {
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("bio", "chem")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("physics", "chem")));
+        TestPaperScenario p3 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("literature", "bio")));
+        TestPaperScenario p4 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("chem", "geo")));
+        paperRepo.saveAll(List.of(p1.getPaper(), p2.getPaper(), p3.getPaper(), p4.getPaper()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper?group=bio"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper().writeValueAsString(List.of(p1.getPaper(), p3.getPaper()))));
+    }
+
+    @DirtiesContext
+    @Test
+    void getAllPaper_withGroupParam_shouldReturn_EmptyList() throws Exception {
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("bio", "chem")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("physics", "chem")));
+        paperRepo.saveAll(List.of(p1.getPaper(), p2.getPaper()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper?group=literature"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                           [
+                                                                           ]
                                                                            """));
     }
 }

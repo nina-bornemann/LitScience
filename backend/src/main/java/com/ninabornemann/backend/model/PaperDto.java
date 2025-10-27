@@ -1,10 +1,12 @@
 package com.ninabornemann.backend.model;
 
+import java.util.List;
+
 public record PaperDto(String doi,
                        String title,
                        String author,
                        int year,
-                       String group,
+                       List<String> group,
                        String notes
 ) {
 }

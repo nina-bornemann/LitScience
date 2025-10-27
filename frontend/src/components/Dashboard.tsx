@@ -8,7 +8,9 @@ export default function Dashboard() {
 
     const [papers, setPapers] = useState<Paper[]>([])
 
-    let favorites = papers.filter((paper) => paper.isFav)
+    const favorites = papers.filter((paper) => paper.isFav)
+
+    const groups = new Set(papers.flatMap((paper) => paper.group))
 
     function getAllPapers() {
         axios
@@ -24,7 +26,7 @@ export default function Dashboard() {
     return (
             <div className={"stats"}>
                 <DashboardCard emoji={"📑"} count={papers.length} title={"Total Entries"}/>
-                <DashboardCard emoji={"📂"} count={0} title={"Groups"}/>
+                <DashboardCard emoji={"📂"} count={groups.size} title={"Groups"}/>
                 <DashboardCard emoji={"❤️"} count={favorites.length} title={"Favorites"}/>
             </div>
     )

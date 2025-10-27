@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/paper")
@@ -23,7 +24,11 @@ public class PaperController {
     }
 
     @GetMapping
-    public List<Paper> getAllPaper() {
+    public List<Paper> getAllPaper(@RequestParam Optional<String> group) {
+        // localhost:8080/api/paper?group=bio
+        if (group.isPresent()) {
+            return paperService.findByGroup(group.get());
+        }
         return paperService.getAllPaper();
     }
 
@@ -68,5 +73,10 @@ public class PaperController {
     @PutMapping("/{id}/favorite")
     public Paper toggleFavoriteById(@PathVariable String id) {
         return paperService.toggleFavoriteById(id);
+    }
+
+    @PutMapping("/{id}/group")
+    public Paper editGroupsById(@PathVariable String id, @RequestBody List<String> groupTags) {
+        return paperService.editGroupsById(id, groupTags);
     }
 }

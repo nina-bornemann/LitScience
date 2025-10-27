@@ -6,6 +6,7 @@ import axios from "axios";
 import { Toast } from 'primereact/toast';
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
+import GroupSelect from "./GroupSelect.tsx";
 
 type PaperDetailPageProps = {
     onDelete: (id?:string) => void;
@@ -111,6 +112,26 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
+    function handleGroupChange(tags:string[]) {
+        axios.put(`/api/paper/${paper?.id}/group`, JSON.stringify(tags), {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(()=> {
+                props.onUpdate()
+            })
+            .catch((error) => {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Could not update Group Tags.',
+                    life: 5000,
+                });
+                console.error(error);
+            })
+    }
+
     return (
         <>
             <Toast ref={toast} />
@@ -123,25 +144,31 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
                 </div>
-                <h2 className={"title"}>Title:</h2>
-                <h2>{paper.title}</h2>
-                <h2> <b>Author: </b>{paper.author}</h2>
-                <p><b>DOI: </b> {paper.doi}</p>
-                <p><b>Publication year: </b>{paper.year}</p>
-                <p><b>Group Tags: </b> {paper.group}</p>
-                <p><b>Notes: </b></p>
-                <div className="container">
-                    <MDEditor
-                        value={notes}
-                        onChange={(value) => setNotes(value || "")}
-                        previewOptions={{
-                            rehypePlugins: [[rehypeSanitize]],
-                        }}
-                    />
+
+                <div className="card">
+                    <h2 className={"title"}>Title:</h2>
+                    <h2>{paper.title}</h2>
+                    <h2> <b>Author: </b>{paper.author}</h2>
+                    <p><b>DOI: </b> {paper.doi}</p>
+                    <p><b>Publication year: </b>{paper.year}</p>
+                    <p className={"group-title"}><b>Group Tags: </b> </p>
+
+                    <GroupSelect onGroupUpdate={handleGroupChange} paper={paper} />
+
+                    <p><b>Notes: </b></p>
+                    <div className="md-container">
+                        <MDEditor
+                            value={notes}
+                            onChange={(value) => setNotes(value || "")}
+                            previewOptions={{
+                                rehypePlugins: [[rehypeSanitize]],
+                            }}
+                        />
                 </div>
                 <button onClick={handleChange} className={"saveButton"}>Save Notes</button>
                 <p><b>PDF available: </b></p>
                 <p><b>Report: </b></p>
+                </div>
             </div>
         </>
     )

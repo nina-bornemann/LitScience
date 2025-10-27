@@ -5,8 +5,8 @@ import com.ninabornemann.backend.model.PaperDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
-
 import java.net.URI;
+import java.util.ArrayList;
 
 @Service
 public class OpenAlexService {
@@ -37,7 +37,7 @@ public class OpenAlexService {
                 response.title(),
                 response.authorships().getFirst().author().displayName(),
                 response.publicationYear(),
-                "",
+                new ArrayList<>(),
                 "");
     }
 }

@@ -1,0 +1,48 @@
+.rs-tag-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 8px;
+    max-height: 50px;
+}
+.rs-tag {
+    background-color: #12344D !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center;
+    margin: 0 0 0 5px !important;
+}
+.rs-tag-closable {
+    position: relative;
+    background-color: #12344D;
+    border-radius: 8px;
+}
+.rs-tag-text {
+    color: white;
+    font-size: 15px;
+}
+.tag-add-btn {
+    border-radius: 8px;
+    background-color: #12344D;
+    display: flex;
+    justify-content: center;
+    margin-left: 5px;
+}
+.tag-input {
+    background-color: #12344D;
+    border: 1px solid #12344D;
+    border-radius: 8px;
+    min-height: 30px;
+}
+.rs-tag-default {
+    background-color: #12344D;
+}
+.rs-tag-icon-close {
+    font-size: 10px;
+}
+.group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
