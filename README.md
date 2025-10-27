@@ -68,15 +68,26 @@ Upload scientific papers directly — the system will extract text and metadata 
 Visualize your reading trends, favorite authors, and keyword heatmaps.
 
 ## 🧠 API Endpoints (Backend)
-Method	Endpoint	Description
-GET	/api/paper	Get all papers or filter by group
-GET	/api/paper/{id}	Get a paper by ID
-GET	/api/paper/import/{doi}	Import paper by DOI via OpenAlex
-POST	/api/paper	Add a new paper manually
-PUT	/api/paper/{id}	Edit a paper
-PUT	/api/paper/{id}/favorite	Toggle favorite
-PUT	/api/paper/{id}/group	Edit groups
-DELETE	/api/paper/{id}	Delete a paper
+Get all papers or filter by group    
+> GET	    /api/paper  
+> GET     /api/paper?group={groupName}
+
+Get a paper by ID
+> GET	    /api/paper/{id}
+
+Import paper by DOI via OpenAlex
+> GET	    /api/paper/import/{doi}
+
+Add a new paper manually 
+> POST	  /api/paper
+
+Edit a paper  (notes, favorites, groups)
+> PUT	    /api/paper/{id}	  
+> PUT	    /api/paper/{id}/favorite	  
+> PUT	    /api/paper/{id}/group
+
+Delete a paper  
+> DELETE	/api/paper/{id}	  
 
 ## 🚀 Getting Started
 ### Backend
