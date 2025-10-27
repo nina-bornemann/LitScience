@@ -2,12 +2,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #12344D;
     border-radius: 8px;
     max-height: 50px;
 }
 .rs-tag {
     background-color: #12344D !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center;
+    margin: 0 0 0 5px !important;
 }
 .rs-tag-closable {
     position: relative;
@@ -21,6 +24,9 @@
 .tag-add-btn {
     border-radius: 8px;
     background-color: #12344D;
+    display: flex;
+    justify-content: center;
+    margin-left: 5px;
 }
 .tag-input {
     background-color: #12344D;
@@ -31,7 +37,6 @@
 .rs-tag-default {
     background-color: #12344D;
 }
-.saveButton {
-    margin-top: 20px;
-    background-color: #12344D;
+.rs-tag-icon-close {
+    font-size: 10px;
 }
