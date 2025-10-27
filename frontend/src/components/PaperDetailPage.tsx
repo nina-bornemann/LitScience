@@ -112,6 +112,26 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
+    function handleGroupChange(tags:string[]) {
+        axios.put(`/api/paper/${paper?.id}/group`, JSON.stringify(tags), {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(()=> {
+                props.onUpdate()
+            })
+            .catch((error) => {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Could not update Group Tags.',
+                    life: 5000,
+                });
+                console.error(error);
+            })
+    }
+
     return (
         <>
             <Toast ref={toast} />
@@ -131,10 +151,10 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     <h2> <b>Author: </b>{paper.author}</h2>
                     <p><b>DOI: </b> {paper.doi}</p>
                     <p><b>Publication year: </b>{paper.year}</p>
+                    <p className={"group-title"}><b>Group Tags: </b> </p>
 
                     <div className={"group"}>
-                        <p className={"group-title"}><b>Group Tags: </b> {paper.group}</p>
-                        <GroupSelect />
+                        <GroupSelect onGroupUpdate={handleGroupChange} paper={paper} />
                     </div>
 
                     <p><b>Notes: </b></p>
