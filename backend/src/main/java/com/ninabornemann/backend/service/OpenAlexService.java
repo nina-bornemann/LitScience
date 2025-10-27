@@ -5,10 +5,8 @@ import com.ninabornemann.backend.model.PaperDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
-
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class OpenAlexService {
