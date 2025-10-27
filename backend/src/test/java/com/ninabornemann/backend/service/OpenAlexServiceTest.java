@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -28,7 +29,7 @@ class OpenAlexServiceTest {
 
     @Test
     void getPaperByDoi() throws DoiNotFoundException {
-        PaperDto paperDto = new PaperDto("123/456", "new article", "Nina Bornemann", 2020, List.of(""), "");
+        PaperDto paperDto = new PaperDto("123/456", "new article", "Nina Bornemann", 2020, new ArrayList<>(), "");
 
         mockServer.expect(ExpectedCount.max(2), requestTo("https://api.openalex.org/works/https://doi.org/123/456"))
                 .andExpect(method(HttpMethod.GET))

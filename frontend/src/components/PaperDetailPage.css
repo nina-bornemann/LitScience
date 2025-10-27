@@ -29,13 +29,6 @@ p {
     margin-top: 20px;
     background-color: #12344D;
 }
-.group {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
 .group-title {
     margin-right: 20px;
 }

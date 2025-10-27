@@ -61,6 +61,7 @@ export default function GroupSelect(props:Readonly<GroupSelectProps>){
     };
 
     return (
+        <div className={"group"}>
             <TagGroup>
                 {tags.map((item, index) => (
                     <Tag key={index} closable onClose={() => removeTag(item)}>
@@ -69,5 +70,6 @@ export default function GroupSelect(props:Readonly<GroupSelectProps>){
                 ))}
                 {renderInput()}
             </TagGroup>
+        </div>
     );
 };

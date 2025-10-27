@@ -153,9 +153,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     <p><b>Publication year: </b>{paper.year}</p>
                     <p className={"group-title"}><b>Group Tags: </b> </p>
 
-                    <div className={"group"}>
-                        <GroupSelect onGroupUpdate={handleGroupChange} paper={paper} />
-                    </div>
+                    <GroupSelect onGroupUpdate={handleGroupChange} paper={paper} />
 
                     <p><b>Notes: </b></p>
                     <div className="md-container">

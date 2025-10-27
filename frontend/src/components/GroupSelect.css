@@ -40,3 +40,9 @@
 .rs-tag-icon-close {
     font-size: 10px;
 }
+.group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
