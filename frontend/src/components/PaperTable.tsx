@@ -20,7 +20,7 @@ export default function PaperTable(props:Readonly<PaperTableProps>) {
 
     const groupTemplate = (paper:Paper)=> {
         return <div className={"groupTags"}>
-                {paper.group.map((tag) => <p className={"tag"}>{tag}</p>)}
+                {paper.group.map((tag, index) => <p key={index} className={"tag"}>{tag}</p>)}
             </div>
     }
 

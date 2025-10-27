@@ -164,7 +164,7 @@ class PaperServiceTest {
         IdService mockIdService = mock(IdService.class);
         PaperRepo mockRepo = mock(PaperRepo.class);
         PaperService service = new PaperService(mockIdService, mockRepo);
-        TestPaperScenario p = testPaperFactory.createRandomTestPaperWithModification((paper) -> paper.withFav(true));
+        TestPaperScenario p = testPaperFactory.createRandomTestPaperWithModification(paper -> paper.withFav(true));
         Paper toggled = p.getPaper().withFav(false);
 
         when(mockRepo.findById(p.getPaper().id())).thenReturn(Optional.of(p.getPaper()));
@@ -231,10 +231,8 @@ class PaperServiceTest {
         IdService mockIdService = mock(IdService.class);
         PaperRepo mockRepo = mock(PaperRepo.class);
         PaperService service = new PaperService(mockIdService, mockRepo);
-        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification((p) -> p.withGroup(List.of("bio", "chem")));
-        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification((p) -> p.withGroup(List.of("physics", "literature")));
-        TestPaperScenario p3 = testPaperFactory.createRandomTestPaperWithModification((p) -> p.withGroup(List.of("literature", "bio")));
-        TestPaperScenario p4 = testPaperFactory.createRandomTestPaperWithModification((p) -> p.withGroup(List.of("chem", "geo")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(List.of("physics", "literature")));
+        TestPaperScenario p3 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(List.of("literature", "bio")));
         List<Paper> papers = List.of(p2.getPaper(), p3.getPaper());
 
         when(mockRepo.findAll()).thenReturn(papers);
@@ -246,7 +244,7 @@ class PaperServiceTest {
     }
 
     @Test
-    void findByGroup_shouldReturn_EmptyList() throws JsonProcessingException {
+    void findByGroup_shouldReturn_EmptyList() {
         IdService mockIdService = mock(IdService.class);
         PaperRepo mockRepo = mock(PaperRepo.class);
         PaperService service = new PaperService(mockIdService, mockRepo);

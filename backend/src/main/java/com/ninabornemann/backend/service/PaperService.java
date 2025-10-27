@@ -71,7 +71,7 @@ public class PaperService {
 
     public List<Paper> findByGroup(String group) {
         return paperRepo.findAll().stream()
-                .filter((p) -> p.group().contains(group))
+                .filter(p -> p.group().contains(group))
                 .toList();
     }
 }

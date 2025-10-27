@@ -235,7 +235,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void toggleFavoriteById_shouldReturn_oppositeBoolean() throws Exception {
-        TestPaperScenario p = testPaperFactory.createRandomTestPaperWithModification((paper) -> paper.withFav(false));
+        TestPaperScenario p = testPaperFactory.createRandomTestPaperWithModification(paper -> paper.withFav(false));
         paperRepo.save(p.getPaper());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/" +p.getPaper().id()+ "/favorite"))
@@ -293,10 +293,10 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void getAllPaper_withGroupParam_shouldReturn_ListOfPapersOfGroup() throws Exception {
-        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("bio", "chem")));
-        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("physics", "chem")));
-        TestPaperScenario p3 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("literature", "bio")));
-        TestPaperScenario p4 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("chem", "geo")));
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("bio", "chem")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("physics", "chem")));
+        TestPaperScenario p3 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("literature", "bio")));
+        TestPaperScenario p4 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("chem", "geo")));
         paperRepo.saveAll(List.of(p1.getPaper(), p2.getPaper(), p3.getPaper(), p4.getPaper()));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/paper?group=bio"))
@@ -307,8 +307,8 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void getAllPaper_withGroupParam_shouldReturn_EmptyList() throws Exception {
-        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("bio", "chem")));
-        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification((p) ->p.withGroup(List.of("physics", "chem")));
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("bio", "chem")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("physics", "chem")));
         paperRepo.saveAll(List.of(p1.getPaper(), p2.getPaper()));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/paper?group=literature"))
