@@ -119,7 +119,7 @@ class PaperControllerTest {
                                                                                     "title": "The state of OA: a large-scale analysis of the prevalence and impact of Open Access articles",
                                                                                     "author": "Heather Piwowar",
                                                                                     "year": 2018,
-                                                                                    "group": [""],
+                                                                                    "group": [],
                                                                                     "notes": "",
                                                                                     "isFav": false
                                                                                 }
