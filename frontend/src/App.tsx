@@ -12,7 +12,7 @@ import Home from "./components/Home.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 import Sidebar from "./components/Sidebar.tsx";
 
-function App() {
+export default function App() {
 
     const [papers, setPapers] = useState<Paper[]>([])
 
@@ -28,17 +28,16 @@ function App() {
     }, [])
 
     return (
-        <div className={"app-layout"}>
+        <div>
             <NavBar />
-            <div className={"layout-sidebar"}>
-                <Sidebar />
-
+            <Sidebar />
+                <div className={"app-layout"}>
                 <Routes>
                     <Route path={"/home"} element={<Home />}/>
                     <Route path={"/"} element={<Dashboard />}/>
 
                     <Route path={"/all"} element={
-                        <div>
+                        <div className={"allPage"}>
                             <AddNewPaper onAdd={(paper) => {
                                 setPapers(prevState => [...prevState, paper])
                             }}/>
@@ -57,10 +56,8 @@ function App() {
                            element={<PaperTable papers={papers.filter((paper) => paper.isFav)} />}/>
 
                 </Routes>
-            </div>
+                </div>
             <Footer/>
         </div>
     )
 }
-
-export default App

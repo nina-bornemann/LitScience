@@ -20,14 +20,11 @@
 }
 
 .app-layout {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    position: fixed;
+    top: 150px;
+    left: 200px;
+    right: 110px;
 }
-.layout-sidebar {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    align-items: flex-start;
+.allPage {
+    margin-top: -51px;
 }

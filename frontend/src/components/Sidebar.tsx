@@ -10,10 +10,7 @@ export default function Sidebar() {
     return (
         <aside className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
             <div className="sidebar-header">
-                <a href="/" className="sidebar-title">
-                    <i className="fa-solid fa-dna"></i>
-                    {isOpen && <span> LitScience</span>}
-                </a>
+                {isOpen && <span className="sidebar-title"> LitScience</span>}
                 <button ref={toggleRef} className="toggle-btn" onClick={() => {
                     setIsOpen(!isOpen)
                     toggleRef.current?.blur()}
