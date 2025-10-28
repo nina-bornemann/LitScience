@@ -2,7 +2,8 @@
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    background: linear-gradient(157deg, rgba(18, 52, 77, 1) 38%, rgba(77, 170, 160, 1) 100%);    font-synthesis: none;
+    background: linear-gradient(157deg, rgba(18, 52, 77, 1) 38%, rgba(77, 170, 160, 1) 100%);
+    font-synthesis: none;
     text-rendering: optimizeLegibility
 }
 

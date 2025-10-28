@@ -10,6 +10,7 @@ import {Route, Routes} from "react-router-dom";
 import PaperDetailPage from "./components/PaperDetailPage.tsx";
 import Home from "./components/Home.tsx";
 import Dashboard from "./components/Dashboard.tsx";
+import Sidebar from "./components/Sidebar.tsx";
 
 function App() {
 
@@ -28,29 +29,31 @@ function App() {
 
     return (
         <div className={"app-layout"}>
-            <NavBar/>
+            <NavBar />
+            <div className={"layout-sidebar"}>
+                <Sidebar />
 
-            <Routes>
-                <Route path={"/home"} element={<Home />}/>
-                <Route path={"/"} element={<Dashboard />}/>
+                <Routes>
+                    <Route path={"/home"} element={<Home />}/>
+                    <Route path={"/"} element={<Dashboard />}/>
 
-                <Route path={"/all"} element={
-                    <div>
-                        <AddNewPaper onAdd={(paper) => {
-                            setPapers(prevState => [...prevState, paper])
-                        }}/>
-                        <PaperTable papers={papers}/>
-                    </div>
-                }/>
+                    <Route path={"/all"} element={
+                        <div>
+                            <AddNewPaper onAdd={(paper) => {
+                                setPapers(prevState => [...prevState, paper])
+                            }}/>
+                            <PaperTable papers={papers}/>
+                        </div>
+                    }/>
 
-                <Route path="/paper/:id" element={
-                    <PaperDetailPage
-                        onDelete={(id) => setPapers(prev => prev.filter(p => p.id !== id))}
-                        onUpdate={() => getAllPapers()}
-                    />
-                }/>
-            </Routes>
-
+                    <Route path="/paper/:id" element={
+                        <PaperDetailPage
+                            onDelete={(id) => setPapers(prev => prev.filter(p => p.id !== id))}
+                            onUpdate={() => getAllPapers()}
+                        />
+                    }/>
+                </Routes>
+            </div>
             <Footer/>
         </div>
     )
