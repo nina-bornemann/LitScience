@@ -1,16 +1,18 @@
 import {useRef, useState} from "react";
 import "./Sidebar.css";
+import {useNavigate} from "react-router-dom";
 
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
     const toggleRef = useRef<HTMLButtonElement>(null);
+    const nav = useNavigate();
 
     return (
         <aside className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
             <div className="sidebar-header">
                 <a href="/" className="sidebar-title">
                     <i className="fa-solid fa-dna"></i>
-                    {isOpen && <span>LitScience</span>}
+                    {isOpen && <span> LitScience</span>}
                 </a>
                 <button ref={toggleRef} className="toggle-btn" onClick={() => {
                     setIsOpen(!isOpen)
@@ -21,23 +23,29 @@ export default function Sidebar() {
             </div>
 
             <nav className="sidebar-content">
-                {[
-                    { icon: "fa-solid fa-house", text: "Home" },
-                    { icon: "fa-chart-line", text: "Dashboard" },
+                {
+                [
+                    { icon: "fa-solid fa-house", text: " Home", link: "/home"},
+                    { icon: "fa-chart-line", text: " Dashboard", link: "/"},
                     { divider: true },
-                    { icon: "fa-solid fa-file", text: "All Papers" },
-                    { icon: "fa-heart", text: "Favorites" },
-                    { icon: "fa-solid fa-layer-group", text: "Groups" },
+                    { icon: "fa-solid fa-file", text: " All Papers", link: "/all"},
+                    { icon: "fa-heart", text: " Favorites", link: "/favorites" },
+                    { icon: "fa-solid fa-layer-group", text: " Groups", link: "/groups" },
                     { divider: true },
-                    { icon: "fa-fire", text: "About" },
-                    { icon: "fa-gem", text: "GitHub" },
+                    { icon: "fa-fire", text: " About", link: "/home" },
                 ].map((item, idx) =>
                     item.divider ? (
                         <hr key={idx} />
                     ) : (
                         <div key={idx} className="nav-button">
-                            <i className={`fas ${item.icon}`}></i>
-                            {isOpen && <span>{item.text}</span>}
+                            <a className={"sidebar-text"} onClick={() =>
+                            {
+                                nav(item.link!)
+                                setIsOpen(!isOpen)
+                            }}>
+                                <i className={`fas ${item.icon}`}></i>
+                                {isOpen && <span>{item.text}</span>}
+                            </a>
                         </div>
                     )
                 )}

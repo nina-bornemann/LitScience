@@ -92,3 +92,6 @@ hr {
     border-color: rgb(77 170 160);
     border-radius: 8px;
 }
+.sidebar-text {
+    color: white;
+}

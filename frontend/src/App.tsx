@@ -52,6 +52,10 @@ function App() {
                             onUpdate={() => getAllPapers()}
                         />
                     }/>
+
+                    <Route path={"/favorites"}
+                           element={<PaperTable papers={papers.filter((paper) => paper.isFav)} />}/>
+
                 </Routes>
             </div>
             <Footer/>
