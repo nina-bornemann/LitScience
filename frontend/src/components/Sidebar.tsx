@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isGroupOpen, setIsGroupOpen] = useState(false);
     const toggleRef = useRef<HTMLButtonElement>(null);
     const nav = useNavigate();
 

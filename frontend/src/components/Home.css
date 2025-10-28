@@ -4,12 +4,15 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    margin-top: -50px;
 }
 .home-title {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    line-height: 1;
 }
 .smiley {
     max-height: 160px;
@@ -20,4 +23,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    line-height: 0;
+    height: 450px;
+    margin-right: 150px;
+}
+p {
+    line-height: 1;
+}
+.descriptionHeader {
+    margin-top: -30px;
+    margin-bottom: 50px;
+}
+.descriptionFooter {
+    margin-top: 50px;
 }
