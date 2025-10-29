@@ -38,11 +38,19 @@ export default function Sidebar() {
                         <div key={idx} className="nav-button">
                             <a className={"sidebar-text"} onClick={() =>
                             {
-                                nav(item.link!)
-                                setIsOpen(!isOpen)
+                                if (item.text === " Groups") {
+                                    setIsGroupOpen(!isGroupOpen)
+                                }
+                                else {
+                                    nav(item.link!)
+                                    setIsOpen(!isOpen)
+                                }
                             }}>
                                 <i className={`fas ${item.icon}`}></i>
                                 {isOpen && <span>{item.text}</span>}
+                                {isGroupOpen && item.text === " Groups" && <a>
+                                    chemistry
+                                </a>}
                             </a>
                         </div>
                     )
