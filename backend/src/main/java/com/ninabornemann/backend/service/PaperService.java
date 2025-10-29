@@ -74,4 +74,12 @@ public class PaperService {
                 .filter(p -> p.group().contains(group))
                 .toList();
     }
+
+    public List<String> getAllGroups() {
+        return paperRepo.findAll().stream()
+                .map(Paper::group)
+                .flatMap(List::stream)
+                .distinct()
+                .toList();
+    }
 }
