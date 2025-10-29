@@ -256,4 +256,38 @@ class PaperServiceTest {
         verifyNoMoreInteractions(mockRepo, mockIdService);
         assertEquals(new ArrayList<>(), actual);
     }
+
+    @Test
+    void getAllGroups_shouldReturn_eachGroupOnce() throws JsonProcessingException {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(List.of("physics", "literature")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(List.of("literature", "bio")));
+        List<Paper> papers = List.of(p1.getPaper(), p2.getPaper());
+
+        when(mockRepo.findAll()).thenReturn(papers);
+        List<String> actual = service.getAllGroups();
+
+        verify(mockRepo).findAll();
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+        assertEquals(List.of("physics", "literature", "bio"), actual);
+    }
+
+    @Test
+    void getAllGroups_shouldReturn_emptyList_whenNoGroupsSet() throws JsonProcessingException {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(new ArrayList<>()));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(new ArrayList<>()));
+        List<Paper> papers = List.of(p1.getPaper(), p2.getPaper());
+
+        when(mockRepo.findAll()).thenReturn(papers);
+        List<String> actual = service.getAllGroups();
+
+        verify(mockRepo).findAll();
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+        assertEquals(new ArrayList<>(), actual);
+    }
 }
