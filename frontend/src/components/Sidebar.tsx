@@ -14,6 +14,9 @@ export default function Sidebar() {
                 {isOpen && <span className="sidebar-title"> LitScience</span>}
                 <button ref={toggleRef} className="toggle-btn" onClick={() => {
                     setIsOpen(!isOpen)
+                    if (isOpen) {
+                        setIsGroupOpen(false);
+                    }
                     toggleRef.current?.blur()}
                     }>
                     <i className={`fas ${isOpen ? "fa-chevron-left" : "fa-chevron-right"}`}></i>
@@ -48,9 +51,12 @@ export default function Sidebar() {
                             }}>
                                 <i className={`fas ${item.icon}`}></i>
                                 {isOpen && <span>{item.text}</span>}
-                                {isGroupOpen && item.text === " Groups" && <a>
-                                    chemistry
-                                </a>}
+                                {isGroupOpen && item.text === " Groups" &&
+                                    <div className={"groupOptions"}>
+                                        <a>chemistry</a>
+                                        <a>bio</a>
+                                    </div>
+                                }
                             </a>
                         </div>
                     )

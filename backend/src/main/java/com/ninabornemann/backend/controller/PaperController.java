@@ -79,4 +79,9 @@ public class PaperController {
     public Paper editGroupsById(@PathVariable String id, @RequestBody List<String> groupTags) {
         return paperService.editGroupsById(id, groupTags);
     }
+
+    @GetMapping("/groups")
+    public List<String> getAllGroups() {
+        return paperService.getAllGroups();
+    }
 }

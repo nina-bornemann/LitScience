@@ -1,7 +1,7 @@
 .sidebar {
     background-color: #335F7A;
     color: white;
-    height: 410px;
+    height: 510px;
     width: 150px;
     display: flex;
     flex-direction: column;
@@ -17,7 +17,7 @@
 
 .sidebar.collapsed {
     width: 65px;
-    height: 410px;
+    height: 510px;
 }
 
 .sidebar-header {
@@ -92,4 +92,10 @@ hr {
 }
 .sidebar-text {
     color: white;
+}
+.groupOptions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
 }
