@@ -1,12 +1,25 @@
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import "./Sidebar.css";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isGroupOpen, setIsGroupOpen] = useState(false);
     const toggleRef = useRef<HTMLButtonElement>(null);
     const nav = useNavigate();
+    const [allGroups, setAllGroups] = useState([])
+
+    function getAllGroups() {
+        axios
+            .get("/api/paper/groups")
+            .then((response) => setAllGroups(response.data))
+            .catch((error) => console.log(error))
+    }
+
+    useEffect(()=> {
+        getAllGroups()
+    }, [isGroupOpen])
 
     return (
         <aside className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
@@ -53,8 +66,7 @@ export default function Sidebar() {
                                 {isOpen && <span>{item.text}</span>}
                                 {isGroupOpen && item.text === " Groups" &&
                                     <div className={"groupOptions"}>
-                                        <a>chemistry</a>
-                                        <a>bio</a>
+                                        {allGroups.map((group) => <a className={"option"}>‧ {group}</a>)}
                                     </div>
                                 }
                             </a>

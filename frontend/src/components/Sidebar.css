@@ -97,5 +97,14 @@ hr {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-start;
+}
+.option {
+    padding-top: 15px;
+    padding-left: 25px;
+    color: white;
+}
+.option:hover {
+    color: rgb(77 170 160);
+    filter: none;
 }
