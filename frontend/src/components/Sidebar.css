@@ -10,7 +10,6 @@
     position: fixed;
     top: 150px;
     left: 20px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
     overflow: auto;
     border-radius: 8px;
 }
@@ -100,11 +99,18 @@ hr {
     align-items: flex-start;
 }
 .option {
-    padding-top: 15px;
-    padding-left: 25px;
     color: white;
+    border: 0;
 }
 .option:hover {
     color: rgb(77 170 160);
     filter: none;
+    border: 0;
+}
+button {
+    background-color: transparent;
+    border: 0;
+    width: 150px;
+    text-align: left;
+    padding: 15px 5px 0 20px;
 }

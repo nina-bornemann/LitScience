@@ -56,6 +56,7 @@ export default function Sidebar() {
                             {
                                 if (item.text === " Groups") {
                                     setIsGroupOpen(!isGroupOpen)
+                                    setIsOpen(true)
                                 }
                                 else {
                                     nav(item.link!)
