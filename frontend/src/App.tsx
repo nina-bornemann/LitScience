@@ -10,8 +10,10 @@ import {Route, Routes} from "react-router-dom";
 import PaperDetailPage from "./components/PaperDetailPage.tsx";
 import Home from "./components/Home.tsx";
 import Dashboard from "./components/Dashboard.tsx";
+import Sidebar from "./components/Sidebar.tsx";
+import GroupPage from "./components/GroupPage.tsx";
 
-function App() {
+export default function App() {
 
     const [papers, setPapers] = useState<Paper[]>([])
 
@@ -27,33 +29,38 @@ function App() {
     }, [])
 
     return (
-        <div className={"app-layout"}>
-            <NavBar/>
+        <div>
+            <NavBar />
+            <Sidebar />
+                <div className={"app-layout"}>
+                <Routes>
+                    <Route path={"/home"} element={<Home />}/>
+                    <Route path={"/"} element={<Dashboard />}/>
 
-            <Routes>
-                <Route path={"/home"} element={<Home />}/>
-                <Route path={"/"} element={<Dashboard />}/>
+                    <Route path={"/all"} element={
+                        <div className={"allPage"}>
+                            <AddNewPaper onAdd={(paper) => {
+                                setPapers(prevState => [...prevState, paper])
+                            }}/>
+                            <PaperTable papers={papers}/>
+                        </div>
+                    }/>
 
-                <Route path={"/all"} element={
-                    <div>
-                        <AddNewPaper onAdd={(paper) => {
-                            setPapers(prevState => [...prevState, paper])
-                        }}/>
-                        <PaperTable papers={papers}/>
-                    </div>
-                }/>
+                    <Route path="/paper/:id" element={
+                        <PaperDetailPage
+                            onDelete={(id) => setPapers(prev => prev.filter(p => p.id !== id))}
+                            onUpdate={() => getAllPapers()}
+                        />
+                    }/>
 
-                <Route path="/paper/:id" element={
-                    <PaperDetailPage
-                        onDelete={(id) => setPapers(prev => prev.filter(p => p.id !== id))}
-                        onUpdate={() => getAllPapers()}
-                    />
-                }/>
-            </Routes>
+                    <Route path={"/favorites"}
+                           element={<PaperTable papers={papers.filter((paper) => paper.isFav)} />}/>
 
+                    <Route path={"/group/:groupName"} element={<GroupPage/>}/>
+
+                </Routes>
+                </div>
             <Footer/>
         </div>
     )
 }
-
-export default App

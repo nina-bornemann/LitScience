@@ -3,11 +3,12 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import type {Paper} from "../model/Paper.tsx";
 import DashboardCard from "./DashboardCard.tsx";
+import {useNavigate} from "react-router-dom";
 
 export default function Dashboard() {
 
     const [papers, setPapers] = useState<Paper[]>([])
-
+    const nav = useNavigate();
     const favorites = papers.filter((paper) => paper.isFav)
 
     const groups = new Set(papers.flatMap((paper) => paper.group))
@@ -25,9 +26,9 @@ export default function Dashboard() {
 
     return (
             <div className={"stats"}>
-                <DashboardCard emoji={"📑"} count={papers.length} title={"Total Entries"}/>
-                <DashboardCard emoji={"📂"} count={groups.size} title={"Groups"}/>
-                <DashboardCard emoji={"❤️"} count={favorites.length} title={"Favorites"}/>
+                <DashboardCard emoji={"📑"} count={papers.length} title={"Total Entries"} onClick={() => nav("/all")}/>
+                <DashboardCard emoji={"📂"} count={groups.size} title={"Groups"} onClick={() => nav("/groups/overview")}/>
+                <DashboardCard emoji={"❤️"} count={favorites.length} title={"Favorites"} onClick={() => nav("/favorites")}/>
             </div>
     )
 }

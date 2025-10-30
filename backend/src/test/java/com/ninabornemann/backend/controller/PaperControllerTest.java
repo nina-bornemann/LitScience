@@ -19,6 +19,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import java.util.ArrayList;
 import java.util.List;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
@@ -317,5 +318,31 @@ class PaperControllerTest {
                                                                            [
                                                                            ]
                                                                            """));
+    }
+
+    @DirtiesContext
+    @Test
+    void getAllGroups_shouldReturn_eachGroupOnce() throws Exception {
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(List.of("bio", "stem cells")));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(List.of("bio", "cultivated")));
+        paperRepo.saveAll(List.of(p1.getPaper(), p2.getPaper()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/groups"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                                                             ["bio", "stem cells", "cultivated"]
+                                                                           """));
+    }
+
+    @DirtiesContext
+    @Test
+    void getAllGroups_shouldReturn_emptyList_whenNoGroupsSet() throws Exception {
+        TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(new ArrayList<>()));
+        TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p -> p.withGroup(new ArrayList<>()));
+        paperRepo.saveAll(List.of(p1.getPaper(), p2.getPaper()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/groups"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("[]"));
     }
 }

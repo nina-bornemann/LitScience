@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 @Service
 public class PaperService {
@@ -72,6 +70,14 @@ public class PaperService {
     public List<Paper> findByGroup(String group) {
         return paperRepo.findAll().stream()
                 .filter(p -> p.group().contains(group))
+                .toList();
+    }
+
+    public List<String> getAllGroups() {
+        return paperRepo.findAll().stream()
+                .map(Paper::group)
+                .flatMap(List::stream)
+                .distinct()
                 .toList();
     }
 }
