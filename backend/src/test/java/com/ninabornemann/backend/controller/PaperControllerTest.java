@@ -343,9 +343,6 @@ class PaperControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/paper/groups"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
-                                                                             [
-                                                                             ]
-                                                                           """));
+                .andExpect(MockMvcResultMatchers.content().json("[]"));
     }
 }
