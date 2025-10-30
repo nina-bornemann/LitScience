@@ -9,7 +9,7 @@ export type DashboardCardProps = {
 
 export default function DashboardCard(props:Readonly<DashboardCardProps>) {
 
-    function onKeyDown(e:React.KeyboardEvent) {
+    function handleOnKeyDown(e:React.KeyboardEvent) {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             props.onClick();
