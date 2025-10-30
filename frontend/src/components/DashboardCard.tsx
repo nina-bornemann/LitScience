@@ -17,7 +17,7 @@ export default function DashboardCard(props:Readonly<DashboardCardProps>) {
     }
 
     return (
-        <div role={"button"} tabIndex={0} onKeyDown={onKeyDown} className={"stats-card clickable"} onClick={props.onClick}>
+        <div role={"button"} tabIndex={0} onKeyDown={handleOnKeyDown} className={"stats-card clickable"} onClick={props.onClick}>
             <h1>{props.emoji}</h1>
             <div className={"stats-text"}>
                 <h2>{props.count}</h2>
