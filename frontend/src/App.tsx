@@ -11,6 +11,7 @@ import PaperDetailPage from "./components/PaperDetailPage.tsx";
 import Home from "./components/Home.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 import Sidebar from "./components/Sidebar.tsx";
+import GroupPage from "./components/GroupPage.tsx";
 
 export default function App() {
 
@@ -54,6 +55,8 @@ export default function App() {
 
                     <Route path={"/favorites"}
                            element={<PaperTable papers={papers.filter((paper) => paper.isFav)} />}/>
+
+                    <Route path={"/group/:groupName"} element={<GroupPage/>}/>
 
                 </Routes>
                 </div>

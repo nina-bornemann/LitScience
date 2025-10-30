@@ -66,7 +66,9 @@ export default function Sidebar() {
                                 {isOpen && <span>{item.text}</span>}
                                 {isGroupOpen && item.text === " Groups" &&
                                     <div className={"groupOptions"}>
-                                        {allGroups.map((group) => <a className={"option"}>‧ {group}</a>)}
+                                        {allGroups.map((group) =>
+                                            <button key={group} onClick={() => nav("/group/" + group)}
+                                               className={"option"}>‧ {group}</button>)}
                                     </div>
                                 }
                             </a>
