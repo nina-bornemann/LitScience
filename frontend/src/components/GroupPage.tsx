@@ -20,8 +20,6 @@ export default function GroupPage(){
     }, [groupName])
 
     return (
-        <>
             <PaperTable papers={papers}/>
-        </>
     )
 }
