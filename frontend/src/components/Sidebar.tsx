@@ -3,12 +3,30 @@ import "./Sidebar.css";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
+interface Item {
+    icon?:string | undefined,
+    text?:string | undefined,
+    link?:string | undefined,
+    divider?:boolean | undefined,
+}
+
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isGroupOpen, setIsGroupOpen] = useState(false);
     const toggleRef = useRef<HTMLButtonElement>(null);
     const nav = useNavigate();
-    const [allGroups, setAllGroups] = useState([])
+    const [allGroups, setAllGroups] = useState([]);
+
+    const menuItems:Item[] = [
+        { icon: "fa-solid fa-house", text: " Home", link: "/home"},
+        { icon: "fa-chart-line", text: " Dashboard", link: "/"},
+        { divider: true },
+        { icon: "fa-solid fa-file", text: " All Papers", link: "/all"},
+        { icon: "fa-heart", text: " Favorites", link: "/favorites" },
+        { icon: "fa-solid fa-layer-group", text: " Groups", link: "/groups" },
+        { divider: true },
+        { icon: "fa-fire", text: " About", link: "/home" },
+    ];
 
     function getAllGroups() {
         axios
@@ -21,48 +39,42 @@ export default function Sidebar() {
         getAllGroups()
     }, [isGroupOpen])
 
+     function openSidebar() {
+        setIsOpen(!isOpen)
+        if (isOpen) {
+            setIsGroupOpen(false);
+        }
+        toggleRef.current?.blur()
+    }
+
+    function openSidebarContent(item:Item) {
+        if (item.text === " Groups") {
+            setIsGroupOpen(!isGroupOpen)
+            setIsOpen(true)
+        }
+        else {
+            nav(item.link!)
+            setIsOpen(!isOpen)
+        }
+    }
+
     return (
         <aside className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
             <div className="sidebar-header">
                 {isOpen && <span className="sidebar-title"> LitScience</span>}
-                <button ref={toggleRef} className="toggle-btn" onClick={() => {
-                    setIsOpen(!isOpen)
-                    if (isOpen) {
-                        setIsGroupOpen(false);
-                    }
-                    toggleRef.current?.blur()}
-                    }>
+                <button ref={toggleRef} className="toggle-btn" onClick={openSidebar}>
                     <i className={`fas ${isOpen ? "fa-chevron-left" : "fa-chevron-right"}`}></i>
                 </button>
             </div>
 
             <nav className="sidebar-content">
                 {
-                [
-                    { icon: "fa-solid fa-house", text: " Home", link: "/home"},
-                    { icon: "fa-chart-line", text: " Dashboard", link: "/"},
-                    { divider: true },
-                    { icon: "fa-solid fa-file", text: " All Papers", link: "/all"},
-                    { icon: "fa-heart", text: " Favorites", link: "/favorites" },
-                    { icon: "fa-solid fa-layer-group", text: " Groups", link: "/groups" },
-                    { divider: true },
-                    { icon: "fa-fire", text: " About", link: "/home" },
-                ].map((item, idx) =>
+                menuItems.map((item, idx) =>
                     item.divider ? (
                         <hr key={idx} />
                     ) : (
                         <div key={idx} className="nav-button">
-                            <a className={"sidebar-text"} onClick={() =>
-                            {
-                                if (item.text === " Groups") {
-                                    setIsGroupOpen(!isGroupOpen)
-                                    setIsOpen(true)
-                                }
-                                else {
-                                    nav(item.link!)
-                                    setIsOpen(!isOpen)
-                                }
-                            }}>
+                            <a className={"sidebar-text"} onClick={() => openSidebarContent(item)}>
                                 <i className={`fas ${item.icon}`}></i>
                                 {isOpen && <span>{item.text}</span>}
                                 {isGroupOpen && item.text === " Groups" &&
@@ -78,5 +90,5 @@ export default function Sidebar() {
                 )}
             </nav>
         </aside>
-    );
+    )
 }
