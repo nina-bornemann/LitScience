@@ -4,10 +4,10 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 interface Item {
-    icon?:string | undefined,
-    text?:string | undefined,
-    link?:string | undefined,
-    divider?:boolean | undefined,
+    icon?:string,
+    text?:string,
+    link?:string,
+    divider?:boolean,
 }
 
 export default function Sidebar() {
