@@ -1,21 +1,25 @@
 package com.ninabornemann.backend.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.ninabornemann.backend.service.OpenAiService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestClient;
+
 
 @RestController
-@RequestMapping("api/paper/report")
+@RequestMapping("api/report")
 public class OpenAI_Controller {
 
-    private final RestClient restClient;
+    private final OpenAiService openAiService;
 
-
-    public OpenAI_Controller(RestClient.Builder restClientBuilder, @Value("${OPENAI_API_KEY}") String apiKey) {
-        this.restClient = RestClient.builder()
-                .baseUrl("https://api.openai.com/v1")
-                .defaultHeader("Authorization", "Bearer " + apiKey)
-                .build();
+    public OpenAI_Controller(OpenAiService openAiService) {
+        this.openAiService = openAiService;
     }
+
+    @PostMapping
+        public String createReport(@RequestBody String title) {
+        return openAiService.createReport(title);
+    }
+
 }
