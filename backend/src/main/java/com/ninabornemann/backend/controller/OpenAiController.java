@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/report")
-public class OpenAI_Controller {
+public class OpenAiController {
 
     private final OpenAiService openAiService;
 
-    public OpenAI_Controller(OpenAiService openAiService) {
+    public OpenAiController(OpenAiService openAiService) {
         this.openAiService = openAiService;
     }
 

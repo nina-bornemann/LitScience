@@ -19,7 +19,7 @@ public class OpenAiService {
     private final RestClient restClient;
 
     public OpenAiService(PaperRepo paperRepo, RestClient.Builder restClientBuilder, @Value("${OPENAI_API_KEY}") String apiKey) {
-        this.restClient = RestClient.builder()
+        this.restClient = restClientBuilder
                 .baseUrl("https://api.openai.com/v1")
                 .defaultHeader("Authorization", "Bearer " + apiKey)
                 .build();
