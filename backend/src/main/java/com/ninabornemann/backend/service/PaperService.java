@@ -27,7 +27,7 @@ public class PaperService {
     }
 
     public Paper addNewpaper(PaperDto paperDto) {
-        Paper newPaper = new Paper(idService.randomId(), paperDto.doi(), paperDto.title(), paperDto.author(), paperDto.year(), paperDto.group(), paperDto.notes(), false);
+        Paper newPaper = new Paper(idService.randomId(), paperDto.doi(), paperDto.title(), paperDto.author(), paperDto.year(), paperDto.group(), paperDto.notes(), false, paperDto.report());
         return paperRepo.save(newPaper);
     }
 
@@ -64,7 +64,8 @@ public class PaperService {
                 existing.year(),
                 groupTags,
                 existing.notes(),
-                existing.isFav()));
+                existing.isFav(),
+                existing.report()));
     }
 
     public List<Paper> findByGroup(String group) {
@@ -79,5 +80,19 @@ public class PaperService {
                 .flatMap(List::stream)
                 .distinct()
                 .toList();
+    }
+
+    public Paper setReport(String id, String report) {
+        Paper existing = paperRepo.findById(id)
+                .orElseThrow(() -> new  ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
+        return paperRepo.save(new Paper(existing.id(),
+                existing.doi(),
+                existing.title(),
+                existing.author(),
+                existing.year(),
+                existing.group(),
+                existing.notes(),
+                existing.isFav(),
+                report));
     }
 }

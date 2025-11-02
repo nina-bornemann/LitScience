@@ -1,10 +1,9 @@
 package com.ninabornemann.backend.controller;
 
+import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.service.OpenAiService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.ninabornemann.backend.service.PaperService;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -12,14 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class OpenAiController {
 
     private final OpenAiService openAiService;
+    private final PaperService paperService;
 
-    public OpenAiController(OpenAiService openAiService) {
+    public OpenAiController(OpenAiService openAiService, PaperService paperService) {
         this.openAiService = openAiService;
+        this.paperService =paperService;
     }
 
-    @PostMapping
-        public String createReport(@RequestBody String title) {
-        return openAiService.createReport(title);
+
+
+    @PostMapping("/{id}")
+    public Paper createReport(@PathVariable String id) {
+
+        Paper paper = paperService.getPaperById(id);
+        String report = openAiService.createReport(paper.title());
+        return paperService.setReport(paper.id(), report);
     }
 
 }

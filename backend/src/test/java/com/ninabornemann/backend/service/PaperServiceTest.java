@@ -55,8 +55,8 @@ class PaperServiceTest {
         IdService mockIdService = mock(IdService.class);
         PaperRepo mockRepo = mock(PaperRepo.class);
         PaperService service = new PaperService(mockIdService, mockRepo);
-        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, List.of("stem cells"), "");
-        Paper newPaper = new Paper("Test-id", "123", "gastruloids", "Ludi", 2022, List.of("stem cells"), "", false);
+        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, List.of("stem cells"), "", null);
+        Paper newPaper = new Paper("Test-id", "123", "gastruloids", "Ludi", 2022, List.of("stem cells"), "", false, null);
 
         when(mockIdService.randomId()).thenReturn("Test-id");
         when(mockRepo.save(newPaper)).then(a -> a.getArgument(0));
@@ -131,9 +131,9 @@ class PaperServiceTest {
         IdService mockIdService = mock(IdService.class);
         PaperRepo mockRepo = mock(PaperRepo.class);
         PaperService service = new PaperService(mockIdService, mockRepo);
-        Paper existing = new Paper("123", "234", "Title", "Author", 2002, List.of("Science"), "", true);
-        PaperDto dto = new PaperDto("234", "Title", "Author", 2004, List.of("Better Group"), "some notes");
-        Paper updated = new Paper("123", "234", "Title", "Author", 2004, List.of("Better Group"), "some notes", true);
+        Paper existing = new Paper("123", "234", "Title", "Author", 2002, List.of("Science"), "", true, null);
+        PaperDto dto = new PaperDto("234", "Title", "Author", 2004, List.of("Better Group"), "some notes", "summary");
+        Paper updated = new Paper("123", "234", "Title", "Author", 2004, List.of("Better Group"), "some notes", true, "summary");
 
         when(mockRepo.findById("123")).thenReturn(Optional.of(existing));
         when(mockRepo.save(updated)).then(a -> a.getArgument(0));
@@ -150,7 +150,7 @@ class PaperServiceTest {
         IdService mockIdService = mock(IdService.class);
         PaperRepo mockRepo = mock(PaperRepo.class);
         PaperService service = new PaperService(mockIdService, mockRepo);
-        PaperDto dto = new PaperDto("234", "Title", "Author", 2004, List.of("Better Group"), "some notes");
+        PaperDto dto = new PaperDto("234", "Title", "Author", 2004, List.of("Better Group"), "some notes", null);
 
         when(mockRepo.findById("999")).thenReturn(Optional.empty());
 

@@ -7,6 +7,7 @@ public record PaperDto(String doi,
                        String author,
                        int year,
                        List<String> group,
-                       String notes
+                       String notes,
+                       String report
 ) {
 }

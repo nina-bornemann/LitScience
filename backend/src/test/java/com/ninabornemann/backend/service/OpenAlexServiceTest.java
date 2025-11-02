@@ -26,7 +26,7 @@ class OpenAlexServiceTest {
 
     @Test
     void getPaperByDoi() throws DoiNotFoundException {
-        PaperDto paperDto = new PaperDto("123/456", "new article", "Nina Bornemann", 2020, new ArrayList<>(), "");
+        PaperDto paperDto = new PaperDto("123/456", "new article", "Nina Bornemann", 2020, new ArrayList<>(), "", null);
 
         mockServer.expect(ExpectedCount.max(2), requestTo("https://api.openalex.org/works/https://doi.org/123/456"))
                 .andExpect(method(HttpMethod.GET))

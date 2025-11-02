@@ -38,6 +38,7 @@ public class OpenAlexService {
                 response.authorships().getFirst().author().displayName(),
                 response.publicationYear(),
                 new ArrayList<>(),
-                "");
+                "",
+                null);
     }
 }

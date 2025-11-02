@@ -18,6 +18,7 @@ public class TestPaperFactory {
     List<Integer> year = List.of(1957,  2012,  2018, 1977, 1999);
     List<String> notes = List.of("cool",  "nice",  "interesting", "relevant", "nice to know");
     List<Boolean> isFav = List.of(true,  false);
+    List<String> report = List.of("summary", "generated report", "another report");
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -33,7 +34,8 @@ public class TestPaperFactory {
                 getRandom(year),
                 List.of(getRandom(group), getRandom(group)),
                 getRandom(notes),
-                getRandom(isFav));
+                getRandom(isFav),
+                getRandom(report));
         return new TestPaperScenario(paper, mapper.writeValueAsString(paper));
     }
 

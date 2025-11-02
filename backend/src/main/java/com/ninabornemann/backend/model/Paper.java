@@ -10,6 +10,7 @@ public record Paper(String id,
                     int year,
                     @With List<String> group,
                     String notes,
-                    @With boolean isFav
+                    @With boolean isFav,
+                    String report
                     ) {
 }

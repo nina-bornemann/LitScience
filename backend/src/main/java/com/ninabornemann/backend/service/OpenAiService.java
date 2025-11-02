@@ -1,6 +1,5 @@
 package com.ninabornemann.backend.service;
 
-import com.ninabornemann.backend.Repo.PaperRepo;
 import com.ninabornemann.backend.model.OpenAiMessage;
 import com.ninabornemann.backend.model.OpenAiRequest;
 import com.ninabornemann.backend.model.OpenAiResponse;
@@ -15,15 +14,13 @@ import java.util.List;
 @Service
 public class OpenAiService {
 
-    private final PaperRepo paperRepo;
     private final RestClient restClient;
 
-    public OpenAiService(PaperRepo paperRepo, RestClient.Builder restClientBuilder, @Value("${OPENAI_API_KEY}") String apiKey) {
+    public OpenAiService(RestClient.Builder restClientBuilder, @Value("${OPENAI_API_KEY}") String apiKey) {
         this.restClient = restClientBuilder
                 .baseUrl("https://api.openai.com/v1")
                 .defaultHeader("Authorization", "Bearer " + apiKey)
                 .build();
-        this.paperRepo = paperRepo;
     }
 
     public String createReport(@RequestBody String title) {
