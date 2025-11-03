@@ -7,25 +7,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
 @Service
 public class OpenAiService {
 
-    private final RestClient restClient;
+    private final ApiService apiService;
+    private final String apiKey;
 
-    public OpenAiService(RestClient.Builder restClientBuilder, @Value("${OPENAI_API_KEY}") String apiKey) {
-        this.restClient = restClientBuilder
-                .baseUrl("https://api.openai.com/v1")
-                .defaultHeader("Authorization", "Bearer " + apiKey)
-                .build();
+    public OpenAiService(ApiService apiService, @Value("${OPENAI_API_KEY}") String apiKey) {
+        this.apiService = apiService;
+        this.apiKey = apiKey;
     }
 
+
     public String createReport(@RequestBody String title) {
-        OpenAiResponse response = restClient.post()
-                .uri("/chat/completions")
+        OpenAiResponse response = apiService.getRestClient().post()
+                .uri("https://api.openai.com/v1/chat/completions")
+                .header("Authorization", "Bearer" + apiKey)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new OpenAiRequest("gpt-3.5-turbo", List.of(
                         new OpenAiMessage("user",
