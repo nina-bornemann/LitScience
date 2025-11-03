@@ -3,7 +3,6 @@ import com.ninabornemann.backend.exceptions.DoiNotFoundException;
 import com.ninabornemann.backend.model.OpenAlexResponse;
 import com.ninabornemann.backend.model.PaperDto;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -11,12 +10,10 @@ import java.util.ArrayList;
 @Service
 public class OpenAlexService {
 
-    private final RestClient restClient;
+    private  final ApiService apiService;
 
-    public OpenAlexService(RestClient.Builder restClientBuilder) {
-        this.restClient = restClientBuilder
-                .baseUrl("https://api.openalex.org")
-                .build();
+    public OpenAlexService(ApiService apiService) {
+        this.apiService = apiService;
     }
 
     public PaperDto getPaperByDoi(String doi) throws DoiNotFoundException {
@@ -24,7 +21,7 @@ public class OpenAlexService {
         String absolute = "https://api.openalex.org/works/https://doi.org/" + doi;
         OpenAlexResponse response;
         try {
-            response = restClient.get().uri(URI.create(absolute))
+            response = apiService.getRestClient().get().uri(URI.create(absolute))
                 .retrieve()
                 .body(OpenAlexResponse.class);
         }

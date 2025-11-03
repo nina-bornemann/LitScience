@@ -17,6 +17,6 @@ public class UtilsHelper {
                 dto.group() != null ? dto.group() : existing.group(),
                 dto.notes() != null ? dto.notes() : existing.notes(),
                 existing.isFav(),
-                existing.report());
+                dto.report() != null ? dto.report() : existing.report());
     }
 }
