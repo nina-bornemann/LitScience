@@ -7,11 +7,13 @@ import com.ninabornemann.backend.TestFactory.TestPaperFactory;
 import com.ninabornemann.backend.TestFactory.TestPaperScenario;
 import com.ninabornemann.backend.model.Paper;
 import com.ninabornemann.backend.model.PaperDto;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.MockServerRestClientCustomizer;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
@@ -38,12 +40,15 @@ class PaperControllerTest {
     @Autowired
     private MockRestServiceServer mockServer;
 
+
     @Autowired
     private PaperRepo paperRepo;
 
     String jsonFrom(Object object) throws JsonProcessingException {
        return new ObjectMapper().writeValueAsString(object);
     }
+
+
 
     TestPaperFactory testPaperFactory = new TestPaperFactory();
 

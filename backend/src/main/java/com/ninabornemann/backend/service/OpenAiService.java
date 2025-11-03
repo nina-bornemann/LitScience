@@ -7,23 +7,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
 @Service
 public class OpenAiService {
 
-    private final ApiService apiService;
+    private final RestClient restClient;
     private final String apiKey;
 
-    public OpenAiService(ApiService apiService, @Value("${OPENAI_API_KEY}") String apiKey) {
-        this.apiService = apiService;
+    public OpenAiService(RestClient client, @Value("${OPENAI_API_KEY}") String apiKey) {
+        this.restClient = client;
         this.apiKey = apiKey;
     }
 
 
     public String createReport(@RequestBody String title) {
-        OpenAiResponse response = apiService.getRestClient().post()
+        OpenAiResponse response = restClient.post()
                 .uri("https://api.openai.com/v1/chat/completions")
                 .header("Authorization", "Bearer" + apiKey)
                 .contentType(MediaType.APPLICATION_JSON)
