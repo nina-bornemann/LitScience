@@ -1,0 +1,27 @@
+.group-name {
+    color: rgb(77 170 160);
+}
+
+.overview-container {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: -25px;
+}
+.group-card {
+    background-color: #335F7A;
+    border-radius: 8px;
+    margin: 10px 10px 0 0;
+    padding: 0 10px 0 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.group-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
