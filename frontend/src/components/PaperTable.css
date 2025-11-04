@@ -77,3 +77,15 @@ td {
     padding: 0 12px;
     max-height: 32px;
 }
+.notes {
+    line-height: 0;
+    font-size: 20px;
+}
+.notes-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
