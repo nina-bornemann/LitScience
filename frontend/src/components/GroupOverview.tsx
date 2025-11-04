@@ -55,7 +55,7 @@ export default function GroupOverview() {
                     {groupInfos.map((group, index) => {
                          return <div key={`${group.groupName}-${index}`} className={"group-card"}>
                                     <p> <span className={"group-name"}>{group.groupName} :</span> {group.quantity}</p>
-                                    <button> 🔍</button>
+                                    <button className={"group-card-btn"}> 🔍</button>
                                 </div>
                     })}
                 </div>

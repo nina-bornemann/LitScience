@@ -8,6 +8,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     margin-top: -25px;
+    width: 800px;
 }
 .group-card {
     background-color: #335F7A;
@@ -24,4 +25,13 @@
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
+}
+.group-card-btn {
+    margin-left: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.group-card-btn:hover {
+    border: 1px solid rgb(77 170 160);
+    border-radius: 20px;
 }
