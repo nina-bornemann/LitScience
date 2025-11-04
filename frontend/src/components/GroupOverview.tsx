@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import "./GroupOverview.css"
+import {useNavigate} from "react-router-dom";
 
 interface GroupInfo {
     groupName:string;
@@ -11,6 +12,7 @@ export default function GroupOverview() {
 
     const [allGroups, setAllGroups] = useState<string[]>([])
     const [groupInfos, setGroupInfos] = useState<GroupInfo[]>([])
+    const nav = useNavigate();
 
     function getAllGroups() {
         axios
@@ -46,6 +48,10 @@ export default function GroupOverview() {
         fetchGroupInfos();
     }, [allGroups]);
 
+    function navigateToGroupPage(groupName:string) {
+        nav(`/group/${groupName}`)
+    }
+
     return (
         <>
             <div className={"overview-container"}>
@@ -55,7 +61,7 @@ export default function GroupOverview() {
                     {groupInfos.map((group, index) => {
                          return <div key={`${group.groupName}-${index}`} className={"group-card"}>
                                     <p> <span className={"group-name"}>{group.groupName} :</span> {group.quantity}</p>
-                                    <button className={"group-card-btn"}> 🔍</button>
+                                    <button onClick={() => navigateToGroupPage((group.groupName))} className={"group-card-btn"}> 🔍</button>
                                 </div>
                     })}
                 </div>

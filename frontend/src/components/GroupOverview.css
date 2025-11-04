@@ -8,13 +8,13 @@
     justify-content: flex-start;
     align-items: flex-start;
     margin-top: -25px;
-    width: 800px;
+    width: 900px;
 }
 .group-card {
     background-color: #335F7A;
     border-radius: 8px;
-    margin: 10px 10px 0 0;
-    padding: 0 10px 0 10px;
+    margin: 15px 15px 0 0;
+    padding: 0 15px 0 15px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
