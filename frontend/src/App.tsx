@@ -13,6 +13,7 @@ import Dashboard from "./components/Dashboard.tsx";
 import Sidebar from "./components/Sidebar.tsx";
 import GroupPage from "./components/GroupPage.tsx";
 import GroupOverview from "./components/GroupOverview.tsx";
+import AiReport from "./components/AiReport.tsx";
 
 export default function App() {
 
@@ -53,6 +54,8 @@ export default function App() {
                             onUpdate={() => getAllPapers()}
                         />
                     }/>
+
+                    <Route path={"/paper/:id/report"} element={<AiReport />} />
 
                     <Route path={"/favorites"}
                            element={<PaperTable papers={papers.filter((paper) => paper.isFav)} />}/>
