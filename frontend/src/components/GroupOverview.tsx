@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import type {Paper} from "../model/Paper.tsx";
 import "./GroupOverview.css"
 
 interface GroupInfo {
@@ -17,7 +16,7 @@ export default function GroupOverview() {
         axios
             .get("/api/paper/groups")
             .then((response) => {
-                console.log(response.data)
+                console.log("getting groups", response.data)
                 setAllGroups(response.data)
             })
             .catch((error) => console.log(error))
@@ -28,19 +27,24 @@ export default function GroupOverview() {
     }, [])
 
     useEffect(() => {
-        const gis:GroupInfo[] = [];
-        allGroups.map((groupName) => {
-            let papers: Paper[] = [];
-            axios.get(`/api/paper?group=${groupName}`)
-                .then((response) => {
-                    papers = response.data
-                    console.log(papers)
-                    gis.push( {groupName: groupName, quantity: papers.length})
-                })
-                .catch((error) => console.log(error))
-        });
-        setGroupInfos(gis);
-    }, [allGroups])
+        if (allGroups.length === 0) return;
+
+        const fetchGroupInfos = async () => {
+            try {
+                const infos = await Promise.all(
+                    allGroups.map(async (groupName) => {
+                        const response = await axios.get(`/api/paper?group=${groupName}`);
+                        return { groupName, quantity: response.data.length };
+                    })
+                );
+                setGroupInfos(infos);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchGroupInfos();
+    }, [allGroups]);
 
     return (
         <>
@@ -48,8 +52,8 @@ export default function GroupOverview() {
                 <h2>You have {allGroups.length} groups in your collection!</h2>
 
                 <div className={"group-cards"}>
-                    {groupInfos.map((group) => {
-                         return <div className={"group-card"}>
+                    {groupInfos.map((group, index) => {
+                         return <div key={`${group.groupName}-${index}`} className={"group-card"}>
                                     <p> <span className={"group-name"}>{group.groupName} :</span> {group.quantity}</p>
                                     <button> 🔍</button>
                                 </div>
