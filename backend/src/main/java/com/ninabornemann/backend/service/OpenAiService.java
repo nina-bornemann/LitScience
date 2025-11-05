@@ -27,13 +27,37 @@ public class OpenAiService {
                 .header("Authorization", "Bearer " +apiKey)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new OpenAiRequest("gpt-4-turbo", List.of(
+                        new OpenAiMessage("system",
+                                """
+                                You are a factual scientific summarizer.
+                                Always base your responses strictly on provided paper text.
+                                Never invent, infer, or guess any data.
+                                """),
                         new OpenAiMessage("user",
                                 """
-                                        Please generate a report about the paper with the given title. It should be nicely styled, implement linebreaks after
-                                        paragraphs using \n, with fun emojis fitting each paragraph, BUT DO NOT USE MARKDOWN!. It will show as a string in the end so use html-friendly paragraphs.
-                                        Summarize the abstract in 2 sentences. Highlight most important scientific methods with metrics of most important reagents,
-                                        key findings and a paragraph about the discussion, relevancy and limitations. Include paragraph headlines for each.
-                                        Extract DOIs from the papers reference section that lead to similar studies than the paper, no guesses, no invented items.NEVER MAKE UP FAKE DOIs please."""),
+                                Please generate a structured, readable report about the scientific paper with the given title.
+
+                                STYLE REQUIREMENTS:
+                                - Write clear paragraphs separated by visible line breaks using \\n (for HTML rendering).
+                                - Use fun and fitting emojis at the start of each paragraph.
+                                - DO NOT use Markdown or HTML tags.
+                                - Each section should have a clear title in all caps (e.g., "ABSTRACT", "METHODS", "KEY FINDINGS", "DISCUSSION", "LIMITATIONS").
+                                - Keep a friendly but scientific tone.
+
+                                CONTENT REQUIREMENTS:
+                                1️⃣ Summarize the abstract in 2 sentences.
+                                2️⃣ Describe the key scientific methods, reagents, and relevant metrics.
+                                3️⃣ Summarize the main findings and their scientific relevance.
+                                4️⃣ Discuss limitations or open questions from the study.
+                                5️⃣ At the end, extract **only titles that appear verbatim in the References section of the paper**.
+                                    - Use only titles that literally appear in the References text and the corresponding doi to that paper.
+                                    - Do not guess, infer, or invent any DOIs.
+                                    - If no valid DOIs are present, say: "No DOIs listed in the references section."
+                                    - Never fabricate DOIs or other identifiers.
+
+                                Be concise, factual, and fully based on the source material.
+                                If unsure about any information, omit it rather than guessing.
+                                """),
                         new OpenAiMessage("user", title))))
                 .retrieve()
                 .body(OpenAiResponse.class);
