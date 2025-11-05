@@ -49,12 +49,19 @@ public class OpenAiService {
                                 2️⃣ Describe the key scientific methods, reagents, and relevant metrics.
                                 3️⃣ Summarize the main findings and their scientific relevance.
                                 4️⃣ Discuss limitations or open questions from the study.
-                                5️⃣ At the end, extract **only titles that appear verbatim in the References section of the paper**.
-                                    - Use only titles that literally appear in the References text and the corresponding doi to that paper.
-                                    - Do not guess, infer, or invent any DOIs.
-                                    - If no valid DOIs are present, say: "No DOIs listed in the references section."
-                                    - Never fabricate DOIs or other identifiers.
-
+                                5️⃣ The references follow this structure:
+                                        
+                                    [number]. Author(s). Title. Journal. Year;Volume:Pages. [DOI] [PubMed] [Google Scholar]
+                                
+                                    IMPORTANT RULES:
+                                    1. If the references only contain the placeholder "[DOI]" without the actual DOI number, you MUST NOT invent or guess any DOI.
+                                    2. Instead, you may list the *titles* of those references as "potentially related studies", but only if the title text is explicitly visible in the provided text.
+                                    3. If the title is not visible, say exactly: "No reference titles visible."
+                                    4. NEVER make up or guess any new DOI, paper title, or author.
+                                    5. Summarize the paper as requested below, then add a section called "Referenced Related Studies" that includes ONLY:
+                                       - Items where a real DOI number or visible title is present.
+                                    6. If no real DOIs or titles are available, clearly state: "No valid references found."
+                                        
                                 Be concise, factual, and fully based on the source material.
                                 If unsure about any information, omit it rather than guessing.
                                 """),
