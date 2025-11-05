@@ -21,6 +21,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
     const toast = useRef<Toast>(null);
     const nav = useNavigate();
     const [isFav, setIsFav] = useState<boolean>()
+    const [report, setReport] = useState<string>(null);
 
     useEffect(() => {
         if (id) {
@@ -72,7 +73,8 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             author: undefined,
             year: undefined,
             group: undefined,
-            notes: notes
+            notes: notes,
+            report: null,
         };
         axios.put(`/api/paper/${paper?.id}`, dto)
             .then(()=> {
@@ -135,11 +137,12 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
     return (
         <>
             <Toast ref={toast} />
+
             <div className={"detail-wrapper"}>
                 <div className={"detail-buttons"}>
                     <button onClick={navigateToAll}> ← Back </button>
                     <div>
-                        <button className={"detail-action-button"}>Get AI report</button>
+                        <button onClick={() => setAiReportPopupVisible(!aiReportPopupVisible)} className={"detail-action-button"}>Get AI report</button>
                         <button className={"detail-action-button"} onClick={toggleFavorite}>{isFav && "❤️"}️{!isFav && "🩶"}</button>
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
                     </div>
@@ -164,10 +167,11 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                                 rehypePlugins: [[rehypeSanitize]],
                             }}
                         />
-                </div>
-                <button onClick={handleChange} className={"saveButton"}>Save Notes</button>
-                <p><b>PDF available: </b></p>
-                <p><b>Report: </b></p>
+                    </div>
+                    <button onClick={handleChange} className={"saveButton"}>Save Notes</button>
+
+                    <p><b>Report: </b> <br/></p>
+                    <p className={"report-field"}>{report}</p>
                 </div>
             </div>
         </>
