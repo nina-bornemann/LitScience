@@ -29,6 +29,7 @@ p {
 .saveButton {
     margin-top: 20px;
     background-color: #12344D;
+    margin-bottom: 20px;
 }
 .group-title {
     margin-right: 20px;
@@ -48,5 +49,8 @@ p {
     width: 100%;
 }
 .report-text {
+    line-height: 2;
+}
+.properties {
     line-height: 2;
 }

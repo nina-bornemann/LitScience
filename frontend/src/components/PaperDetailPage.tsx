@@ -179,14 +179,14 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                 <div className="card">
                     <h2 className={"title"}>Title:</h2>
                     <h2>{paper.title}</h2>
-                    <h2><b>Author: </b>{paper.author}</h2>
-                    <p><b>DOI: </b> {paper.doi}</p>
-                    <p><b>Publication year: </b>{paper.year}</p>
-                    <p className={"group-title"}><b>Group Tags: </b></p>
+                    <h2 className={"properties"}><b>Author: </b>{paper.author}</h2>
+                    <p className={"properties"}><b>DOI: </b> {paper.doi}</p>
+                    <p className={"properties"}><b>Publication year: </b>{paper.year}</p>
+                    <p className={"group-title properties"}><b>Group Tags: </b></p>
 
                     <GroupSelect onGroupUpdate={handleGroupChange} paper={paper}/>
 
-                    <p><b>Notes: </b></p>
+                    <p className={"properties"}><b>Notes: </b></p>
                     <div className="md-container">
                         <MDEditor
                             value={notes}
@@ -198,7 +198,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     </div>
                     <button onClick={handleChange} className={"saveButton"}>Save Notes</button>
 
-                    <p><b>Report: </b> <br/></p>
+                    <p className={"properties"}><b>Report: </b> <br/></p>
 
                     <div className="report-field">
                         {isLoadingReport && <p>🤖 Working on your summary, please wait...</p>}
