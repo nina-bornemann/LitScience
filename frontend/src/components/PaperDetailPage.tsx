@@ -31,6 +31,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     setPaper(response.data)
                     setNotes(response.data.notes)
                     setIsFav(response.data.isFav)
+                    setReport(response.data.report)
                 })
                 .catch((e) => console.log("Failed to load paper: " + e))
         }
@@ -142,7 +143,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
             .then((response) => {
                 setReport(response.data.report)
                 console.log(response.data.report)
-                props.onUpdate();
+                props.onUpdate()
             })
             .catch((error) => console.log(error))
             .finally(() => setIsLoadingReport(false))

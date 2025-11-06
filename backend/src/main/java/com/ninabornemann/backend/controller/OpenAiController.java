@@ -18,8 +18,6 @@ public class OpenAiController {
         this.paperService =paperService;
     }
 
-
-
     @PostMapping("/{id}")
     public Paper createReport(@PathVariable String id) {
         Paper paper = paperService.getPaperById(id);
