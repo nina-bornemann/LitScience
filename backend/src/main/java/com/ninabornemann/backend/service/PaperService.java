@@ -57,15 +57,7 @@ public class PaperService {
     public Paper editGroupsById(String id, List<String> groupTags) {
         Paper existing = paperRepo.findById(id)
                 .orElseThrow(() -> new  ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
-        return paperRepo.save(new Paper(existing.id(),
-                existing.doi(),
-                existing.title(),
-                existing.author(),
-                existing.year(),
-                groupTags,
-                existing.notes(),
-                existing.isFav(),
-                existing.report()));
+        return paperRepo.save(existing.withGroup(groupTags));
     }
 
     public List<Paper> findByGroup(String group) {
@@ -85,14 +77,6 @@ public class PaperService {
     public Paper setReport(String id, String report) {
         Paper existing = paperRepo.findById(id)
                 .orElseThrow(() -> new  ResponseStatusException(HttpStatus.NOT_FOUND, idNotFoundMessage));
-        return paperRepo.save(new Paper(existing.id(),
-                existing.doi(),
-                existing.title(),
-                existing.author(),
-                existing.year(),
-                existing.group(),
-                existing.notes(),
-                existing.isFav(),
-                report));
+        return paperRepo.save(existing.withReport(report));
     }
 }

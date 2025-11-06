@@ -300,7 +300,7 @@ class PaperServiceTest {
         String report = "very nice summary";
         Paper p2 = p1.getPaper().withReport(report);
 
-        when(mockRepo.findById(p1.getPaper().id())).thenReturn(Optional.ofNullable(p1.getPaper()));
+        when(mockRepo.findById(p1.getPaper().id())).thenReturn(Optional.of(p1.getPaper()));
         when(mockRepo.save(p2)).thenReturn(p2);
         Paper actual = service.setReport(p1.getPaper().id(), report);
 
