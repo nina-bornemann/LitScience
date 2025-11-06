@@ -53,7 +53,6 @@ export default function GroupOverview() {
     }
 
     return (
-        <>
             <div className={"overview-container"}>
                 <h2>You have {allGroups.length} groups in your collection!</h2>
 
@@ -66,6 +65,5 @@ export default function GroupOverview() {
                     })}
                 </div>
             </div>
-        </>
     )
 }
