@@ -290,4 +290,23 @@ class PaperServiceTest {
         verifyNoMoreInteractions(mockIdService, mockRepo);
         assertEquals(new ArrayList<>(), actual);
     }
+
+    @Test
+    void setReport_shouldReturn_paperWithReport() throws JsonProcessingException {
+        IdService mockIdService = mock(IdService.class);
+        PaperRepo mockRepo = mock(PaperRepo.class);
+        PaperService service = new PaperService(mockIdService, mockRepo);
+        TestPaperScenario p1 = new TestPaperFactory().createRandomTestPaperWithModification(p -> p.withReport(null));
+        String report = "very nice summary";
+        Paper p2 = p1.getPaper().withReport(report);
+
+        when(mockRepo.findById(p1.getPaper().id())).thenReturn(Optional.ofNullable(p1.getPaper()));
+        when(mockRepo.save(p2)).thenReturn(p2);
+        Paper actual = service.setReport(p1.getPaper().id(), report);
+
+        verify(mockRepo).findById(p1.getPaper().id());
+        verify(mockRepo).save(p2);
+        verifyNoMoreInteractions(mockIdService, mockRepo);
+        assertEquals(p2, actual);
+    }
 }
