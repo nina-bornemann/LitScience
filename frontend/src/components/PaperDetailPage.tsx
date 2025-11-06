@@ -153,9 +153,10 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
         if (!report) return null;
 
         return report
+            .replaceAll("*", "")
             .split(/\n+/)
             .filter(p => p.trim() !== "")
-            .map((paragraph, idx) => <p key={idx}>{paragraph}</p>);
+            .map((paragraph, idx) => <p key={idx} className={"report-text"}>{paragraph}</p>);
     }
 
     return (

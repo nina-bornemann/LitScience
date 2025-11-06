@@ -42,3 +42,11 @@ p {
     height: 600px;
     overflow-y: auto;
 }
+.report-field {
+    padding: 10px 30px 10px 30px;
+    text-align: justify;
+    width: 100%;
+}
+.report-text {
+    line-height: 2;
+}
