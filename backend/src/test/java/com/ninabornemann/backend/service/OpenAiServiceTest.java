@@ -3,7 +3,6 @@ package com.ninabornemann.backend.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
-import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -26,7 +25,7 @@ class OpenAiServiceTest {
 
 
     @Test
-    void generateReport_shouldReturn_summarizedReport() throws Exception {
+    void generateReport_shouldReturn_summarizedReport() {
         String title = "Capturing Cardiogenesis in Gastruloids";
         mockServer.expect(requestTo("https://api.openai.com/v1/chat/completions"))
                 .andExpect(method(HttpMethod.POST))
