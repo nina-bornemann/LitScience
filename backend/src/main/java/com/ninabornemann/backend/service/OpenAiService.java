@@ -50,7 +50,7 @@ public class OpenAiService {
                                 3️⃣ Summarize the main findings and their scientific relevance.
                                 4️⃣ Discuss limitations or open questions from the study.
                                 5️⃣ The references follow this structure:
-                                        
+                                
                                     [number]. Author(s). Title. Journal. Year;Volume:Pages. [DOI] [PubMed] [Google Scholar]
                                 
                                     IMPORTANT RULES:
@@ -61,7 +61,7 @@ public class OpenAiService {
                                     5. Summarize the paper as requested below, then add a section called "Referenced Related Studies" that includes ONLY:
                                        - Items where a real DOI number or visible title is present.
                                     6. If no real DOIs or titles are available, clearly state: "No valid references found."
-                                        
+                                
                                 Be concise, factual, and fully based on the source material.
                                 If unsure about any information, omit it rather than guessing.
                                 """),

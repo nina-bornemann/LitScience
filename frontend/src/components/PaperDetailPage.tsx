@@ -22,6 +22,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
     const nav = useNavigate();
     const [isFav, setIsFav] = useState<boolean>()
     const [report, setReport] = useState<string>(null);
+    const [isLoadingReport, setIsLoadingReport] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -135,6 +136,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
     }
 
     function handleReport() {
+        setIsLoadingReport(true);
         axios
             .post(`/api/report/${paper?.id}`)
             .then((response) => {
@@ -142,7 +144,8 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                 console.log(response.data.report)
                 props.onUpdate();
             })
-            .catch();
+            .catch((error) => console.log(error))
+            .finally(() => setIsLoadingReport(false))
     }
 
     function renderReport() {
@@ -162,7 +165,9 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                 <div className={"detail-buttons"}>
                     <button onClick={navigateToAll}> ← Back</button>
                     <div>
-                        <button onClick={handleReport} className={"detail-action-button"}>Get AI report</button>
+                        <button onClick={handleReport} className={"detail-action-button"} disabled={isLoadingReport}>
+                            {isLoadingReport ? "⏳ Generating..." : "Get AI report"}
+                        </button>
                         <button className={"detail-action-button"}
                                 onClick={toggleFavorite}>{isFav && "❤️"}️{!isFav && "🩶"}</button>
                         <button className={"detail-action-button"} onClick={handleDelete}> 🗑</button>
@@ -194,7 +199,8 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     <p><b>Report: </b> <br/></p>
 
                     <div className="report-field">
-                        {renderReport()}
+                        {isLoadingReport && <p>🤖 Working on your summary, please wait...</p>}
+                        {!isLoadingReport && renderReport()}
                     </div>
 
                 </div>

@@ -22,7 +22,6 @@ public class OpenAiController {
 
     @PostMapping("/{id}")
     public Paper createReport(@PathVariable String id) {
-
         Paper paper = paperService.getPaperById(id);
         String report = openAiService.createReport(paper.title());
         return paperService.setReport(paper.id(), report);
