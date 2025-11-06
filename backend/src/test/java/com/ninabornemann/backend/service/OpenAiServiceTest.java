@@ -1,9 +1,10 @@
-/*
 package com.ninabornemann.backend.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
@@ -13,7 +14,8 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
-@RestClientTest(ApiService.class)
+@SpringBootTest
+@AutoConfigureMockRestServiceServer
 class OpenAiServiceTest {
 
     @Autowired
@@ -43,4 +45,4 @@ class OpenAiServiceTest {
 
         assertEquals("This is a summary about this very interesting paper!", actual);
     }
-}*/
+}
