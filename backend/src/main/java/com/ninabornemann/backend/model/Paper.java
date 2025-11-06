@@ -11,6 +11,6 @@ public record Paper(String id,
                     @With List<String> group,
                     String notes,
                     @With boolean isFav,
-                    String report
+                    @With String report
                     ) {
 }
