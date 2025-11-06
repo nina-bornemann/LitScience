@@ -11,9 +11,9 @@ class UtilsHelperTest {
 
     @Test
     void transformDtoToPaper_shouldReturn_CorrectPaper(){
-        Paper p = new Paper("1", "23", "Test", "Tester", 1999, List.of(""), "", false);
-        PaperDto dto = new PaperDto(null, null, null, 0, null, "Experiments to do");
-        Paper updated = new Paper("1", "23", "Test", "Tester", 1999, List.of(""), "Experiments to do", false);
+        Paper p = new Paper("1", "23", "Test", "Tester", 1999, List.of(""), "", false, null);
+        PaperDto dto = new PaperDto(null, null, null, 0, null, "Experiments to do", null);
+        Paper updated = new Paper("1", "23", "Test", "Tester", 1999, List.of(""), "Experiments to do", false, null);
 
         Paper actual = UtilsHelper.transformDtoToPaper(dto, p);
 

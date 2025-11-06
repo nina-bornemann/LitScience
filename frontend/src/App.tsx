@@ -12,6 +12,7 @@ import Home from "./components/Home.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 import Sidebar from "./components/Sidebar.tsx";
 import GroupPage from "./components/GroupPage.tsx";
+import GroupOverview from "./components/GroupOverview.tsx";
 
 export default function App() {
 
@@ -58,6 +59,7 @@ export default function App() {
 
                     <Route path={"/group/:groupName"} element={<GroupPage/>}/>
 
+                    <Route path={"/groups/overview"} element={<GroupOverview />}/>
                 </Routes>
                 </div>
             <Footer/>

@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
@@ -73,7 +74,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void addNewPaper_shouldReturn_newPaper() throws Exception {
-        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, List.of("stem cells", "gastruloids"), "");
+        PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, List.of("stem cells", "gastruloids"), "", null);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/paper")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonFrom(dto)))
@@ -86,7 +87,8 @@ class PaperControllerTest {
                                                                                   "year": 2022,
                                                                                   "group": ["stem cells", "gastruloids"],
                                                                                   "notes": "",
-                                                                                  "isFav": false
+                                                                                  "isFav": false,
+                                                                                  "report": null
                                                                                 }
                                                                            """))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
@@ -122,7 +124,8 @@ class PaperControllerTest {
                                                                                     "year": 2018,
                                                                                     "group": [],
                                                                                     "notes": "",
-                                                                                    "isFav": false
+                                                                                    "isFav": false,
+                                                                                    "report": null
                                                                                 }
                                                                                 """))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
@@ -193,9 +196,9 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void editPaperById_shouldReturn_updatedPaper() throws Exception {
-        Paper existing = new Paper("234", "123.4/56", "Plant metabolism", "Prof", 1970, List.of("plants"), "", false);
+        Paper existing = new Paper("234", "123.4/56", "Plant metabolism", "Prof", 1970, List.of("plants"), "", false, null);
         paperRepo.save(existing);
-        PaperDto updated = new PaperDto("123.4/56", "Plant metabolism", "Prof", 1970, List.of("plants"), "cool paper");
+        PaperDto updated = new PaperDto("123.4/56", "Plant metabolism", "Prof", 1970, List.of("plants"), "cool paper", null);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/234")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -211,7 +214,8 @@ class PaperControllerTest {
                                                                                "year": 1970,
                                                                                "group": ["plants"],
                                                                                "notes": "cool paper",
-                                                                               "isFav": false
+                                                                               "isFav": false,
+                                                                               "report": null
                                                                            }
                                                                            """));
     }
@@ -219,7 +223,7 @@ class PaperControllerTest {
     @DirtiesContext
     @Test
     void editPaperById_shouldThrow_ResponseStatusException_whenIdNotFound() throws Exception {
-        PaperDto dto = new PaperDto("22.3/4", "Gastruloids", "Krauss", 2022, List.of("stem cells"), "important");
+        PaperDto dto = new PaperDto("22.3/4", "Gastruloids", "Krauss", 2022, List.of("stem cells"), "important", "summary");
         mockMvc.perform(MockMvcRequestBuilders.put("/api/paper/333")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonFrom(dto))

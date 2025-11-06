@@ -3,7 +3,7 @@ import PaperTable from "./PaperTable.tsx";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-
+import "./GroupPage.css"
 
 export default function GroupPage(){
 
@@ -20,6 +20,12 @@ export default function GroupPage(){
     }, [groupName])
 
     return (
+        <>
+            <div className={"group-header"}>
+                <h2 className={"group-name"}>Group: </h2> <h2>{groupName}</h2>
+            </div>
             <PaperTable papers={papers}/>
+        </>
+
     )
 }

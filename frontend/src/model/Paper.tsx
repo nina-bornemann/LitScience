@@ -5,8 +5,9 @@ export type Paper = {
     author:string,
     year:number,
     group:string[],
-    notes:string
-    isFav:boolean
+    notes:string,
+    isFav:boolean,
+    report:string | null
 }
 
 export type PaperDto = {
@@ -15,6 +16,7 @@ export type PaperDto = {
     author:string | undefined,
     year:number | undefined,
     group:string[] | undefined,
-    notes:string | undefined
+    notes:string | undefined,
+    report:string | null
 }
 

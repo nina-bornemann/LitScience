@@ -1,0 +1,10 @@
+.group-name {
+    color: rgb(77 170 160);
+}
+.group-header {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: -75px;
+    margin-left: 20px;
+}

@@ -15,12 +15,20 @@ export default function PaperTable(props:Readonly<PaperTableProps>) {
     const nav = useNavigate()
 
     const favTemplate = (paper:Paper) => {
-        return <div className={"fav-container"}> <p className={"fav"}>{paper.isFav && "❤️"}️{!paper.isFav && ""}</p> </div>
+        return <div className={"fav-container"}>
+                <p className={"fav"}>{paper.isFav && "❤️"}️{!paper.isFav && ""}</p>
+        </div>
     };
 
     const groupTemplate = (paper:Paper)=> {
         return <div className={"groupTags"}>
                 {paper.group.map((tag, index) => <p key={index} className={"tag"}>{tag}</p>)}
+            </div>
+    }
+
+    const noteTemplate = (paper:Paper) => {
+        return <div className={"notes-container"}>
+               <p className={"notes"}>{paper.notes !== null && "🔍"}{paper.notes === null && ""}</p>
             </div>
     }
 
@@ -36,8 +44,9 @@ export default function PaperTable(props:Readonly<PaperTableProps>) {
                     <Column field="isFav" header="" sortable style={{ width: '5%' }} body={favTemplate} className={"truncate-2"}></Column>
                     <Column field="title" header="Title" sortable style={{ width: '30%' }} className={"truncate-2"}></Column>
                     <Column field="author" header="Author" sortable style={{ width: '20%' }} className={"truncate-2"}></Column>
-                    <Column field="doi" header="DOI" sortable style={{ width: '15%' }} className={"truncate-3"}></Column>
+                    <Column field="doi" header="DOI" sortable style={{ width: '10%' }} className={"truncate-3"}></Column>
                     <Column field="year" header="Year" sortable style={{ width: '10%' }}></Column>
+                    <Column field="notes" header="Notes" style={{ width: '5%'}} body={noteTemplate}> </Column>
                     <Column field="group" header="Group" sortable style={{ width: '20%' }} body={groupTemplate} className={"truncate-2"}></Column>
                 </DataTable>
             </div>

@@ -13,10 +13,8 @@ public class OpenAlexService {
 
     private final RestClient restClient;
 
-    public OpenAlexService(RestClient.Builder restClientBuilder) {
-        this.restClient = restClientBuilder
-                .baseUrl("https://api.openalex.org")
-                .build();
+    public OpenAlexService(RestClient client) {
+        this.restClient = client;
     }
 
     public PaperDto getPaperByDoi(String doi) throws DoiNotFoundException {
@@ -38,6 +36,7 @@ public class OpenAlexService {
                 response.authorships().getFirst().author().displayName(),
                 response.publicationYear(),
                 new ArrayList<>(),
-                "");
+                "",
+                null);
     }
 }

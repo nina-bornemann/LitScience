@@ -3,24 +3,26 @@ import {useEffect, useState, useRef} from "react";
 import type {Paper, PaperDto} from "../model/Paper.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import { Toast } from 'primereact/toast';
+import {Toast} from 'primereact/toast';
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 import GroupSelect from "./GroupSelect.tsx";
 
 type PaperDetailPageProps = {
-    onDelete: (id?:string) => void;
+    onDelete: (id?: string) => void;
     onUpdate: () => void;
 }
 
-export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
+export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
 
-    const {id} = useParams<{id:string}>()
+    const {id} = useParams<{ id: string }>()
     const [paper, setPaper] = useState<Paper | undefined>(undefined)
     const [notes, setNotes] = useState<string>("");
     const toast = useRef<Toast>(null);
     const nav = useNavigate();
     const [isFav, setIsFav] = useState<boolean>()
+    const [report, setReport] = useState<string>(null);
+    const [isLoadingReport, setIsLoadingReport] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -29,6 +31,7 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                     setPaper(response.data)
                     setNotes(response.data.notes)
                     setIsFav(response.data.isFav)
+                    setReport(response.data.report)
                 })
                 .catch((e) => console.log("Failed to load paper: " + e))
         }
@@ -65,17 +68,18 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
-    function handleChange(){
-        const dto:PaperDto = {
+    function handleChange() {
+        const dto: PaperDto = {
             doi: undefined,
             title: undefined,
             author: undefined,
             year: undefined,
             group: undefined,
-            notes: notes
+            notes: notes,
+            report: null,
         };
         axios.put(`/api/paper/${paper?.id}`, dto)
-            .then(()=> {
+            .then(() => {
                 toast.current?.show({
                     severity: 'success',
                     summary: 'Updated',
@@ -112,13 +116,13 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
-    function handleGroupChange(tags:string[]) {
+    function handleGroupChange(tags: string[]) {
         axios.put(`/api/paper/${paper?.id}/group`, JSON.stringify(tags), {
             headers: {
                 "Content-Type": "application/json"
             }
         })
-            .then(()=> {
+            .then(() => {
                 props.onUpdate()
             })
             .catch((error) => {
@@ -132,30 +136,57 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
             })
     }
 
+    function handleReport() {
+        setIsLoadingReport(true);
+        axios
+            .post(`/api/report/${paper?.id}`)
+            .then((response) => {
+                setReport(response.data.report)
+                console.log(response.data.report)
+                props.onUpdate()
+            })
+            .catch((error) => console.log(error))
+            .finally(() => setIsLoadingReport(false))
+    }
+
+    function renderReport() {
+        if (!report) return null;
+
+        return report
+            .replaceAll("*", "")
+            .split(/\n+/)
+            .filter(p => p.trim() !== "")
+            .map((paragraph, idx) => <p key={idx} className={"report-text"}>{paragraph}</p>);
+    }
+
     return (
         <>
-            <Toast ref={toast} />
+            <Toast ref={toast}/>
+
             <div className={"detail-wrapper"}>
                 <div className={"detail-buttons"}>
-                    <button onClick={navigateToAll}> ← Back </button>
+                    <button onClick={navigateToAll}> ← Back</button>
                     <div>
-                        <button className={"detail-action-button"}>Get AI report</button>
-                        <button className={"detail-action-button"} onClick={toggleFavorite}>{isFav && "❤️"}️{!isFav && "🩶"}</button>
-                        <button className={"detail-action-button"} onClick={handleDelete}> 🗑 </button>
+                        <button onClick={handleReport} className={"detail-action-button"} disabled={isLoadingReport}>
+                            {isLoadingReport ? "⏳ Generating..." : "Get AI report"}
+                        </button>
+                        <button className={"detail-action-button"}
+                                onClick={toggleFavorite}>{isFav && "❤️"}️{!isFav && "🩶"}</button>
+                        <button className={"detail-action-button"} onClick={handleDelete}> 🗑</button>
                     </div>
                 </div>
 
                 <div className="card">
                     <h2 className={"title"}>Title:</h2>
                     <h2>{paper.title}</h2>
-                    <h2> <b>Author: </b>{paper.author}</h2>
-                    <p><b>DOI: </b> {paper.doi}</p>
-                    <p><b>Publication year: </b>{paper.year}</p>
-                    <p className={"group-title"}><b>Group Tags: </b> </p>
+                    <h2 className={"properties"}><b>Author: </b>{paper.author}</h2>
+                    <p className={"properties"}><b>DOI: </b> {paper.doi}</p>
+                    <p className={"properties"}><b>Publication year: </b>{paper.year}</p>
+                    <p className={"group-title properties"}><b>Group Tags: </b></p>
 
-                    <GroupSelect onGroupUpdate={handleGroupChange} paper={paper} />
+                    <GroupSelect onGroupUpdate={handleGroupChange} paper={paper}/>
 
-                    <p><b>Notes: </b></p>
+                    <p className={"properties"}><b>Notes: </b></p>
                     <div className="md-container">
                         <MDEditor
                             value={notes}
@@ -164,10 +195,16 @@ export default function PaperDetailPage(props:Readonly<PaperDetailPageProps>) {
                                 rehypePlugins: [[rehypeSanitize]],
                             }}
                         />
-                </div>
-                <button onClick={handleChange} className={"saveButton"}>Save Notes</button>
-                <p><b>PDF available: </b></p>
-                <p><b>Report: </b></p>
+                    </div>
+                    <button onClick={handleChange} className={"saveButton"}>Save Notes</button>
+
+                    <p className={"properties"}><b>Report: </b> <br/></p>
+
+                    <div className="report-field">
+                        {isLoadingReport && <p>🤖 Working on your summary, please wait...</p>}
+                        {!isLoadingReport && renderReport()}
+                    </div>
+
                 </div>
             </div>
         </>
