@@ -58,7 +58,8 @@ Upcoming:
 ✅ Favorites & Tags – Organize your research easily  
 ✅ Markdown Notes – Write and save formatted notes per paper  
 ✅ Dashboard – Quick stats: total papers, groups, favorites  
-✅ Use GPT-based analysis to summarize, extract keywords, and auto-generate learning notes.
+✅ Use ChatGPT-based analysis to summarize, extract keywords, and auto-generate learning notes.
+✅ closable Sidebar for easy navigation
 
 
 ## 🔮 Coming Soon   
@@ -123,7 +124,7 @@ Frontend runs at:
 
 - User can edit tags, notes, and mark favorites
 
-- (Future) User clicks “Get AI report” → OpenAI summarizes the paper
+- User clicks “Get AI report” → OpenAI summarizes the paper
 
 👩‍🔬 Nina  
 ☕️ Capstone Project — 2025  
