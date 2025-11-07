@@ -3,13 +3,12 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Java CI with Maven](https://github.com/nina-bornemann/LitScience/actions/workflows/maven.yml/badge.svg)](https://github.com/nina-bornemann/LitScience/actions/workflows/maven.yml)
 
 
-![website](docs/img.png)
-
+![img.png](img.png)
 
 **LitScience** is an intelligent literature assistant for 
 researchers, students, and curious readers.  
 It lets you import scientific papers by DOI, organize them with 
-tags, favorite key readings, and (soon) analyze papers with AI for 
+tags, favorite key readings, and analyze papers with AI for 
 summaries and insights.
 
 This project is a **full-stack capstone** combining a Spring Boot 
@@ -20,9 +19,8 @@ backend, React + TypeScript frontend, and external APIs like
 # 🚧 Status
 > **In Progress — Capstone 2025**
 
-Core CRUD and OpenAlex integration are implemented.  
+Core CRUD, OpenAi and OpenAlex integration are implemented.  
 Upcoming:
-- 🧩 **OpenAI API integration** for generating smart summaries and key research insights
 - 📄 **PDF “drop-in” uploads** to extract and parse content directly from files
 - 🎨 **Expanded UI dashboard** for citation management, search, and analytics
 
@@ -60,10 +58,10 @@ Upcoming:
 ✅ Favorites & Tags – Organize your research easily  
 ✅ Markdown Notes – Write and save formatted notes per paper  
 ✅ Dashboard – Quick stats: total papers, groups, favorites  
+✅ Use GPT-based analysis to summarize, extract keywords, and auto-generate learning notes.
 
-## 🔮 Coming Soon  
-### 🚀 OpenAI Integration  
-Use GPT-based analysis to summarize, extract keywords, and auto-generate learning notes.
+
+## 🔮 Coming Soon   
 
 ### 📄 PDF Drop-Ins
 Upload scientific papers directly — the system will extract text and metadata automatically.
@@ -73,7 +71,7 @@ Visualize your reading trends, favorite authors, and keyword heatmaps.
 
 ## 🧠 API Endpoints (Backend)
 Get all papers or filter by group    
-> GET	    /api/paper  
+> GET	  /api/paper  
 > GET     /api/paper?group={groupName}
 
 Get a paper by ID
@@ -92,6 +90,9 @@ Edit a paper  (notes, favorites, groups)
 
 Delete a paper  
 > DELETE	/api/paper/{id}	  
+
+Create AI generated report
+> POST   /api/paper/{id}
 
 ## 🚀 Getting Started
 ### Backend
