@@ -6,7 +6,7 @@ export default function Home() {
         <div className={"home"}>
             <div className={"home-title"}>
                 <h1>🧪    Welcome to LitScience! </h1>
-                <img src={"/src/assets/Smiley_Cell.png"} alt={"Cell-Smiley-Logo"} className={"smiley"}/>
+                <img src={"/Smiley_Cell.png"} alt={"Cell-Smiley-Logo"} className={"smiley"}/>
             </div>
             <div className={"description"}>
                 <h2 className={"descriptionHeader"}> ✨ What you can do here: </h2>

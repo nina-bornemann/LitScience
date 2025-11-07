@@ -14,7 +14,7 @@ export default function NavBar() {
             <header>
                 <div className={"logo-container"}>
                     <a href="#" onClick={navToDashboard} className={"clickable"}>
-                        <img src="/src/assets/logo.png" alt="Logo" className="logo" />
+                        <img src="/logo.png" alt="Logo" className="logo" />
                     </a>
                     <a href="#" onClick={navToDashboard} className={"clickable"}>
                         <h2 className={"logo-text"}>LitScience</h2>
