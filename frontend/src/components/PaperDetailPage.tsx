@@ -21,7 +21,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
     const toast = useRef<Toast>(null);
     const nav = useNavigate();
     const [isFav, setIsFav] = useState<boolean>()
-    const [report, setReport] = useState<string>(null);
+    const [report, setReport] = useState<string | null>(null);
     const [isLoadingReport, setIsLoadingReport] = useState(false);
 
     useEffect(() => {
