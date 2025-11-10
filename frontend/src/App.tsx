@@ -44,8 +44,8 @@ export default function App() {
                 <div className={"app-layout"}>
                 <Routes>
                     <Route path={"/login"} element={<Login />}/>
-                    <Route path={"/home"} element={<Home />}/>
-                    <Route path={"/"} element={<Dashboard />}/>
+                    <Route path={"/"} element={<Home />}/>
+                    <Route path={"/dashboard"} element={<Dashboard />}/>
 
                     <Route path={"/all"} element={
                         <div className={"allPage"}>

@@ -6,7 +6,7 @@ export default function NavBar() {
     const nav = useNavigate()
 
     function navToDashboard() {
-        nav("/")
+        nav("/dashboard")
     }
 
     return (
@@ -22,8 +22,8 @@ export default function NavBar() {
                 </div>
 
                 <nav>
-                    <Link to={"/home"} className={"clickable"}>  Home  </Link>
-                    <Link to={"/"} className={"clickable"}> Dashboard </Link>
+                    <Link to={"/"} className={"clickable"}>  Home  </Link>
+                    <Link to={"/dashboard"} className={"clickable"}> Dashboard </Link>
                     <Link to={"/all"} className={"clickable"}>  My Collection  </Link>
                 </nav>
             </header>
