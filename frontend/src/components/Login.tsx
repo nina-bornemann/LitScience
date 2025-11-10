@@ -22,9 +22,6 @@ export default function Login() {
         }, []);
 
     return (
-
-        <>
-            <button onClick={login}><span>LOGIN</span> </button>
-        </>
+        <button onClick={login}><span>LOGIN</span> </button>
     )
 }

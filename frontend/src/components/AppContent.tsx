@@ -33,33 +33,31 @@ export default function AppContent() {
     }, [])
 
     return (
-        <>
-            <Routes>
-                <Route path={"/dashboard"} element={<Dashboard />}/>
+        <Routes>
+            <Route path={"/dashboard"} element={<Dashboard />}/>
 
-                <Route path={"all"} element={
-                    <div className={"allPage"}>
-                        <AddNewPaper onAdd={(paper) => {
-                            setPapers(prevState => [...prevState, paper])
-                        }}/>
-                        <PaperTable papers={papers}/>
-                    </div>
-                }/>
+            <Route path={"all"} element={
+                <div className={"allPage"}>
+                    <AddNewPaper onAdd={(paper) => {
+                        setPapers(prevState => [...prevState, paper])
+                    }}/>
+                    <PaperTable papers={papers}/>
+                </div>
+            }/>
 
-                <Route path="paper/:id" element={
-                    <PaperDetailPage
-                        onDelete={(id) => setPapers(prev => prev.filter(p => p.id !== id))}
-                        onUpdate={() => getAllPapers()}
-                    />
-                }/>
+            <Route path="paper/:id" element={
+                <PaperDetailPage
+                    onDelete={(id) => setPapers(prev => prev.filter(p => p.id !== id))}
+                    onUpdate={() => getAllPapers()}
+                />
+            }/>
 
-                <Route path={"favorites"}
-                       element={<PaperTable papers={getFavoritePapers()} />}/>
+            <Route path={"favorites"}
+                   element={<PaperTable papers={getFavoritePapers()} />}/>
 
-                <Route path={"group/:groupName"} element={<GroupPage/>}/>
+            <Route path={"group/:groupName"} element={<GroupPage/>}/>
 
-                <Route path={"groups/overview"} element={<GroupOverview />}/>
-            </Routes>
-        </>
+            <Route path={"groups/overview"} element={<GroupOverview />}/>
+        </Routes>
     )
 }
