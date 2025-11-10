@@ -12,15 +12,21 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+  /*  private final String defaultSuccessUrl;
+
+    public SecurityConfig(@Value("${DEFAULT_SUCCESS_URL}") String defaultSuccessUrl) {
+        this.defaultSuccessUrl = defaultSuccessUrl;
+    }
+*/
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, @Value("${DEFAULT_SUCCESS_URL}") String defaultSuccessUrl) throws Exception {
-        System.out.println(defaultSuccessUrl);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        //System.out.println(defaultSuccessUrl);
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/api/*").authenticated()
                         .anyRequest().permitAll())
-                .oauth2Login(o -> o.defaultSuccessUrl(defaultSuccessUrl));
+                .oauth2Login(o -> o.defaultSuccessUrl("http://localhost:8080"));
         return http.build();
     }
 }
