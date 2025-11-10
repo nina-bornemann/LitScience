@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("api/report")
+@RequestMapping("/api/report")
 public class OpenAiController {
 
     private final OpenAiService openAiService;

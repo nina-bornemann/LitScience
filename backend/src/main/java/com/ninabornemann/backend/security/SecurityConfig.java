@@ -1,5 +1,6 @@
 package com.ninabornemann.backend.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,13 +13,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, @Value("${DEFAULT_SUCCESS_URL}") String defaultSuccessUrl) throws Exception {
+        System.out.println(defaultSuccessUrl);
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/api/*").authenticated()
                         .anyRequest().permitAll())
-                .oauth2Login(o -> o.defaultSuccessUrl("https://litscience.onrender.com/"));
+                .oauth2Login(o -> o.defaultSuccessUrl(defaultSuccessUrl));
         return http.build();
     }
 }

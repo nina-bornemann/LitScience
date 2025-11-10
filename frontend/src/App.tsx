@@ -13,6 +13,7 @@ import Dashboard from "./components/Dashboard.tsx";
 import Sidebar from "./components/Sidebar.tsx";
 import GroupPage from "./components/GroupPage.tsx";
 import GroupOverview from "./components/GroupOverview.tsx";
+import Login from "./components/Login.tsx";
 
 export default function App() {
 
@@ -21,8 +22,15 @@ export default function App() {
     function getAllPapers() {
         axios
             .get("/api/paper")
-            .then((response) => setPapers(response.data))
-            .catch((e) => console.log(e))
+            .then((response) => {
+                setPapers(response.data)
+            })
+            .catch((e) => console.log("error", e))
+    }
+
+    function getFavoritePapers() {
+        console.log("papers:", papers)
+        return papers?.filter((paper) => paper.isFav)
     }
 
     useEffect(() => {
@@ -35,6 +43,7 @@ export default function App() {
             <Sidebar />
                 <div className={"app-layout"}>
                 <Routes>
+                    <Route path={"/login"} element={<Login />}/>
                     <Route path={"/home"} element={<Home />}/>
                     <Route path={"/"} element={<Dashboard />}/>
 
@@ -55,7 +64,7 @@ export default function App() {
                     }/>
 
                     <Route path={"/favorites"}
-                           element={<PaperTable papers={papers.filter((paper) => paper.isFav)} />}/>
+                           element={<PaperTable papers={getFavoritePapers()} />}/>
 
                     <Route path={"/group/:groupName"} element={<GroupPage/>}/>
 
