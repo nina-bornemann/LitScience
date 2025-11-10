@@ -15,6 +15,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, @Value("${DEFAULT_SUCCESS_URL}") String defaultSuccessUrl) throws Exception {
         http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/api/*").authenticated()
                         .anyRequest().permitAll())
