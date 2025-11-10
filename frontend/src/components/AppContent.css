@@ -1,0 +1,30 @@
+#root {
+    max-width: 1280px;
+    margin: 0;
+    padding: 10px;
+}
+
+@keyframes logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
+}
+
+.app-layout {
+    position: fixed;
+    top: 150px;
+    left: 200px;
+    right: 110px;
+}
+.allPage {
+    margin-top: -51px;
+}

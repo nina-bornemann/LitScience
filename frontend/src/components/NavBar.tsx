@@ -1,5 +1,6 @@
 import './NavBar.css'
 import {Link, useNavigate} from "react-router-dom";
+import Login from "./Login.tsx";
 
 export default function NavBar() {
 
@@ -26,6 +27,8 @@ export default function NavBar() {
                     <Link to={"/dashboard"} className={"clickable"}> Dashboard </Link>
                     <Link to={"/all"} className={"clickable"}>  My Collection  </Link>
                 </nav>
+
+                <Login />
             </header>
         </>
     )
