@@ -1,7 +1,10 @@
 import axios from "axios";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 export default function Login() {
+
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+
     function login() {
         const host:string =
             window.location.host === "localhost:5173" ?
@@ -13,12 +16,14 @@ export default function Login() {
 
     function loadUser() {
         axios.get("/api/auth")
-            .then(response => console.log(response.data))
+            .then(response => {
+                setIsLoggedIn(!response.data.includes("html"))
+            })
     }
 
     useEffect(() => {
         loadUser()
-        }, []);
+        });
 
     function logout() {
         const host:string =
@@ -31,8 +36,8 @@ export default function Login() {
 
     return (
         <>
-            <button onClick={login}><span>LOGIN</span></button>
-            <button onClick={logout}><span>LOGOUT</span></button>
+            {!isLoggedIn && <button onClick={login}><span>LOGIN</span></button>}
+            {isLoggedIn && <button onClick={logout}><span>LOGOUT</span></button>}
         </>
     )
 }

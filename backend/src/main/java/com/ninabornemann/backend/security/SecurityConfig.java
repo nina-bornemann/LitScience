@@ -20,7 +20,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/*").authenticated()
                         .anyRequest().permitAll())
                 .logout(l -> l.logoutSuccessUrl(defaultSuccessUrl))
-                .oauth2Login(o -> o.defaultSuccessUrl(defaultSuccessUrl));
+                .oauth2Login(o -> o.defaultSuccessUrl(defaultSuccessUrl + "/dashboard"));
         return http.build();
     }
 }
