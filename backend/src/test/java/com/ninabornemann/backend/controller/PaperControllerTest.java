@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
@@ -49,6 +50,7 @@ class PaperControllerTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void getAllPaper_shouldReturn_listOfPaper() throws Exception {
         TestPaperScenario p1 = testPaperFactory.createRandomTestPaper();
         TestPaperScenario p2 = testPaperFactory.createRandomTestPaper();
@@ -62,6 +64,7 @@ class PaperControllerTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void getAllPapers_shouldReturn_EmptyListWhenEmpty() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/paper"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -73,6 +76,7 @@ class PaperControllerTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void addNewPaper_shouldReturn_newPaper() throws Exception {
         PaperDto dto = new PaperDto("123", "gastruloids", "Ludi", 2022, List.of("stem cells", "gastruloids"), "", null);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/paper")
@@ -297,6 +301,7 @@ class PaperControllerTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void getAllPaper_withGroupParam_shouldReturn_ListOfPapersOfGroup() throws Exception {
         TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("bio", "chem")));
         TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("physics", "chem")));
@@ -311,6 +316,7 @@ class PaperControllerTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void getAllPaper_withGroupParam_shouldReturn_EmptyList() throws Exception {
         TestPaperScenario p1 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("bio", "chem")));
         TestPaperScenario p2 = testPaperFactory.createRandomTestPaperWithModification(p ->p.withGroup(List.of("physics", "chem")));

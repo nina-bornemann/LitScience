@@ -16,7 +16,9 @@ export default function Dashboard() {
     function getAllPapers() {
         axios
             .get("/api/paper")
-            .then((response) => setPapers(response.data))
+            .then((response) => {
+                setPapers(response.data)
+            })
             .catch((e) => console.log(e))
     }
 

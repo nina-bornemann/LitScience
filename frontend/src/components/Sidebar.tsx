@@ -18,14 +18,14 @@ export default function Sidebar() {
     const [allGroups, setAllGroups] = useState([]);
 
     const menuItems:Item[] = [
-        { icon: "fa-solid fa-house", text: " Home", link: "/home"},
-        { icon: "fa-chart-line", text: " Dashboard", link: "/"},
+        { icon: "fa-solid fa-house", text: " Home", link: "/"},
+        { icon: "fa-chart-line", text: " Dashboard", link: "/dashboard"},
         { divider: true },
         { icon: "fa-solid fa-file", text: " All Papers", link: "/all"},
         { icon: "fa-heart", text: " Favorites", link: "/favorites" },
         { icon: "fa-solid fa-layer-group", text: " Groups", link: "/groups" },
         { divider: true },
-        { icon: "fa-fire", text: " About", link: "/home" },
+        { icon: "fa-fire", text: " About", link: "/" },
     ];
 
     function getAllGroups() {
