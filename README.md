@@ -126,6 +126,19 @@ Frontend runs at:
 
 - User clicks “Get AI report” → OpenAI summarizes the paper
 
+
+## 🌱 Environment Variables
+
+
+| Variable            | Description                               | Example                                                            |
+|---------------------|-------------------------------------------|--------------------------------------------------------------------|
+| MONGO_DB_URI        | connection String for databank connection | mongodb+srv://[username:password@]host[/[defaultauthdb][?options]] |
+| OPENAI_API_KEY      | for AI generated reports                  | sk-[22 characters]BlbkFJ[20 characters]                            |
+| GITHUB_ID           | needed for Login via OAuth                | [20 characters]                                                    |
+| GITHUB_SECRET       | needed for Login via OAuth                | [40 characters]                                                    |
+| DEFAULT_SUCCESS_URL | to redirect after successful login        | http://localhost:5173                                              |
+
+
 👩‍🔬 Nina  
 ☕️ Capstone Project — 2025  
 🧬 Turning scientific chaos into structured curiosity.

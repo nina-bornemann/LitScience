@@ -2,7 +2,6 @@ import axios from "axios";
 import {useEffect} from "react";
 
 export default function Login() {
-    console.log("test")
     function login() {
         const host:string =
             window.location.host === "localhost:5173" ?
