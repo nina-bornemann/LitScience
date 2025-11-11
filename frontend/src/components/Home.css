@@ -28,7 +28,8 @@
     margin-right: 150px;
 }
 p {
-    line-height: 1;
+    line-height: 0;
+    margin: 0;
 }
 .descriptionHeader {
     margin-top: -30px;
