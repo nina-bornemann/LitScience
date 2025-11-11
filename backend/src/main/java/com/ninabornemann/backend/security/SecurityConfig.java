@@ -19,7 +19,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/api/*").authenticated()
                         .anyRequest().permitAll())
-                .oauth2Login(o -> o.defaultSuccessUrl(defaultSuccessUrl));
+                .logout(l -> l.logoutSuccessUrl(defaultSuccessUrl))
+                .oauth2Login(o -> o.defaultSuccessUrl(defaultSuccessUrl + "/dashboard"));
         return http.build();
     }
 }

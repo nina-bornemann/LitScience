@@ -40,7 +40,7 @@ export default function PaperTable(props:Readonly<PaperTableProps>) {
     return (
         <>
             <div className={"table-container"}>
-                <DataTable onRowClick={navToDetails} rowClassName={() => "clickable"} value={props.papers} footer={footer} dataKey="id" removableSort scrollable scrollHeight="500px" resizableColumns color={"transparent"} tableStyle={{ minWidth: '40rem'}}>
+                <DataTable onRowClick={navToDetails} rowClassName={() => "clickable"} value={props.papers} footer={footer} dataKey="id" removableSort scrollable scrollHeight="60vh" resizableColumns color={"transparent"} tableStyle={{ minWidth: '40rem'}}>
                     <Column field="isFav" header="" sortable style={{ width: '5%' }} body={favTemplate} className={"truncate-2"}></Column>
                     <Column field="title" header="Title" sortable style={{ width: '30%' }} className={"truncate-2"}></Column>
                     <Column field="author" header="Author" sortable style={{ width: '20%' }} className={"truncate-2"}></Column>
