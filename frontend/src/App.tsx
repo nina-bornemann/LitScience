@@ -8,6 +8,7 @@ import AppContent from "./components/AppContent.tsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import Impressum from "./components/Impressum.tsx";
 
 export default function App() {
 
@@ -38,6 +39,7 @@ export default function App() {
                     <Route element={<ProtectedRoute user={user} />}>
                         <Route path={"/*"} element={<AppContent />}/>
                     </Route>
+                    <Route path={"/impressum"} element={<Impressum />}/>
                 </Routes>
                 </div>
             <Footer/>
