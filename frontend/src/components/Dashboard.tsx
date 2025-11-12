@@ -103,7 +103,7 @@ export default function Dashboard() {
                 <DashboardCard emoji={"📂"} count={groups.size} title={"Groups"} onClick={() => nav("/groups/overview")}/>
                 <DashboardCard emoji={"❤️"} count={favorites.length} title={"Favorites"} onClick={() => nav("/favorites")}/>
             </div>
-            <div className={"card"}>
+            <div className={"chart-card"}>
                 <Chart type="pie" data={chartData} options={chartOptions} className="w-full md:w-30rem" />
             </div>
         </div>

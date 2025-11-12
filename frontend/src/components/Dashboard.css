@@ -46,10 +46,12 @@
     width: 400px;
     align-self: center;
 }
-.card {
-    height: 445px !important;
-    width: 70% !important;
-    margin-top: 12px !important;
+.chart-card {
+    background-color: #335F7A;
+    border-radius: 8px;
+    height: 445px;
+    width: 70%;
+    margin-top: 20px;
     display: flex;
     flex-direction:row;
     justify-content: center;
