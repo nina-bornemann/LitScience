@@ -53,6 +53,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     summary: 'Deleted',
                     detail: 'The paper was successfully deleted.',
                     life: 5000,
+
                 });
                 props.onDelete(paper?.id);
                 setTimeout(() => navigateToAll(), 1000);
@@ -84,6 +85,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'success',
                     summary: 'Updated',
                     detail: 'The notes were successfully updated.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 props.onUpdate();
@@ -161,7 +163,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
 
     return (
         <>
-            <Toast ref={toast}/>
+            <Toast  ref={toast}/>
 
             <div className={"detail-wrapper"}>
                 <div className={"detail-buttons"}>
