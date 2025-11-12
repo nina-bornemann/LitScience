@@ -12,3 +12,7 @@ footer {
     height: 40px;
     background-color: rgb(9 15 22);
 }
+.impressum-btn {
+    background-color: rgb(9 15 22);
+    border: 0;
+}

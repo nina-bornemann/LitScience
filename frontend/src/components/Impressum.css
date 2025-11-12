@@ -1,0 +1,21 @@
+.impressum {
+    line-height: 1.5;
+    overflow-y: auto;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 150px;
+    gap: 0;
+}
+.app-layout {
+    overflow: auto;
+}
+.impressum-container {
+    overflow-y: auto;
+    height: 800px;
+}
+.impressum-titles {
+    margin-top: 30px;
+    margin-bottom: -20px;
+    padding: 0;
+}
