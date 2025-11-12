@@ -3,7 +3,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=litscience_LitScience_backend&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=litscience_LitScience_backend) [![Java CI with Maven](https://github.com/nina-bornemann/LitScience/actions/workflows/maven.yml/badge.svg)](https://github.com/nina-bornemann/LitScience/actions/workflows/maven.yml)
 
 
-![img.png](img.png)
+![table overview](docs/table_overview.png)
 
 **LitScience** is an intelligent literature assistant for 
 researchers, students, and curious readers.  
@@ -30,17 +30,20 @@ Upcoming:
 
 ### 🖥️ Frontend
 - **React + TypeScript (Vite)**
-- **PrimeReact** for advanced data tables
 - **RSuite** for tag management and UI components
 - **Axios** for API communication
 - **React Router v6** for client-side navigation
 - **@uiw/react-md-editor** for Markdown-based notes
+- **Protected Routes** using React Router authentication guards to ensure only logged-in users access main features
+- **OAuth Login** via GitHub — implemented via backend OAuth2 client and frontend redirect flow
+- **PrimeReact** for advanced data visualization (table and charts)
 
 ### 🧩 Backend
-- **Spring Boot (Java 21)**
-- **RESTful architecture with MVC pattern**
-- **OpenAlex API integration** (via `RestClient`)
-- **Planned:** OpenAI API (summarization, keyword extraction, flashcards)
+- **Spring Boot** Java 21
+- **RESTful** architecture with MVC pattern
+- **OpenAlex API** integration via `RestClient`
+- **OpenAI API** summary of key findings and methods, keyword extraction
+- **OAuth2 Login** with GitHub — handles user authentication and redirects to frontend after login
 - **Planned:** PDF parsing service for file uploads
 
 ### 🗄️ Database
@@ -50,7 +53,7 @@ Upcoming:
 
 ## 🏛️ Architecture Overview
 
-![diagram](docs/diagram-4x.png)
+![diagram](docs/litscience_flow_chart.png)
 
 ## 📚 Features  
 ✅ Import by DOI – Fetch metadata (title, author, year) via the OpenAlex API  
@@ -58,8 +61,11 @@ Upcoming:
 ✅ Favorites & Tags – Organize your research easily  
 ✅ Markdown Notes – Write and save formatted notes per paper  
 ✅ Dashboard – Quick stats: total papers, groups, favorites  
+✅ Interactive Pie Chart Dashboard – Visual overview of paper distribution by group  
 ✅ Use ChatGPT-based analysis to summarize, extract keywords, and auto-generate learning notes    
-✅ closable Sidebar for easy navigation
+✅ closable Sidebar for easy navigation  
+✅ OAuth2 GitHub Login – Secure login flow with redirect and logout  
+✅ Protected Routes – Only accessible after successful authentication  
 
 
 ## 🔮 Coming Soon   
@@ -95,6 +101,12 @@ Delete a paper
 Create AI generated report
 > POST   /api/paper/{id}
 
+Authentication
+
+> GET /login/oauth2/code/github  
+> GET /logout  
+> GET /user — returns logged-in user info  
+
 ## 🚀 Getting Started
 ### Backend
 
@@ -114,6 +126,8 @@ Frontend runs at:
 👉 http://localhost:5173 (default Vite port)
 
 ## 💡 Example Flow
+- User logs in via GitHub OAuth to access protected dashboard routes  
+
 - User enters a DOI in the input field
 
 - Frontend calls GET /api/paper/import/{doi}
