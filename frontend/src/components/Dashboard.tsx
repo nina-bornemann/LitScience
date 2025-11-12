@@ -28,12 +28,14 @@ export default function Dashboard() {
                 }
             }
         }
+        const sortedEntries = [...map.entries()].sort((a, b) => b[1] - a[1]);
+        console.log(sortedEntries);
         const documentStyle = getComputedStyle(document.documentElement);
         const data = {
-            labels: [...map.keys()],
+            labels: sortedEntries.map(([group]) => group),
             datasets: [
                 {
-                    data: [...map.values()],
+                    data: sortedEntries.map(([_, count]) => count),
                     backgroundColor: [
                         documentStyle.getPropertyValue('--blue-500'),
                         documentStyle.getPropertyValue('--yellow-500'),
