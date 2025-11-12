@@ -54,3 +54,12 @@ p {
 .properties {
     line-height: 2;
 }
+.p-toast {
+    margin-top: 70px;
+}
+.p-toast-icon-close {
+    background-color: rgb(217 236 220);
+}
+.p-icon {
+    color: #12344D;
+}

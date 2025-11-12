@@ -13,6 +13,7 @@
   "dependencies": {
     "@uiw/react-md-editor": "^4.0.8",
     "axios": "^1.12.2",
+    "chart.js": "^4.5.1",
     "primereact": "^10.9.7",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

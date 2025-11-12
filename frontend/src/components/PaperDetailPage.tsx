@@ -52,7 +52,9 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'success',
                     summary: 'Deleted',
                     detail: 'The paper was successfully deleted.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
+
                 });
                 props.onDelete(paper?.id);
                 setTimeout(() => navigateToAll(), 1000);
@@ -62,6 +64,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Could not delete the paper.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 console.error(error);
@@ -84,6 +87,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'success',
                     summary: 'Updated',
                     detail: 'The notes were successfully updated.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 props.onUpdate();
@@ -93,6 +97,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Could not edit notes.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 console.error(error);
@@ -110,6 +115,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Could not add to favorites.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 console.error(error);
@@ -130,6 +136,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Could not update Group Tags.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 console.error(error);
@@ -161,7 +168,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
 
     return (
         <>
-            <Toast ref={toast}/>
+            <Toast  ref={toast}/>
 
             <div className={"detail-wrapper"}>
                 <div className={"detail-buttons"}>
