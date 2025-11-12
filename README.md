@@ -53,7 +53,7 @@ Upcoming:
 
 ## 🏛️ Architecture Overview
 
-![diagram](docs/litscience_flow_chart.png)
+![diagram](docs/litscience_flow_chart.svg)
 
 ## 📚 Features  
 ✅ Import by DOI – Fetch metadata (title, author, year) via the OpenAlex API  
