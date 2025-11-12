@@ -52,6 +52,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'success',
                     summary: 'Deleted',
                     detail: 'The paper was successfully deleted.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
 
                 });
@@ -63,6 +64,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Could not delete the paper.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 console.error(error);
@@ -95,6 +97,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Could not edit notes.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 console.error(error);
@@ -112,6 +115,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Could not add to favorites.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 console.error(error);
@@ -132,6 +136,7 @@ export default function PaperDetailPage(props: Readonly<PaperDetailPageProps>) {
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Could not update Group Tags.',
+                    closeIcon: "fa-solid fa-xmark",
                     life: 5000,
                 });
                 console.error(error);
